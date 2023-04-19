@@ -4,5 +4,8 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require('tailwind-scrollbar')],
+  corePlugins: {
+    preflight: false, // <== disable this!
+  },
 };

@@ -1,0 +1,67 @@
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { Upload, UploadProps } from 'antd';
+import { RcFile } from 'antd/es/upload';
+import { FC, useState } from 'react';
+
+import { useAppDispatch } from '../../../hooks/useAppDispatch';
+import { useAppSelector } from '../../../hooks/useAppSelector';
+import { setAvatarFile } from '../../../redux/state/configSlice';
+import { beforeUploadPNGAndJPEG } from '../../../utils/beforeUploadPNGAndJPEG';
+import { getBase64 } from '../../../utils/getBase64';
+import Wrapper from '../../Wrapper';
+
+const SettingsInterlocutorDownloadAvatar: FC = () => {
+  const [loading, setLoading] = useState(false);
+
+  const { avatarFile } = useAppSelector((state) => state.config);
+  const dispatch = useAppDispatch();
+
+  const handleCustomRequest: UploadProps['customRequest'] = async ({
+    onSuccess,
+  }: any) => {
+    setTimeout(() => {
+      onSuccess('ok');
+    }, 0);
+  };
+
+  const handleChange: UploadProps['onChange'] = (info) => {
+    if (info.file.status === 'uploading') {
+      setLoading(true);
+      return;
+    }
+
+    if (info.file.status === 'done') {
+      getBase64(info.file.originFileObj as RcFile, (url) => {
+        setLoading(false);
+        dispatch(setAvatarFile(url));
+      });
+    }
+  };
+
+  const uploadButton = (
+    <div>
+      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      <div className='mt-2'>Загрузить</div>
+    </div>
+  );
+
+  return (
+    <Wrapper title='Загрузить аватарку:'>
+      <Upload
+        listType='picture-circle'
+        showUploadList={false}
+        onChange={handleChange}
+        customRequest={handleCustomRequest}
+        beforeUpload={beforeUploadPNGAndJPEG}
+      >
+        {avatarFile ? (
+          <img src={avatarFile} alt='avatar' className='w-full' />
+        ) : (
+          uploadButton
+        )}
+      </Upload>
+    </Wrapper>
+  );
+};
+
+export default SettingsInterlocutorDownloadAvatar;
