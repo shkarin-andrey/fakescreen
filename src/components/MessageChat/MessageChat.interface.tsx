@@ -1,6 +1,7 @@
 import type { Message } from '../../redux/state/chatSlice';
 
 export interface IMessageChat {
+  id: Message['id'];
   type: Message['type'];
   message: Message['message'];
   time: Message['time'];

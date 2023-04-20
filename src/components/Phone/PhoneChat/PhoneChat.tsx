@@ -57,6 +57,7 @@ const PhoneChat: FC = () => {
               <>
                 {item.message && (
                   <MessageChat
+                    id={item.id}
                     type={item.type}
                     message={item.message}
                     time={item.time}

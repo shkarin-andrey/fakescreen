@@ -33,13 +33,16 @@ export const chatSlice = createSlice({
     setMessage: (state, action: PayloadAction<Message>) => {
       state.data.unshift(action.payload);
     },
+    deleteMessage: (state, action: PayloadAction<string>) => {
+      state.data = state.data.filter((item) => item.id !== action.payload);
+    },
     resetChat: (state) => {
       state.data = [];
     },
   },
 });
 
-export const { setChatTime, setMessage, resetChat } = chatSlice.actions;
+export const { setChatTime, setMessage, resetChat, deleteMessage } = chatSlice.actions;
 
 export default chatSlice.reducer;
 

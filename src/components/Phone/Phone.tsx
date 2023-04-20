@@ -1,18 +1,35 @@
-import { Button } from 'antd';
-import { FC } from 'react';
+import { Button, notification } from 'antd';
+import html2canvas from 'html2canvas';
+import { FC, useRef } from 'react';
 
 import phoneImg from '../../assets/images/phone.svg';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { resetChat } from '../../redux/state/chatSlice';
+import { downloadJPG } from '../../utils/downloadJPG';
 import PhoneChat from './PhoneChat';
 import PhoneFooter from './PhoneFooter';
 import PhoneHeader from './PhoneHeader';
 
 const Phone: FC = () => {
+  const ref = useRef(null);
+
   const dispatch = useAppDispatch();
 
   const handleResetChat = () => {
     dispatch(resetChat());
+  };
+
+  const handleSaveScreenshot = () => {
+    if (ref.current) {
+      html2canvas(ref.current)
+        .then((canvas) => {
+          downloadJPG(canvas);
+          notification.success({ message: 'Скриншот сделан успешно' });
+        })
+        .catch((error) => {
+          notification.error({ message: error });
+        });
+    }
   };
 
   return (
@@ -23,13 +40,16 @@ const Phone: FC = () => {
           alt='FakeScreen Pro phone'
           className='absolute top-0 left-0 w-full h-full z-10'
         />
-        <div className='w-full h-full rounded-[55px] flex flex-col'>
+        <div ref={ref} className='w-full h-full rounded-[55px] flex flex-col'>
           <PhoneHeader />
           <PhoneChat />
           <PhoneFooter />
         </div>
       </div>
-      <Button onClick={handleResetChat}> Очистить переписку</Button>
+      <Button type='primary' onClick={handleSaveScreenshot}>
+        Сделать скриншот
+      </Button>
+      <Button onClick={handleResetChat}>Очистить переписку</Button>
     </div>
   );
 };
