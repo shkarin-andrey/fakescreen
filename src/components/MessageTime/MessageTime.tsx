@@ -11,7 +11,7 @@ const MessageTime: FC<IMessageTime> = ({
 }) => {
   return (
     <div
-      className={`flex items-center text-[10px] py-[1px] pl-[5px] pr-[3px] rounded-3xl ${
+      className={`flex items-center text-[10px] py-[1px] pl-[5px] pr-[3px] leading-none rounded-3xl ${
         isBackground ? 'bg-[#72839166]' : ''
       } ${type === 'owner' || isBackground ? 'text-white' : 'text-[#8C8C8C]'}`}
     >

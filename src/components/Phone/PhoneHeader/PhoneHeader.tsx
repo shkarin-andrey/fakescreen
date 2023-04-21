@@ -2,7 +2,6 @@ import { FC } from 'react';
 
 import BattaryIcon from '../../../assets/icons/BattaryIcon';
 import WaterMarkIcon from '../../../assets/icons/WaterMarkIcon';
-import telegram from '../../../assets/images/telegram.png';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import EthernetHeader from '../../EthernetHeader';
 import GeoHandler from '../../GeoHandler';
