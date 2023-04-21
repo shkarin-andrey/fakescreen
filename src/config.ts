@@ -1,5 +1,5 @@
 export const options = [
-  { value: 'online', label: 'В сети' },
+  { value: 'online', label: 'в сети' },
   { value: 'scarcely', label: 'был(а) только что' },
   { value: 'recently', label: 'был(а) недавно' },
   { value: 'long', label: 'был(а) давно' },

@@ -7,7 +7,7 @@ const EthernetHeader: FC = () => {
   const { wifi, ethernet } = useAppSelector((state) => state.config);
 
   if (ethernet === 'wifi') {
-    return <WifiIcon width='13.11' height='10' type={wifi} />;
+    return <WifiIcon width='16' height='13' type={wifi} />;
   }
 
   return <span className='uppercase font-medium'>{ethernet}</span>;

@@ -75,9 +75,9 @@ const MessageChat: FC<IMessageChat> = ({
       <div
         aria-hidden={true}
         onClick={handleOpen}
-        className={`flex flex-wrap pl-[11px] pr-[6px] py-[5px] rounded-[13px] text-base max-w-[245px]  relative leading-[134%] ${isOwner} ${classNameNextType} ${classNameRounded()}`}
+        className={`flex flex-wrap pl-[11px] pr-[6px] py-[5px] rounded-[13px] text-base max-w-[245px] w-fit relative leading-[134%] ${isOwner} ${classNameNextType} ${classNameRounded()}`}
       >
-        <div className='tracking-[1px]'>{message}</div>
+        <div className='tracking-[0.1px]'>{message}</div>
         <div className='ml-auto -mb-1'>
           <MessageTime type={type} time={time} isViewed={isViewed} />
         </div>

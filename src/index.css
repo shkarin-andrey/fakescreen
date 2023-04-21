@@ -16,7 +16,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: local('SF Pro Display'), url('assets/fonts/SF-Pro-Display-Regular.otf');
+  src: url('./assets/fonts/SF-Pro-Display-Regular.otf') format('opentype');
 }
 
 @font-face {
@@ -24,7 +24,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: local('SF Pro Display'), url('assets/fonts/SF-Pro-Display-Medium.otf');
+  src: url('./assets/fonts/SF-Pro-Display-Medium.otf') format('opentype');
 }
 
 @font-face {
@@ -32,9 +32,23 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: local('SF Pro Display'), url('assets/fonts/SF-Pro-Display-Semibold.otf');
+  src: url('./assets/fonts/SF-Pro-Display-Semibold.otf') format('opentype');
 }
 
-#phone {
-  font-family: 'SF Pro Displa', sans-serif;
+@font-face {
+  font-family: 'M PLUS Rounded 1c';
+  src: local('Rounded Mplus 1c Medium'), local('RoundedMplus1c-Medium'),
+    url('./assets/fonts/Roundedmplus1cmedium.woff2') format('woff2'),
+    url('./assets/fonts/Roundedmplus1cmedium.woff') format('woff'),
+    url('./assets/fonts/Roundedmplus1cmedium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+* {
+  font-family: 'SF Pro Display', sans-serif;
+}
+
+.avatar {
+  font-family: 'M PLUS Rounded 1c', sans-serif !important;
 }

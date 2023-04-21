@@ -21,7 +21,9 @@ const Phone: FC = () => {
 
   const handleSaveScreenshot = () => {
     if (ref.current) {
-      html2canvas(ref.current)
+      html2canvas(ref.current, {
+        scale: 3.5,
+      })
         .then((canvas) => {
           downloadJPG(canvas);
           notification.success({ message: 'Скриншот сделан успешно' });
@@ -33,14 +35,18 @@ const Phone: FC = () => {
   };
 
   return (
-    <div className='flex flex-col gap-5 max-w-[375px] w-full '>
+    <div className='flex flex-col gap-5 max-w-[376px] w-full '>
       <div className='h-[746px] relative py-6 px-[27px]'>
         <img
           src={phoneImg}
           alt='FakeScreen Pro phone'
           className='absolute top-0 left-0 w-full h-full z-10'
         />
-        <div ref={ref} className='w-full h-full rounded-[55px] flex flex-col'>
+        <div
+          id='phone'
+          ref={ref}
+          className='w-full h-full flex flex-col font-[SF_Pro_Display]'
+        >
           <PhoneHeader />
           <PhoneChat />
           <PhoneFooter />

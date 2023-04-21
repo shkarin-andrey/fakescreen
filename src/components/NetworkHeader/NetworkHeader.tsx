@@ -8,10 +8,10 @@ const NetworkHeader: FC = () => {
   const { network, stateSim } = useAppSelector((state) => state.config);
 
   if (network === 'sim') {
-    return <SimIcon width='13.11' height='10' type={stateSim} />;
+    return <SimIcon width='14' height='10' type={stateSim} />;
   }
 
-  return <AviaIcon width='13.11' height='10' />;
+  return <AviaIcon width='14' height='10' />;
 };
 
 export default NetworkHeader;

@@ -6,6 +6,7 @@ import SettingsPhoneEthernet from './SettingsPhoneEthernet';
 import SettingsPhoneGeo from './SettingsPhoneGeo';
 import SettingsPhoneNetwork from './SettingsPhoneNetwork';
 import SettingsPhoneTime from './SettingsPhoneTime';
+import SettingsPhoneWatermark from './SettingsPhoneWatermark';
 import SettingsPhoneWifi from './SettingsPhoneWifi';
 
 const SettingsPhone: FC = () => {
@@ -19,6 +20,7 @@ const SettingsPhone: FC = () => {
       <SettingsPhoneEthernet />
       {ethernet === 'wifi' && <SettingsPhoneWifi />}
       <SettingsPhoneNetwork />
+      <SettingsPhoneWatermark />
     </div>
   );
 };

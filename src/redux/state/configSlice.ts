@@ -25,6 +25,7 @@ interface ConfigState {
   stateSim: number;
   unread: number;
   isUnread: boolean;
+  watermark: boolean;
 }
 
 const initialState: ConfigState = {
@@ -35,7 +36,7 @@ const initialState: ConfigState = {
   time: '9:41',
   spum: false,
   bgImage: gallary[0],
-  geo: 'outline',
+  geo: 'fill',
   status: options[0].label,
   bgAvatarColor: listColorsBgAvatar[0],
   avatarFile: '',
@@ -43,6 +44,7 @@ const initialState: ConfigState = {
   stateSim: 4,
   isUnread: false,
   unread: 1,
+  watermark: true,
 };
 
 export const configSlice = createSlice({
@@ -94,6 +96,9 @@ export const configSlice = createSlice({
     setIsUnread: (state, action: PayloadAction<ConfigState['isUnread']>) => {
       state.isUnread = action.payload;
     },
+    setWatermark: (state, action: PayloadAction<ConfigState['watermark']>) => {
+      state.watermark = action.payload;
+    },
   },
 });
 
@@ -113,6 +118,7 @@ export const {
   setStateSim,
   setUnread,
   setIsUnread,
+  setWatermark,
 } = configSlice.actions;
 
 export default configSlice.reducer;
