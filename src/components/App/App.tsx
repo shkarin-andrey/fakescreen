@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 
 import Layout from '../Layout';
 import Phone from '../Phone';
@@ -15,23 +15,26 @@ const App: FC = () => {
     setCurrent(value);
   };
 
-  const items = [
-    {
-      title: 'Настройки Iphone',
-      description: 'Настройте параметры телефона',
-      content: <SettingsPhone />,
-    },
-    {
-      title: 'Настройки Собеседника',
-      description: 'Настройте параметры собеседника',
-      content: <SettingsInterlocutor />,
-    },
-    {
-      title: 'Настройки Переписки',
-      description: 'Настройте сообщения ',
-      content: <SettingsChat />,
-    },
-  ];
+  const items = useMemo(
+    () => [
+      {
+        title: 'Настройки Iphone',
+        description: 'Настройте параметры телефона',
+        content: <SettingsPhone />,
+      },
+      {
+        title: 'Настройки Собеседника',
+        description: 'Настройте параметры собеседника',
+        content: <SettingsInterlocutor />,
+      },
+      {
+        title: 'Настройки Переписки',
+        description: 'Настройте сообщения ',
+        content: <SettingsChat />,
+      },
+    ],
+    [],
+  );
 
   return (
     <Layout>

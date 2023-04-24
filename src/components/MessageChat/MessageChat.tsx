@@ -1,6 +1,6 @@
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { Popconfirm } from 'antd';
-import { FC, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 
 import TailIcon from '../../assets/icons/TailIcon';
 import { deleteMessage } from '../../redux/state/chatSlice';
@@ -18,6 +18,13 @@ const MessageChat: FC<IMessageChat> = ({
   nextType,
 }) => {
   const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.innerHTML = message;
+    }
+  }, []);
 
   const dispatch = useAppDispatch();
 
@@ -78,7 +85,7 @@ const MessageChat: FC<IMessageChat> = ({
         className={`flex pl-[11px] pr-[6px] py-[5px] rounded-[13px] text-base max-w-[250px] w-fit relative leading-[134%] ${isOwner} ${classNameNextType} ${classNameRounded()}`}
       >
         <div>
-          <span className='tracking-[0.6px] break-all'>{message}</span>
+          <span ref={ref} className='tracking-[0.6px] break-all' />
           <MessageTime
             className='pt-[10px]'
             type={type}

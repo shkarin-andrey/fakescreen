@@ -9,7 +9,7 @@ type ChatTime = {
 export type Message = {
   id: string;
   type: string;
-  message?: string;
+  message: string;
   isViewed: boolean;
   time: string;
   sticker?: string;

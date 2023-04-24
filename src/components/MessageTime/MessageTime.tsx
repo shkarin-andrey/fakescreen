@@ -1,5 +1,6 @@
 import { FC } from 'react';
 
+import NoViewedMessageIcon from '../../assets/icons/NoViewedMessageIcon';
 import ViewedMessageIcon from '../../assets/icons/ViewedMessageIcon';
 import { IMessageTime } from './MessageTime.interface';
 
@@ -20,6 +21,7 @@ const MessageTime: FC<IMessageTime> = ({
     >
       <span>{time}</span>
       {isViewed && type === 'owner' && <ViewedMessageIcon />}
+      {!isViewed && type === 'owner' && <NoViewedMessageIcon />}
     </div>
   );
 };
