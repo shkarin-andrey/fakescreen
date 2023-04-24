@@ -1,4 +1,3 @@
-import { Avatar } from 'antd';
 import { FC } from 'react';
 
 import ShapeIcon from '../../../assets/icons/ShapeIcon';
@@ -31,20 +30,12 @@ const PhoneUserInfo: FC = () => {
       <div
         className='avatar col-span-2 ml-auto w-8 h-8 rounded-full overflow-hidden flex justify-center items-center text-white uppercase'
         style={{
-          background: avatarFile ? `url("${avatarFile}")` : bgAvatarColor,
+          background: avatarFile
+            ? `url("${avatarFile}") center center/cover no-repeat`
+            : bgAvatarColor,
         }}
       >
         {!avatarFile && <div className='text-[13px]'>{username?.[0]}</div>}
-        {/* <Avatar
-          size='large'
-          src={avatarFile}
-          className='w-full h-full flex justify-center items-center uppercase'
-          style={{
-            background: bgAvatarColor,
-          }}
-        >
-          {username?.[0]}
-        </Avatar> */}
       </div>
     </div>
   );
