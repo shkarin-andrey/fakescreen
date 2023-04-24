@@ -17,7 +17,7 @@ const SettingsChatMessage: FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const handleChatMessage = (e: any) => {
+  const handleChatMessage = (e: React.ChangeEvent<HTMLDivElement>) => {
     if (ref.current) {
       ref.current.innerHTML = e.currentTarget.innerHTML;
     }
@@ -45,7 +45,7 @@ const SettingsChatMessage: FC = () => {
 
   const onEmojiClick = (event: EmojiClickData) => {
     const emoji = event.getImageUrl(EmojiStyle.APPLE);
-    const elEmoji = `<img class='w-[12px] h-[12px]' src='${emoji}' alt='${event.emoji}' />`;
+    const elEmoji = `<img class='w-[20px] h-[20px]' src='${emoji}' alt='${event.emoji}' />`;
 
     if (ref.current) {
       ref.current.innerHTML += elEmoji;

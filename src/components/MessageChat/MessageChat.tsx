@@ -18,13 +18,13 @@ const MessageChat: FC<IMessageChat> = ({
   nextType,
 }) => {
   const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLSpanElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (ref.current) {
       ref.current.innerHTML = message;
     }
-  }, []);
+  }, [message]);
 
   const dispatch = useAppDispatch();
 
@@ -85,7 +85,7 @@ const MessageChat: FC<IMessageChat> = ({
         className={`flex pl-[11px] pr-[6px] py-[5px] rounded-[13px] text-base max-w-[250px] w-fit relative leading-[134%] ${isOwner} ${classNameNextType} ${classNameRounded()}`}
       >
         <div>
-          <span ref={ref} className='tracking-[0.6px] break-all' />
+          <div ref={ref} className='contents tracking-[0.6px] break-all' />
           <MessageTime
             className='pt-[10px]'
             type={type}

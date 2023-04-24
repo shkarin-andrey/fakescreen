@@ -23,13 +23,16 @@ const Phone: FC = () => {
     if (ref.current) {
       html2canvas(ref.current, {
         scale: 3.5,
+        allowTaint: true,
+        useCORS: true,
       })
         .then((canvas) => {
           downloadJPG(canvas);
           notification.success({ message: 'Скриншот сделан успешно' });
         })
         .catch((error) => {
-          notification.error({ message: error });
+          console.error(error);
+          notification.error({ message: error.message });
         });
     }
   };
