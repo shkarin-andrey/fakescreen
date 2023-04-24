@@ -75,11 +75,16 @@ const MessageChat: FC<IMessageChat> = ({
       <div
         aria-hidden={true}
         onClick={handleOpen}
-        className={`flex flex-wrap items-end pl-[11px] pr-[6px] py-[5px] rounded-[13px] text-base max-w-[250px] w-fit relative leading-[134%] ${isOwner} ${classNameNextType} ${classNameRounded()}`}
+        className={`flex pl-[11px] pr-[6px] py-[5px] rounded-[13px] text-base max-w-[250px] w-fit relative leading-[134%] ${isOwner} ${classNameNextType} ${classNameRounded()}`}
       >
-        <div className='tracking-[0.6px]'>{message}</div>
-        <div className='ml-auto h-fit'>
-          <MessageTime type={type} time={time} isViewed={isViewed} />
+        <div>
+          <span className='tracking-[0.6px] break-all'>{message}</span>
+          <MessageTime
+            className='pt-[10px]'
+            type={type}
+            time={time}
+            isViewed={isViewed}
+          />
         </div>
         {isPrevType && (
           <div className={`absolute -bottom-[5px] ${classNamePrevTypeTail}`}>

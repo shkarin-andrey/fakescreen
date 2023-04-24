@@ -8,12 +8,15 @@ const MessageTime: FC<IMessageTime> = ({
   time,
   isBackground = false,
   isViewed,
+  className = '',
 }) => {
   return (
     <div
-      className={`flex items-center text-[10px] py-[1px] pl-[5px] pr-[3px] leading-none rounded-3xl ${
+      className={`inline-block float-right text-right text-[10px] py-[1px] pl-[5px] pr-[3px] leading-none rounded-3xl ${
         isBackground ? 'bg-[#72839166]' : ''
-      } ${type === 'owner' || isBackground ? 'text-white' : 'text-[#8C8C8C]'}`}
+      } ${
+        type === 'owner' || isBackground ? 'text-white' : 'text-[#8C8C8C]'
+      } ${className}`}
     >
       <span>{time}</span>
       {isViewed && type === 'owner' && <ViewedMessageIcon />}

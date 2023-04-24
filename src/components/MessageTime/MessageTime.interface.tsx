@@ -5,4 +5,5 @@ export interface IMessageTime {
   time: Message['time'];
   isViewed: Message['isViewed'];
   isBackground?: boolean;
+  className?: string;
 }
