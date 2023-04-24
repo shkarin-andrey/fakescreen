@@ -2,11 +2,11 @@ import { FC } from 'react';
 
 const ViewedMessageIcon: FC = () => {
   return (
-    <svg width='14' height='14' viewBox='0 0 14 14' fill='none'>
+    <svg width='14' height='8' viewBox='0 0 14 8' fill='none'>
       <path
-        d='M1.54102 7.71583L3.67454 9.70712L9.27505 4.47998M13.0087 4.60444L7.40821 9.83157L6.74149 9.2093'
+        d='M1.3291 4.5L3.8578 6.89664L9.8291 1M12.8291 1L6.95676 6.87234L6.8291 7'
         stroke='white'
-        strokeWidth='1.08306'
+        strokeWidth='0.945076'
         strokeLinecap='round'
         strokeLinejoin='round'
       />
