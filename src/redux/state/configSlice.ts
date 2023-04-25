@@ -1,12 +1,11 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import { UploadFile } from 'antd';
 
 import { gallary } from '../../components/SettingsInterlocutor/SettingsInterlocutorIGallary/SettingsInterlocutorIGallary.config';
 import { listColorsBgAvatar, options } from '../../config';
 
 type Ethernet = 'wifi' | 'e' | '3g' | '4g' | 'lte';
-type Geo = 'outline' | 'fill' | 'blue';
+type Geo = 'outline' | 'fill' | 'blue' | undefined;
 type Network = 'sim' | 'avia';
 
 interface ConfigState {
@@ -36,7 +35,7 @@ const initialState: ConfigState = {
   time: '09:41',
   spum: false,
   bgImage: gallary[0],
-  geo: 'fill',
+  geo: undefined,
   status: options[0].label,
   bgAvatarColor: listColorsBgAvatar[0],
   avatarFile: '',

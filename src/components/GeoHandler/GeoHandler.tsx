@@ -16,7 +16,11 @@ const GeoHandler: FC = () => {
     return <GeoFillIcon className='mt-[1px]' />;
   }
 
-  return <GeoBlueIcon className='mt-[1px]' />;
+  if (geo === 'blue') {
+    return <GeoBlueIcon className='mt-[1px]' />;
+  }
+
+  return null;
 };
 
 export default GeoHandler;

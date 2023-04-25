@@ -1,3 +1,4 @@
+import { CloseOutlined } from '@ant-design/icons';
 import { Radio, RadioChangeEvent } from 'antd';
 import { FC } from 'react';
 
@@ -28,6 +29,9 @@ const SettingsPhoneGeo: FC = () => {
         </Radio.Button>
         <Radio.Button value='blue' className='flex justify-center items-center'>
           <GeoBlueIcon />
+        </Radio.Button>
+        <Radio.Button className='flex justify-center items-center'>
+          <CloseOutlined style={{ color: 'red' }} />
         </Radio.Button>
       </Radio.Group>
     </Wrapper>
