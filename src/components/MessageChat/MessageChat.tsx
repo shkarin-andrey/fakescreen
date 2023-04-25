@@ -1,11 +1,8 @@
-import { QuestionCircleOutlined } from '@ant-design/icons';
-import { Popconfirm } from 'antd';
 import { FC, useEffect, useRef, useState } from 'react';
 
 import TailIcon from '../../assets/icons/TailIcon';
-import { deleteMessage } from '../../redux/state/chatSlice';
 import MessageTime from '../MessageTime/MessageTime';
-import { useAppDispatch } from './../../hooks/useAppDispatch';
+import ModalEditMessage from '../Modal/ModalEditMessage';
 import { IMessageChat } from './MessageChat.interface';
 
 const MessageChat: FC<IMessageChat> = ({
@@ -17,7 +14,7 @@ const MessageChat: FC<IMessageChat> = ({
   prevType,
   nextType,
 }) => {
-  const [open, setOpen] = useState(false);
+  const [isOpneModal, setIsOpneModal] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -25,8 +22,6 @@ const MessageChat: FC<IMessageChat> = ({
       ref.current.innerHTML = message;
     }
   }, [message]);
-
-  const dispatch = useAppDispatch();
 
   const isOwner =
     type === 'owner' ? 'bg-[#007AFF] text-white ml-auto' : 'bg-white text-black';
@@ -58,30 +53,15 @@ const MessageChat: FC<IMessageChat> = ({
   const classNamePrevTypeTail =
     isPrevType && type === 'owner' ? '-right-1' : '-left-1 -scale-x-100';
 
-  const handleOk = () => {
-    dispatch(deleteMessage(id));
-    setOpen((prev) => !prev);
-  };
-
-  const handleOpen = () => {
-    setOpen((prev) => !prev);
-  };
-
-  const handleCancel = () => {
-    setOpen((prev) => !prev);
+  const handleOpenModal = () => {
+    setIsOpneModal(true);
   };
 
   return (
-    <Popconfirm
-      title='Удалить сообщение?'
-      open={open}
-      onConfirm={handleOk}
-      onCancel={handleCancel}
-      icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
-    >
+    <>
       <div
         aria-hidden={true}
-        onClick={handleOpen}
+        onClick={handleOpenModal}
         className={`flex pl-[11px] pr-[6px] py-[5px] rounded-[13px] text-base max-w-[250px] w-fit relative leading-[134%] ${isOwner} ${classNameNextType} ${classNameRounded()}`}
       >
         <div>
@@ -99,7 +79,15 @@ const MessageChat: FC<IMessageChat> = ({
           </div>
         )}
       </div>
-    </Popconfirm>
+      <ModalEditMessage
+        id={id}
+        type={type}
+        time={time}
+        isViewed={isViewed}
+        isOpneModal={isOpneModal}
+        setIsOpneModal={setIsOpneModal}
+      />
+    </>
   );
 };
 

@@ -36,12 +36,17 @@ export const chatSlice = createSlice({
     deleteMessage: (state, action: PayloadAction<string>) => {
       state.data = state.data.filter((item) => item.id !== action.payload);
     },
+    updateMessage: (state, action: PayloadAction<any>) => {
+      const data = { ...state.data[action.payload.index], ...action.payload.data };
+      state.data.splice(action.payload.index, 1, data);
+    },
     resetChat: (state) => {
       state.data = [];
     },
   },
 });
 
-export const { setChatTime, setMessage, resetChat, deleteMessage } = chatSlice.actions;
+export const { setChatTime, setMessage, deleteMessage, updateMessage, resetChat } =
+  chatSlice.actions;
 
 export default chatSlice.reducer;

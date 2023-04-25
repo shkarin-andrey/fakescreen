@@ -17,3 +17,8 @@ export const listColorsBgAvatar = [
   'linear-gradient(180deg, #9ADC7F 0%, #9ADD82 0.01%, #8ED979 19.27%, #7AD471 40.7%, #6ACF6D 72.7%, #54CC66 100%)',
   'linear-gradient(180deg, #D79BEA 0%, #D79BEA 0.01%, #DF96F2 19.27%, #DA83EF 40.7%, #D97CF0 72.7%, #D268E9 100%)',
 ];
+
+export const optionsTypeMessage = [
+  { label: 'Вы', value: 'owner' },
+  { label: 'Собеседник', value: 'interlocutor' },
+];

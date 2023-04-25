@@ -3,7 +3,7 @@ import { FC, Fragment, useCallback } from 'react';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import type { Message } from '../../../redux/state/chatSlice';
 import MessageChat from '../../MessageChat';
-import MessageTime from '../../MessageTime';
+import MessageSticker from '../../MessageSticker';
 
 const PhoneChat: FC = () => {
   const { bgImage } = useAppSelector((state) => state.config);
@@ -67,25 +67,12 @@ const PhoneChat: FC = () => {
                   />
                 )}
                 {item.sticker && (
-                  <div
-                    className={`w-40 h-40 relative mt-[7px] ${
-                      item.type === 'owner' ? 'ml-auto' : ''
-                    }`}
-                  >
-                    <img
-                      className='w-full h-full object-cover'
-                      src={item.sticker}
-                      alt=''
-                    />
-                    <div className='absolute bottom-[6px] -right-1'>
-                      <MessageTime
-                        isViewed={item.isViewed}
-                        type={item.type}
-                        time={item.time}
-                        isBackground
-                      />
-                    </div>
-                  </div>
+                  <MessageSticker
+                    isViewed={item.isViewed}
+                    type={item.type}
+                    sticker={item.sticker}
+                    time={item.time}
+                  />
                 )}
               </>
             )}

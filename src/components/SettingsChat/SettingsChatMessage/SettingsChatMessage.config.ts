@@ -4,8 +4,3 @@ export const initialValue = {
   time: null,
   isViewed: true,
 };
-
-export const options = [
-  { label: 'Вы', value: 'owner' },
-  { label: 'Собеседник', value: 'interlocutor' },
-];

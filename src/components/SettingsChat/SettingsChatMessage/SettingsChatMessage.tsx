@@ -5,10 +5,11 @@ import { FC, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import EmojiIcon from '../../../assets/icons/EmojiIcon';
+import { optionsTypeMessage } from '../../../config';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { setMessage } from '../../../redux/state/chatSlice';
 import Wrapper from '../../Wrapper';
-import { initialValue, options } from './SettingsChatMessage.config';
+import { initialValue } from './SettingsChatMessage.config';
 import SettingsChatMessageSticker from './SettingsChatMessageSticker';
 
 const SettingsChatMessage: FC = () => {
@@ -60,7 +61,7 @@ const SettingsChatMessage: FC = () => {
       className='flex flex-col item-center'
     >
       <Form.Item name='type'>
-        <Radio.Group options={options} />
+        <Radio.Group options={optionsTypeMessage} />
       </Form.Item>
       <Wrapper title='Сообщение:'>
         <div

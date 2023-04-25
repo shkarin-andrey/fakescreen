@@ -16,7 +16,6 @@ const SettingsPhoneBattary: FC = () => {
   }, []);
 
   const handleChangeTypeBattary = (e: RadioChangeEvent) => {
-    console.log('radio checked', e.target.value);
     setTypeBattary(e.target.value);
   };
 
