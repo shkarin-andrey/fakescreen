@@ -1,5 +1,8 @@
 import { FC, useMemo, useState } from 'react';
+import { IntlProvider } from 'react-intl';
 
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { messages } from '../../i18n/messages';
 import Layout from '../Layout';
 import Phone from '../Phone';
 import SettingsChat from '../SettingsChat/SettingsChat';
@@ -10,6 +13,8 @@ import Title from '../Title';
 
 const App: FC = () => {
   const [current, setCurrent] = useState(2);
+
+  const { language } = useAppSelector((state) => state.language);
 
   const onChange = (value: number) => {
     setCurrent(value);
@@ -37,16 +42,22 @@ const App: FC = () => {
   );
 
   return (
-    <Layout>
-      <div className='flex justify-center'>
-        <Title />
-      </div>
-      <StepsScreen current={current} onChange={onChange} items={items} />
-      <div className='flex justify-between gap-10 mt-20'>
-        <div>{items[current].content}</div>
-        <Phone />
-      </div>
-    </Layout>
+    <IntlProvider
+      messages={messages[language]}
+      locale={language}
+      defaultLocale={language}
+    >
+      <Layout>
+        <div className='flex justify-center'>
+          <Title />
+        </div>
+        <StepsScreen current={current} onChange={onChange} items={items} />
+        <div className='flex justify-between gap-10 mt-20'>
+          <div>{items[current].content}</div>
+          <Phone />
+        </div>
+      </Layout>
+    </IntlProvider>
   );
 };
 

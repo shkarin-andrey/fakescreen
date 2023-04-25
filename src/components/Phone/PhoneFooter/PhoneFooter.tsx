@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import AttachIcon from '../../../assets/icons/AttachIcon';
 import RecordAudioImage from '../../../assets/icons/RecordAudioImage';
@@ -10,7 +11,9 @@ const PhoneFooter: FC = () => {
       <div className='flex items-center gap-1 py-[5px]'>
         <AttachIcon />
         <div className='flex items-center justify-between h-7 pl-[11px] pr-[7px] border-[0.8px] border-[#d6d1d1] border-solid rounded-[14px] bg-white w-full'>
-          <span className='text-[#AEAEB2] text-sm'>Сообщение</span>
+          <span className='text-[#AEAEB2] text-sm'>
+            <FormattedMessage id='footer_phone_message' />
+          </span>
           <StickersIcon />
         </div>
         <div className='ml-1'>

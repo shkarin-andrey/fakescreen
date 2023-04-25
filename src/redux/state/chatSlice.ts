@@ -45,21 +45,3 @@ export const chatSlice = createSlice({
 export const { setChatTime, setMessage, resetChat, deleteMessage } = chatSlice.actions;
 
 export default chatSlice.reducer;
-
-[
-  {
-    chatTime: '10:10',
-  },
-  {
-    type: 'owner',
-    message: 'qweqeqweqwe',
-    isViewed: true,
-    time: '15:45',
-  },
-  {
-    type: 'interlocutor',
-    message: 'qweqeqweqwe',
-    isViewed: true,
-    time: '15:45',
-  },
-];
