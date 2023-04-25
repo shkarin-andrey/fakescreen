@@ -18,7 +18,7 @@ const App: FC = () => {
   const items = useMemo(
     () => [
       {
-        title: 'Настройки Iphone',
+        title: 'Настройки iPhone',
         description: 'Настройте параметры телефона',
         content: <SettingsPhone />,
       },
