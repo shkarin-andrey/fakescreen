@@ -24,7 +24,7 @@ const Layout: FC<ILayout> = ({ children }) => {
         {local.map((lang) => (
           <FloatButton
             key={lang}
-            description={lang}
+            description={lang.split('-')[1]}
             onClick={() => dispatch(setLanguage(lang))}
           />
         ))}

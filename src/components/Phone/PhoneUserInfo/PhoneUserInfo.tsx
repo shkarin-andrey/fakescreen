@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import ShapeIcon from '../../../assets/icons/ShapeIcon';
 import { options } from '../../../config';
@@ -20,7 +21,9 @@ const PhoneUserInfo: FC = () => {
             {unread}
           </div>
         ) : (
-          <span className='font-normal'>Назад</span>
+          <span className='font-normal'>
+            <FormattedMessage id='header_phone_back' />
+          </span>
         )}
       </div>
       <div className='text-sm col-span-5 flex flex-col items-center leading-none'>
