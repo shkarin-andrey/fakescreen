@@ -23,7 +23,7 @@ interface ConfigState {
   avatarFile: string;
   network: Network;
   stateSim: number;
-  unread: number;
+  unread: number | null;
   isUnread: boolean;
   watermark: boolean;
 }

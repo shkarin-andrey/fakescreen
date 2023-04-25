@@ -15,7 +15,7 @@ const SettingsInterlocutorUnread: FC = () => {
     dispatch(setIsUnread(e.target.checked));
   };
 
-  const handleChangeUnread = (value: any): void => {
+  const handleChangeUnread = (value: number | null): void => {
     dispatch(setUnread(value));
   };
 
@@ -23,7 +23,7 @@ const SettingsInterlocutorUnread: FC = () => {
     <Wrapper title='Непрочитанные:'>
       <div className='flex items-center gap-2'>
         <Checkbox onChange={handleChangeIsUnread} checked={isUnread} />
-        <InputNumber onChange={handleChangeUnread} value={unread} min={1} max={99} />
+        <InputNumber onChange={handleChangeUnread} value={unread} min={1} max={9999} />
       </div>
     </Wrapper>
   );
