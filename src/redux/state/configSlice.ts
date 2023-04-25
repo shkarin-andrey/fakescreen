@@ -33,7 +33,7 @@ const initialState: ConfigState = {
   wifi: 3,
   ethernet: 'wifi',
   username: 'Паша Техник',
-  time: '9:41',
+  time: '09:41',
   spum: false,
   bgImage: gallary[0],
   geo: 'fill',

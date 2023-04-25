@@ -9,14 +9,14 @@ const GeoHandler: FC = () => {
   const { geo } = useAppSelector((state) => state.config);
 
   if (geo === 'outline') {
-    return <GeoOutlineIcon />;
+    return <GeoOutlineIcon className='mt-[1px]' />;
   }
 
   if (geo === 'fill') {
-    return <GeoFillIcon />;
+    return <GeoFillIcon className='mt-[1px]' />;
   }
 
-  return <GeoBlueIcon />;
+  return <GeoBlueIcon className='mt-[1px]' />;
 };
 
 export default GeoHandler;

@@ -15,7 +15,7 @@ const SettingsPhoneTime: FC = () => {
   const dispatch = useAppDispatch();
   const { time } = useAppSelector((state) => state.config);
 
-  const handleChangeTime = (_: any, value: string) => {
+  const handleChangeTime = (_: dayjs.Dayjs | null, value: string) => {
     dispatch(setTime(value));
   };
 

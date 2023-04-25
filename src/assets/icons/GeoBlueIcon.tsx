@@ -1,8 +1,12 @@
 import { FC } from 'react';
 
-const GeoBlueIcon: FC = () => {
+interface IGeoBlueIcon {
+  className?: string;
+}
+
+const GeoBlueIcon: FC<IGeoBlueIcon> = ({ className = '' }) => {
   return (
-    <svg width='12' height='12' viewBox='0 0 12 12' fill='none'>
+    <svg className={className} width='12' height='12' viewBox='0 0 12 12' fill='none'>
       <g clipPath='url(#clip0_177_7389)'>
         <path
           d='M5.99902 11.4182C8.97266 11.4182 11.4131 8.97266 11.4131 5.99902C11.4131 3.03052 8.96753 0.584961 5.99902 0.584961C3.02539 0.584961 0.584961 3.03052 0.584961 5.99902C0.584961 8.97266 3.03052 11.4182 5.99902 11.4182ZM3.33301 6.41943C2.82544 6.41943 2.66138 5.81445 3.1792 5.57861L7.70117 3.47656C8.19336 3.25098 8.6394 3.69702 8.41382 4.18408L6.32202 8.71631C6.09131 9.229 5.4812 9.07007 5.4812 8.55225V6.60913C5.4812 6.49634 5.4043 6.41943 5.29663 6.41943H3.33301Z'
