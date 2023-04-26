@@ -11,7 +11,7 @@ const PhoneUserInfo: FC = () => {
     useAppSelector((state) => state.config);
 
   const isStatusOnline =
-    status === options[0].label ? 'text-[#32A8E6]' : 'text-[#787878]';
+    status.props.id === options[0].label ? 'text-[#32A8E6]' : 'text-[#787878]';
 
   return (
     <div className='w-full bg-[#F6F6F6] h-[38px] pl-[6px] pr-[5px] grid grid-cols-9 items-center text-xs font-semibold text-[#171717]'>

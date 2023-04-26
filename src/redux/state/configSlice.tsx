@@ -1,5 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
+import { FormattedMessage } from 'react-intl';
 
 import { gallary } from '../../components/SettingsInterlocutor/SettingsInterlocutorIGallary/SettingsInterlocutorIGallary.config';
 import { listColorsBgAvatar, options } from '../../config';
@@ -18,7 +19,7 @@ interface ConfigState {
   mute: boolean;
   bgImage: string;
   geo: Geo;
-  status: string;
+  status: any;
   bgAvatarColor: string;
   avatarFile: string;
   network: Network;
@@ -38,7 +39,7 @@ const initialState: ConfigState = {
   mute: false,
   bgImage: gallary[0],
   geo: undefined,
-  status: options[0].label,
+  status: <FormattedMessage id={options[0].label} />,
   bgAvatarColor: listColorsBgAvatar[0],
   avatarFile: '',
   network: 'sim',

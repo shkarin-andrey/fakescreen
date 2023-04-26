@@ -1,12 +1,12 @@
 export const options = [
-  { value: 'online', label: 'в сети' },
-  { value: 'scarcely', label: 'был(а) только что' },
-  { value: 'recently', label: 'был(а) недавно' },
-  { value: 'long', label: 'был(а) давно' },
-  { value: 'minutesAgo', label: 'был(а) * минут назад' },
-  { value: 'hourseAgo', label: 'был(а) * часов назад' },
-  { value: 'today', label: 'был(а) сегодня в *' },
-  { value: 'yesterday', label: 'был(а) вчера в *' },
+  { value: 'online', label: 'interlocutor_status_online' },
+  { value: 'scarcely', label: 'interlocutor_status_scarcely' },
+  { value: 'recently', label: 'interlocutor_status_recently' },
+  { value: 'long', label: 'interlocutor_status_long' },
+  { value: 'minutesAgo', label: 'interlocutor_status_minutesAgo' },
+  { value: 'hourseAgo', label: 'interlocutor_status_hourseAgo' },
+  { value: 'today', label: 'interlocutor_status_today' },
+  { value: 'yesterday', label: 'interlocutor_status_yesterday' },
 ];
 
 export const listColorsBgAvatar = [
