@@ -12,7 +12,7 @@ export const messages = {
     interlocutor_status_hourseAgo: 'was {time}',
     interlocutor_status_today: 'was today in {time}',
     interlocutor_status_yesterday: 'was yesterday in {time}',
-    interlocutor_status_write: 'печатает',
+    interlocutor_status_write: 'typing',
 
     header_phone_back: 'Back',
 
