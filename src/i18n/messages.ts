@@ -12,6 +12,7 @@ export const messages = {
     interlocutor_status_hourseAgo: 'was {time}',
     interlocutor_status_today: 'was today in {time}',
     interlocutor_status_yesterday: 'was yesterday in {time}',
+    interlocutor_status_write: 'печатает',
 
     header_phone_back: 'Back',
 
@@ -29,6 +30,7 @@ export const messages = {
     interlocutor_status_hourseAgo: 'был(а) {time}',
     interlocutor_status_today: 'был(а) сегодня в {time}',
     interlocutor_status_yesterday: 'был(а) вчера в {time}',
+    interlocutor_status_write: 'печатает',
 
     header_phone_back: 'Назад',
 

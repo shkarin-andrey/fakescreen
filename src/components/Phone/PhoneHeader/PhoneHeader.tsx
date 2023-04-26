@@ -18,7 +18,7 @@ const PhoneHeader: FC = () => {
     <>
       <div className='w-full bg-[#F6F6F6] h-[34px] pl-[18px] pr-3 pt-[3px] flex justify-between items-center text-xs font-semibold text-[#171717] relative'>
         <div
-          className={`flex items-center gap-1 text-[14px] -mt-[1px] ${
+          className={`flex items-center gap-[3px] text-[14px] -mt-[1px] ${
             geo === undefined ? 'ml-[6px]' : ''
           }`}
         >

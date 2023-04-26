@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 import MuteIcon from '../../../assets/icons/MuteIcon';
 import ShapeIcon from '../../../assets/icons/ShapeIcon';
+import WriteIcon from '../../../assets/icons/WriteIcon';
 import { options } from '../../../config';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 
@@ -11,7 +12,9 @@ const PhoneUserInfo: FC = () => {
     useAppSelector((state) => state.config);
 
   const isStatusOnline =
-    status.props.id === options[0].label ? 'text-[#32A8E6]' : 'text-[#787878]';
+    status.props.id === options[0].label || status.props.id === options[8].label
+      ? 'text-[#32A8E6]'
+      : 'text-[#787878]';
 
   return (
     <div className='w-full bg-[#F6F6F6] h-[38px] pl-[6px] pr-[5px] grid grid-cols-9 items-center text-xs font-semibold text-[#171717]'>
@@ -37,7 +40,14 @@ const PhoneUserInfo: FC = () => {
           )}
         </div>
         <span className={`text-[11px] pt-[1px] font-normal ${isStatusOnline}`}>
-          {status}
+          {status.props.id === 'interlocutor_status_write' ? (
+            <div className='flex items-center gap-1'>
+              <WriteIcon />
+              {status}
+            </div>
+          ) : (
+            status
+          )}
         </span>
       </div>
       <div

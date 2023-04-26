@@ -7,6 +7,7 @@ export const options = [
   { value: 'hourseAgo', label: 'interlocutor_status_hourseAgo' },
   { value: 'today', label: 'interlocutor_status_today' },
   { value: 'yesterday', label: 'interlocutor_status_yesterday' },
+  { value: 'write', label: 'interlocutor_status_write' },
 ];
 
 export const listColorsBgAvatar = [
