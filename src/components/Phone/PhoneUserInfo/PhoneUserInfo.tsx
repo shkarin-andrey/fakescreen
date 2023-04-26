@@ -1,12 +1,13 @@
 import { FC } from 'react';
 import { FormattedMessage } from 'react-intl';
 
+import MuteIcon from '../../../assets/icons/MuteIcon';
 import ShapeIcon from '../../../assets/icons/ShapeIcon';
 import { options } from '../../../config';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 
 const PhoneUserInfo: FC = () => {
-  const { username, status, bgAvatarColor, isUnread, unread, avatarFile } =
+  const { username, status, bgAvatarColor, isUnread, unread, avatarFile, mute } =
     useAppSelector((state) => state.config);
 
   const isStatusOnline =
@@ -26,9 +27,18 @@ const PhoneUserInfo: FC = () => {
           </span>
         )}
       </div>
-      <div className='text-sm col-span-5 flex flex-col items-center leading-none'>
-        <span className='font-semibold'>{username}</span>
-        <span className={`text-xs font-normal ${isStatusOnline}`}>{status}</span>
+      <div className='text-sm col-span-5 flex flex-col items-center leading-none pb-[2px]'>
+        <div className='flex items-end gap-[4px]'>
+          <span className='font-semibold'>{username}</span>
+          {mute && (
+            <div>
+              <MuteIcon />
+            </div>
+          )}
+        </div>
+        <span className={`text-[11px] pt-[1px] font-normal ${isStatusOnline}`}>
+          {status}
+        </span>
       </div>
       <div
         className='avatar col-span-2 ml-auto w-8 h-8 rounded-full overflow-hidden flex justify-center items-center text-white uppercase'

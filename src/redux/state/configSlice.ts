@@ -15,6 +15,7 @@ interface ConfigState {
   username: string;
   time: string;
   spum: boolean;
+  mute: boolean;
   bgImage: string;
   geo: Geo;
   status: string;
@@ -34,6 +35,7 @@ const initialState: ConfigState = {
   username: 'Паша Техник',
   time: '09:41',
   spum: false,
+  mute: false,
   bgImage: gallary[0],
   geo: undefined,
   status: options[0].label,
@@ -67,6 +69,9 @@ export const configSlice = createSlice({
     },
     setSpum: (state, action: PayloadAction<ConfigState['spum']>) => {
       state.spum = action.payload;
+    },
+    setMute: (state, action: PayloadAction<ConfigState['mute']>) => {
+      state.mute = action.payload;
     },
     setBgImage: (state, action: PayloadAction<ConfigState['bgImage']>) => {
       state.bgImage = action.payload;
@@ -108,6 +113,7 @@ export const {
   setUsername,
   setTime,
   setSpum,
+  setMute,
   setBgImage,
   setGeo,
   setStatus,

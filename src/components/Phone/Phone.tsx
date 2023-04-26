@@ -1,4 +1,5 @@
-import { Button, notification } from 'antd';
+import { ClearOutlined, SaveOutlined, SettingOutlined } from '@ant-design/icons';
+import { FloatButton, notification } from 'antd';
 import html2canvas from 'html2canvas';
 import { FC, useRef } from 'react';
 
@@ -55,10 +56,23 @@ const Phone: FC = () => {
           <PhoneFooter />
         </div>
       </div>
-      <Button type='primary' onClick={handleSaveScreenshot}>
-        Сделать скриншот
-      </Button>
-      <Button onClick={handleResetChat}>Очистить переписку</Button>
+      <FloatButton.Group
+        trigger='hover'
+        type='primary'
+        style={{ right: 20 }}
+        icon={<SettingOutlined />}
+      >
+        <FloatButton
+          onClick={handleResetChat}
+          icon={<ClearOutlined />}
+          tooltip={'Очистить переписку'}
+        />
+        <FloatButton
+          onClick={handleSaveScreenshot}
+          icon={<SaveOutlined />}
+          tooltip={'Сохранить скриншот'}
+        />
+      </FloatButton.Group>
     </div>
   );
 };

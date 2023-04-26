@@ -1,4 +1,5 @@
 import { Button, Select, TimePicker } from 'antd';
+import dayjs from 'dayjs';
 import { FC, useState } from 'react';
 
 import { options } from '../../../config';
@@ -29,7 +30,7 @@ const SettingsInterlocutorStatus: FC = () => {
     }
   };
 
-  const handleChangeTime = (_: any, value: string) => {
+  const handleChangeTime = (_: dayjs.Dayjs | null, value: string) => {
     setTime(value);
   };
 

@@ -9,6 +9,9 @@
   .scrollbar-small::-webkit-scrollbar-thumb {
     border-radius: 14px;
   }
+  .scrollbar-small:hover::-webkit-scrollbar-thumb {
+    --scrollbar-thumb: #b1b1b1;
+  }
 }
 
 @font-face {

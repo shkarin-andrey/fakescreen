@@ -16,9 +16,9 @@ const PhoneHeader: FC = () => {
 
   return (
     <>
-      <div className='w-full bg-[#F6F6F6] h-[38px] pl-[18px] pr-3 pt-[3px] flex justify-between items-center text-xs font-semibold text-[#171717] relative'>
+      <div className='w-full bg-[#F6F6F6] h-[34px] pl-[18px] pr-3 pt-[3px] flex justify-between items-center text-xs font-semibold text-[#171717] relative'>
         <div
-          className={`flex items-center gap-1 text-[14px] ${
+          className={`flex items-center gap-1 text-[14px] -mt-[1px] ${
             geo === undefined ? 'ml-[6px]' : ''
           }`}
         >
@@ -31,7 +31,7 @@ const PhoneHeader: FC = () => {
           </div>
         )}
 
-        <div className='mt-[1px] flex items-center gap-[3px]'>
+        <div className='mt-[3px] flex items-center gap-[2px]'>
           <NetworkHeader />
           <EthernetHeader />
           <BattaryIcon size={volumeBattary} />

@@ -45,7 +45,7 @@ const PhoneChat: FC = () => {
         backgroundSize: 'cover',
       }}
     >
-      <div className='w-full h-full px-[9px] py-[7px] overflow-y-scroll flex flex-col-reverse scrollbar scrollbar-thumb-[#B1B1B1] scrollbar-track-transparent scrollbar-small'>
+      <div className='chat w-full h-full px-[9px] py-[7px] overflow-y-scroll flex flex-col-reverse scrollbar scrollbar-thumb-transparent scrollbar-track-transparent scrollbar-small'>
         {data.map((item, index) => (
           <Fragment key={item.id}>
             {'chatTime' in item && (
