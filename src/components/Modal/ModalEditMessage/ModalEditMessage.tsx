@@ -1,4 +1,3 @@
-import { DownOutlined } from '@ant-design/icons';
 import { Checkbox, Input, Modal, Radio, RadioChangeEvent, TimePicker } from 'antd';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import dayjs from 'dayjs';

@@ -10,7 +10,11 @@ const EthernetHeader: FC = () => {
     return <WifiIcon width='16' height='13' type={wifi} />;
   }
 
-  return <span className='uppercase font-medium'>{ethernet}</span>;
+  return (
+    <span className='uppercase font-semibold text-[9px] leading-none mb-[3px]'>
+      {ethernet}
+    </span>
+  );
 };
 
 export default EthernetHeader;
