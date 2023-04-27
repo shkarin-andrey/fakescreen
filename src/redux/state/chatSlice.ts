@@ -1,7 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
-type ChatTime = {
+export type ChatTime = {
   id: string;
   chatTime: string;
 };

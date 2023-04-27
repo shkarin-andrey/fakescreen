@@ -4,6 +4,7 @@ import { useAppSelector } from '../../../hooks/useAppSelector';
 import type { Message } from '../../../redux/state/chatSlice';
 import MessageChat from '../../MessageChat';
 import MessageSticker from '../../MessageSticker';
+import TimeChat from '../../TimeChat/TimeChat';
 
 const PhoneChat: FC = () => {
   const { bgImage } = useAppSelector((state) => state.config);
@@ -48,11 +49,7 @@ const PhoneChat: FC = () => {
       <div className='chat w-full h-full px-[9px] py-[7px] overflow-y-scroll flex flex-col-reverse scrollbar scrollbar-thumb-transparent scrollbar-track-transparent scrollbar-small'>
         {data.map((item, index) => (
           <Fragment key={item.id}>
-            {'chatTime' in item && (
-              <div className='bg-[#72839166] rounded-[27px] px-[6px] py-[2px] text-white text-xs w-fit mx-auto mt-[13px]'>
-                {item.chatTime}
-              </div>
-            )}
+            {'chatTime' in item && <TimeChat id={item.id} chatTime={item.chatTime} />}
             {'type' in item && (
               <>
                 {item.message && (
@@ -68,6 +65,7 @@ const PhoneChat: FC = () => {
                 )}
                 {item.sticker && (
                   <MessageSticker
+                    id={item.id}
                     isViewed={item.isViewed}
                     type={item.type}
                     sticker={item.sticker}

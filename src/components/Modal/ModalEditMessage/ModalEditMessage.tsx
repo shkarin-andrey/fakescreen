@@ -1,4 +1,4 @@
-import { Checkbox, Modal, Radio, RadioChangeEvent, TimePicker } from 'antd';
+import { Checkbox, Input, Modal, Radio, RadioChangeEvent, TimePicker } from 'antd';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import dayjs from 'dayjs';
 import { FC, useState } from 'react';
@@ -17,10 +17,12 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
   type,
   time,
   isViewed,
+  chatTime,
 }) => {
   const [checkedViewed, setCheckedViewed] = useState(isViewed);
   const [selectType, setSelectType] = useState(type);
   const [selectTime, setSelectTime] = useState(time);
+  const [changeChatTime, setChangeChatTime] = useState(chatTime);
 
   const dispatch = useAppDispatch();
   const { data } = useAppSelector((state) => state.chat);
@@ -42,6 +44,7 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
         type: selectType,
         isViewed: checkedViewed,
         time: selectTime,
+        chatTime: changeChatTime,
       },
     };
 
@@ -61,6 +64,10 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
     setSelectTime(value);
   };
 
+  const handleChangeChatTime = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setChangeChatTime(event.target.value);
+  };
+
   return (
     <Modal
       title='Редактирование сообщения'
@@ -75,19 +82,28 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
       }
     >
       <div className='flex flex-col gap-3'>
-        <Radio.Group
-          value={selectType}
-          options={optionsTypeMessage}
-          onChange={handleSelectType}
-        />
-        <TimePicker
-          value={dayjs(selectTime, 'HH:mm')}
-          onChange={handleChangeTime}
-          format={'HH:mm'}
-        />
-        <Checkbox checked={checkedViewed} onChange={handleChangeViewed}>
-          Прочитано
-        </Checkbox>
+        {chatTime !== undefined && (
+          <Input value={changeChatTime} onChange={handleChangeChatTime} />
+        )}
+        {type !== undefined && (
+          <Radio.Group
+            value={selectType}
+            options={optionsTypeMessage}
+            onChange={handleSelectType}
+          />
+        )}
+        {time !== undefined && (
+          <TimePicker
+            value={dayjs(selectTime, 'HH:mm')}
+            onChange={handleChangeTime}
+            format={'HH:mm'}
+          />
+        )}
+        {isViewed !== undefined && (
+          <Checkbox checked={checkedViewed} onChange={handleChangeViewed}>
+            Прочитано
+          </Checkbox>
+        )}
       </div>
     </Modal>
   );
