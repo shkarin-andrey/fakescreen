@@ -18,11 +18,11 @@ const PhoneUserInfo: FC = () => {
 
   return (
     <div className='w-full bg-[#F6F6F6] h-[38px] pl-[6px] pr-[5px] grid grid-cols-9 items-center text-xs font-semibold text-[#171717]'>
-      <div className='text-[#037EE5] col-span-2 flex items-center gap-[6px] text-sm'>
+      <div className='text-[#037EE5] col-span-2 flex items-center gap-[6px] text-sm mt-[2px]'>
         <ShapeIcon />
         {isUnread ? (
-          <div className='flex justify-center items-center text-white px-[6.65px] py-[5px] leading-none bg-[#007AFF] rounded-full text-[11px]'>
-            {unread}
+          <div className='flex justify-center items-center text-white px-[5px] h-fit py-[1px] leading-none bg-[#007AFF] rounded-full text-[10px] font-normal'>
+            <div className='mb-[2px]'>{unread}</div>
           </div>
         ) : (
           <span className='font-normal'>

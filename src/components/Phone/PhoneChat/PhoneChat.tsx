@@ -1,5 +1,6 @@
-import { FC, Fragment, useCallback } from 'react';
+import { FC, Fragment, useCallback, useEffect, useRef, useState } from 'react';
 
+import GoDownButtonIcon from '../../../assets/icons/GoDownButtonIcon';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import type { Message } from '../../../redux/state/chatSlice';
 import MessageChat from '../../MessageChat';
@@ -9,6 +10,8 @@ import TimeChat from '../../TimeChat';
 const PhoneChat: FC = () => {
   const { bgImage } = useAppSelector((state) => state.config);
   const { data } = useAppSelector((state) => state.chat);
+  const ref = useRef<HTMLDivElement>(null);
+  const [scroll, setScroll] = useState(false);
 
   const prevType = useCallback(
     (index: number): Message['type'] | null => {
@@ -36,9 +39,17 @@ const PhoneChat: FC = () => {
     [data],
   );
 
+  useEffect(() => {
+    if (ref.current && ref.current.clientHeight < ref.current.scrollHeight) {
+      setScroll(true);
+    } else {
+      setScroll(false);
+    }
+  }, [ref.current?.scrollHeight]);
+
   return (
     <div
-      className='flex-1 overflow-hidden z-10'
+      className='relative flex-1 overflow-hidden z-10'
       style={{
         backgroundImage: `url('${bgImage}')`,
         backgroundPosition: 'center',
@@ -46,7 +57,10 @@ const PhoneChat: FC = () => {
         backgroundSize: 'cover',
       }}
     >
-      <div className='chat w-full h-full px-[9px] py-[7px] overflow-y-scroll flex flex-col-reverse scrollbar scrollbar-thumb-transparent scrollbar-track-transparent scrollbar-small'>
+      <div
+        ref={ref}
+        className='chat w-full h-full px-[9px] py-[7px] overflow-y-scroll flex flex-col-reverse scrollbar scrollbar-thumb-transparent scrollbar-track-transparent scrollbar-small'
+      >
         {data.map((item, index) => (
           <Fragment key={item.id}>
             {'chatTime' in item && <TimeChat id={item.id} chatTime={item.chatTime} />}
@@ -77,6 +91,11 @@ const PhoneChat: FC = () => {
           </Fragment>
         ))}
       </div>
+      {scroll && (
+        <div className='absolute bottom-[5px] right-[5px]'>
+          <GoDownButtonIcon />
+        </div>
+      )}
     </div>
   );
 };
