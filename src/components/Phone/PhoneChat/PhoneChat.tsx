@@ -1,4 +1,4 @@
-import { FC, Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import { FC, Fragment, UIEvent, useCallback, useEffect, useRef, useState } from 'react';
 
 import GoDownButtonIcon from '../../../assets/icons/GoDownButtonIcon';
 import { useAppSelector } from '../../../hooks/useAppSelector';
@@ -39,13 +39,13 @@ const PhoneChat: FC = () => {
     [data],
   );
 
-  useEffect(() => {
-    if (ref.current && ref.current.clientHeight < ref.current.scrollHeight) {
+  const handleScroll = (e: any) => {
+    if (e.target.scrollTop < -30) {
       setScroll(true);
     } else {
       setScroll(false);
     }
-  }, [ref.current?.scrollHeight]);
+  };
 
   return (
     <div
@@ -59,6 +59,7 @@ const PhoneChat: FC = () => {
     >
       <div
         ref={ref}
+        onScroll={handleScroll}
         className='chat w-full h-full px-[9px] py-[7px] overflow-y-scroll flex flex-col-reverse scrollbar scrollbar-thumb-transparent scrollbar-track-transparent scrollbar-small'
       >
         {data.map((item, index) => (
@@ -92,7 +93,7 @@ const PhoneChat: FC = () => {
         ))}
       </div>
       {scroll && (
-        <div className='absolute bottom-[5px] right-[5px]'>
+        <div className='absolute -bottom-[2px] right-[2px]'>
           <GoDownButtonIcon />
         </div>
       )}
