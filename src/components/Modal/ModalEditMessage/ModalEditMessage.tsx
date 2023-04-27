@@ -1,24 +1,15 @@
 import { DownOutlined } from '@ant-design/icons';
-import {
-  Button,
-  Checkbox,
-  Dropdown,
-  Input,
-  Modal,
-  Radio,
-  RadioChangeEvent,
-  TimePicker,
-} from 'antd';
+import { Checkbox, Input, Modal, Radio, RadioChangeEvent, TimePicker } from 'antd';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import dayjs from 'dayjs';
-import EmojiPicker, { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
+import { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
 import { FC, useEffect, useRef, useState } from 'react';
 
-import EmojiIcon from '../../../assets/icons/EmojiIcon';
 import { optionsTypeMessage } from '../../../config';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { deleteMessage, updateMessage } from '../../../redux/state/chatSlice';
+import DropdownEmoji from '../../DropdownEmoji';
 import { IModalEditMessage } from './ModalEditMessage.interface';
 import ModalEditMessageFooter from './ModalEditMessageFooter';
 
@@ -156,23 +147,7 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
               contentEditable
               dangerouslySetInnerHTML={{ __html: ref.current?.innerHTML || '' }}
             />
-            <Dropdown
-              dropdownRender={() => (
-                <EmojiPicker
-                  emojiStyle={EmojiStyle.APPLE}
-                  onEmojiClick={onEmojiClick}
-                  lazyLoadEmojis
-                  searchPlaceHolder='Поиск'
-                />
-              )}
-              trigger={['click']}
-              className='w-fit'
-            >
-              <Button className='flex items-center gap-1'>
-                <EmojiIcon />
-                <DownOutlined />
-              </Button>
-            </Dropdown>
+            <DropdownEmoji onEmojiClick={onEmojiClick} />
           </div>
         )}
       </div>

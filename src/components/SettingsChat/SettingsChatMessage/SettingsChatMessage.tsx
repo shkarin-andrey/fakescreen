@@ -1,13 +1,12 @@
-import { DownOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Dropdown, Form, Radio, TimePicker } from 'antd';
-import EmojiPicker, { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
-import { FC, useRef, useState } from 'react';
+import { Button, Checkbox, Form, Radio, TimePicker } from 'antd';
+import { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
+import { FC, useCallback, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import EmojiIcon from '../../../assets/icons/EmojiIcon';
 import { optionsTypeMessage } from '../../../config';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { setMessage } from '../../../redux/state/chatSlice';
+import DropdownEmoji from '../../DropdownEmoji';
 import Wrapper from '../../Wrapper';
 import { initialValue } from './SettingsChatMessage.config';
 import SettingsChatMessageSticker from './SettingsChatMessageSticker';
@@ -44,14 +43,14 @@ const SettingsChatMessage: FC = () => {
     setSelect(sticker);
   };
 
-  const onEmojiClick = (event: EmojiClickData) => {
+  const onEmojiClick = useCallback((event: EmojiClickData) => {
     const emoji = event.getImageUrl(EmojiStyle.APPLE);
     const elEmoji = `<img class='w-[20px] h-[20px]' src='${emoji}' alt='${event.emoji}' />`;
 
     if (ref.current) {
       ref.current.innerHTML += elEmoji;
     }
-  };
+  }, []);
 
   return (
     <Form
@@ -71,23 +70,7 @@ const SettingsChatMessage: FC = () => {
           contentEditable
           dangerouslySetInnerHTML={{ __html: ref.current?.innerHTML || '' }}
         />
-        <Dropdown
-          dropdownRender={() => (
-            <EmojiPicker
-              emojiStyle={EmojiStyle.APPLE}
-              onEmojiClick={onEmojiClick}
-              lazyLoadEmojis
-              searchPlaceHolder='Поиск'
-            />
-          )}
-          trigger={['click']}
-          className='w-fit'
-        >
-          <Button className='flex items-center gap-1'>
-            <EmojiIcon />
-            <DownOutlined />
-          </Button>
-        </Dropdown>
+        <DropdownEmoji onEmojiClick={onEmojiClick} />
         <Form.Item
           name='time'
           rules={[{ type: 'object' as const, required: true, message: 'Выберите время' }]}
