@@ -10,9 +10,8 @@ import PhoneSpum from '../PhoneSpum';
 import PhoneUserInfo from '../PhoneUserInfo';
 
 const PhoneHeader: FC = () => {
-  const { volumeBattary, time, spum, watermark, geo } = useAppSelector(
-    (state) => state.config,
-  );
+  const { volumeBattary, time, spum, watermark, geo, isCharge, isEconom } =
+    useAppSelector((state) => state.config);
 
   return (
     <>
@@ -34,7 +33,7 @@ const PhoneHeader: FC = () => {
         <div className='mt-[3px] flex items-center gap-[2px]'>
           <NetworkHeader />
           <EthernetHeader />
-          <BattaryIcon size={volumeBattary} />
+          <BattaryIcon isCharge={isCharge} isEconom={isEconom} size={volumeBattary} />
         </div>
       </div>
       <PhoneUserInfo />

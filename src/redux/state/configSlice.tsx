@@ -12,6 +12,8 @@ type Network = 'sim' | 'avia';
 interface ConfigState {
   volumeBattary: number;
   wifi: number;
+  isEconom: boolean;
+  isCharge: boolean;
   ethernet: Ethernet;
   username: string;
   time: string;
@@ -47,6 +49,8 @@ const initialState: ConfigState = {
   isUnread: false,
   unread: 1,
   watermark: true,
+  isEconom: false,
+  isCharge: false,
 };
 
 export const configSlice = createSlice({
@@ -104,6 +108,12 @@ export const configSlice = createSlice({
     setWatermark: (state, action: PayloadAction<ConfigState['watermark']>) => {
       state.watermark = action.payload;
     },
+    setIsEconom: (state, action: PayloadAction<ConfigState['isEconom']>) => {
+      state.isEconom = action.payload;
+    },
+    setIsCharge: (state, action: PayloadAction<ConfigState['isCharge']>) => {
+      state.isCharge = action.payload;
+    },
   },
 });
 
@@ -125,6 +135,8 @@ export const {
   setUnread,
   setIsUnread,
   setWatermark,
+  setIsCharge,
+  setIsEconom,
 } = configSlice.actions;
 
 export default configSlice.reducer;

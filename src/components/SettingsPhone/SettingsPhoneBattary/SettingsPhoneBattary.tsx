@@ -1,22 +1,31 @@
-import { InputNumber, Radio, RadioChangeEvent, Slider } from 'antd';
-import { FC, useCallback, useState } from 'react';
+import { Checkbox, InputNumber, Slider } from 'antd';
+import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { FC, useCallback } from 'react';
 
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
-import { setVolumeBattary } from '../../../redux/state/configSlice';
+import {
+  setIsCharge,
+  setIsEconom,
+  setVolumeBattary,
+} from '../../../redux/state/configSlice';
 
 const SettingsPhoneBattary: FC = () => {
-  const [typeBattary, setTypeBattary] = useState('charge');
-
-  const { volumeBattary } = useAppSelector((state) => state.config);
+  const { volumeBattary, isCharge, isEconom } = useAppSelector((state) => state.config);
   const dispatch = useAppDispatch();
 
   const handleChangeVolumeBattary = useCallback((newValue: any) => {
     dispatch(setVolumeBattary(newValue));
   }, []);
 
-  const handleChangeTypeBattary = (e: RadioChangeEvent) => {
-    setTypeBattary(e.target.value);
+  const handleChangeTypeBattary = (e: CheckboxChangeEvent) => {
+    if (e.target.value === 'charge') {
+      dispatch(setIsCharge(e.target.checked));
+    }
+
+    if (e.target.value === 'econom') {
+      dispatch(setIsEconom(e.target.checked));
+    }
   };
 
   return (
@@ -37,10 +46,14 @@ const SettingsPhoneBattary: FC = () => {
           onChange={handleChangeVolumeBattary}
         />
       </div>
-      <Radio.Group onChange={handleChangeTypeBattary} value={typeBattary}>
-        <Radio value={'charge'}>Зарядка</Radio>
-        <Radio value={'econom'}>Режим сбережения</Radio>
-      </Radio.Group>
+      <div className='flex items-center gap-3'>
+        <Checkbox checked={isCharge} value={'charge'} onChange={handleChangeTypeBattary}>
+          Зарядка
+        </Checkbox>
+        <Checkbox checked={isEconom} value={'econom'} onChange={handleChangeTypeBattary}>
+          Режим сбережения
+        </Checkbox>
+      </div>
     </div>
   );
 };
