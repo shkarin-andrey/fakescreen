@@ -86,6 +86,7 @@ const MessageChat: FC<IMessageChat> = ({
         isViewed={isViewed}
         isOpneModal={isOpneModal}
         setIsOpneModal={setIsOpneModal}
+        message={message}
       />
     </>
   );

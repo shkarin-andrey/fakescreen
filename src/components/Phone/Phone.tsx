@@ -57,11 +57,7 @@ const Phone: FC = () => {
           alt='FakeScreen Pro phone'
           className='absolute top-0 left-0 w-full h-full z-10'
         />
-        <div
-          id='phone'
-          ref={ref}
-          className='w-full h-full flex flex-col font-[SF_Pro_Display]'
-        >
+        <div id='phone' ref={ref} className='w-full h-full flex flex-col'>
           <PhoneHeader />
           <PhoneChat />
           <PhoneFooter />

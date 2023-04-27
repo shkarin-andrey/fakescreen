@@ -7,5 +7,6 @@ export interface IModalEditMessage {
   type?: Message['type'];
   isViewed?: Message['isViewed'];
   time?: Message['time'];
-  chatTime?: ChatTime['chatTime'];
+  chatTime?: ChatTime['chatTime'] | null;
+  message?: Message['message'];
 }

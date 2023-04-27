@@ -4,7 +4,7 @@ import { useAppSelector } from '../../../hooks/useAppSelector';
 import type { Message } from '../../../redux/state/chatSlice';
 import MessageChat from '../../MessageChat';
 import MessageSticker from '../../MessageSticker';
-import TimeChat from '../../TimeChat/TimeChat';
+import TimeChat from '../../TimeChat';
 
 const PhoneChat: FC = () => {
   const { bgImage } = useAppSelector((state) => state.config);
