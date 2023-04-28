@@ -1,4 +1,4 @@
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { DeleteOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { Upload, UploadProps } from 'antd';
 import { RcFile } from 'antd/es/upload';
 import { FC, useState } from 'react';
@@ -38,6 +38,10 @@ const SettingsInterlocutorDownloadAvatar: FC = () => {
     }
   };
 
+  const handleDeleteAvatar = () => {
+    dispatch(setAvatarFile(null));
+  };
+
   const uploadButton = (
     <div>
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
@@ -55,7 +59,16 @@ const SettingsInterlocutorDownloadAvatar: FC = () => {
         beforeUpload={beforeUploadPNGAndJPEG}
       >
         {avatarFile ? (
-          <img src={avatarFile} alt='avatar' className='w-full' />
+          <div className='group w-full h-full overflow-hidden rounded-full relative'>
+            <img src={avatarFile} alt='avatar' className='w-full h-full object-cover' />
+            <div
+              aria-hidden
+              onClick={handleDeleteAvatar}
+              className='absolute w-full h-full top-0 left-0 flex justify-center items-center bg-gray-700/80 text-white opacity-0 group-hover:opacity-100 transition-all'
+            >
+              <DeleteOutlined className='text-red-600 text-3xl' />
+            </div>
+          </div>
         ) : (
           uploadButton
         )}

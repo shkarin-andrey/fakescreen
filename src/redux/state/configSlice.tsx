@@ -23,7 +23,7 @@ interface ConfigState {
   geo: Geo;
   status: any;
   bgAvatarColor: string;
-  avatarFile: string;
+  avatarFile: string | null;
   network: Network;
   stateSim: number;
   unread: number | null;
@@ -43,7 +43,7 @@ const initialState: ConfigState = {
   geo: undefined,
   status: <FormattedMessage id={options[0].label} />,
   bgAvatarColor: listColorsBgAvatar[0],
-  avatarFile: '',
+  avatarFile: null,
   network: 'sim',
   stateSim: 4,
   isUnread: false,
