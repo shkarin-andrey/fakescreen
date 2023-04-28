@@ -1,13 +1,19 @@
-import { DeleteOutlined } from '@ant-design/icons';
 import { Button, Popover } from 'antd';
 import { FC, useState } from 'react';
 
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { deleteMessage } from '../../redux/state/chatSlice';
+import { deleteMessage, Message } from '../../redux/state/chatSlice';
 import MessageTime from '../MessageTime/MessageTime';
-import { IMessageSticker } from './MessageSticker.interface';
 
-const MessageSticker: FC<IMessageSticker> = ({ id, isViewed, type, sticker, time }) => {
+interface IMessageImage {
+  id: Message['id'];
+  type: Message['type'];
+  image: Message['image'];
+  isViewed: Message['isViewed'];
+  time: Message['time'];
+}
+
+const MessageImage: FC<IMessageImage> = ({ id, type, image, isViewed, time }) => {
   const [hovered, setHovered] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -31,8 +37,12 @@ const MessageSticker: FC<IMessageSticker> = ({ id, isViewed, type, sticker, time
       open={hovered}
       onOpenChange={handleHoverChange}
     >
-      <div className={`w-40 h-40 relative mt-[7px] ${type === 'owner' ? 'ml-auto' : ''}`}>
-        <img className='w-full h-full object-cover' src={sticker} alt='' />
+      <div className={`w-fit relative mt-[7px] ${type === 'owner' ? 'ml-auto' : ''}`}>
+        <img
+          className='max-w-[257px] max-h-[316px] min-w-[100px] min-h-[100px] rounded-xl'
+          src={image}
+          alt='imageChat'
+        />
         <div className='absolute bottom-[6px] right-1'>
           <MessageTime isViewed={isViewed} type={type} time={time} isBackground />
         </div>
@@ -41,4 +51,4 @@ const MessageSticker: FC<IMessageSticker> = ({ id, isViewed, type, sticker, time
   );
 };
 
-export default MessageSticker;
+export default MessageImage;

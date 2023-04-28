@@ -1,6 +1,6 @@
-import { Button, Checkbox, Form, Radio, TimePicker } from 'antd';
+import { Button, Checkbox, Form, Radio, TimePicker, Upload } from 'antd';
 import { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
-import { FC, useCallback, useRef, useState } from 'react';
+import { FC, SetStateAction, useCallback, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { optionsTypeMessage } from '../../../config';
@@ -8,11 +8,13 @@ import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { setMessage } from '../../../redux/state/chatSlice';
 import DropdownEmoji from '../../DropdownEmoji';
 import Wrapper from '../../Wrapper';
+import SettingsChatImage from './SettingsChatImage';
 import { initialValue } from './SettingsChatMessage.config';
 import SettingsChatMessageSticker from './SettingsChatMessageSticker';
 
 const SettingsChatMessage: FC = () => {
   const [select, setSelect] = useState<string | null>(null);
+  const [image, setImage] = useState<string | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 
   const dispatch = useAppDispatch();
@@ -35,8 +37,17 @@ const SettingsChatMessage: FC = () => {
       data.sticker = select;
     }
 
+    if (image) {
+      data.image = image;
+    }
+
     dispatch(setMessage(data));
     setSelect(null);
+    setImage(null);
+
+    if (ref.current) {
+      ref.current.innerHTML = '';
+    }
   };
 
   const onSelect = (sticker: string) => {
@@ -81,6 +92,8 @@ const SettingsChatMessage: FC = () => {
       <Form.Item name='isViewed' valuePropName='checked'>
         <Checkbox>Прочитано</Checkbox>
       </Form.Item>
+
+      <SettingsChatImage image={image} setImage={setImage} />
       <Form.Item name='sticker'>
         <SettingsChatMessageSticker select={select} onSelect={onSelect} />
       </Form.Item>

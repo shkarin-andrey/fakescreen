@@ -13,6 +13,7 @@ export type Message = {
   isViewed: boolean;
   time: string;
   sticker?: string;
+  image?: string;
 };
 
 interface ChatState {

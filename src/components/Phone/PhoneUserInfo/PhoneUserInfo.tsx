@@ -12,7 +12,7 @@ const PhoneUserInfo: FC = () => {
     useAppSelector((state) => state.config);
 
   const isStatusOnline =
-    status.props.id === options[0].label || status.props.id === options[8].label
+    status.props.id === options[1].label || status.props.id === options[0].label
       ? 'text-[#32A8E6]'
       : 'text-[#787878]';
 
@@ -39,16 +39,18 @@ const PhoneUserInfo: FC = () => {
             </div>
           )}
         </div>
-        <span className={`text-[11px] pt-[1px] font-normal ${isStatusOnline}`}>
-          {status.props.id === 'interlocutor_status_write' ? (
+        <div className={`text-[11px] pt-[1px] font-normal ${isStatusOnline}`}>
+          {status.props.id === options[0].label ? (
             <div className='flex items-center gap-1'>
-              <WriteIcon />
-              {status}
+              <div>
+                <WriteIcon />
+              </div>
+              <span>{status}</span>
             </div>
           ) : (
             status
           )}
-        </span>
+        </div>
       </div>
       <div
         className='avatar col-span-2 ml-auto w-8 h-8 rounded-full overflow-hidden flex justify-center items-center text-white uppercase'

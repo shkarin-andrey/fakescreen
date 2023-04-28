@@ -41,7 +41,7 @@ const initialState: ConfigState = {
   mute: false,
   bgImage: gallary[0],
   geo: undefined,
-  status: <FormattedMessage id={options[0].label} />,
+  status: <FormattedMessage id={options[1].label} />,
   bgAvatarColor: listColorsBgAvatar[0],
   avatarFile: null,
   network: 'sim',

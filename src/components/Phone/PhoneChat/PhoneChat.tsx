@@ -1,9 +1,10 @@
-import { FC, Fragment, UIEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { FC, Fragment, useCallback, useRef, useState } from 'react';
 
 import GoDownButtonIcon from '../../../assets/icons/GoDownButtonIcon';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import type { Message } from '../../../redux/state/chatSlice';
 import MessageChat from '../../MessageChat';
+import MessageImage from '../../MessageImage';
 import MessageSticker from '../../MessageSticker';
 import TimeChat from '../../TimeChat';
 
@@ -84,6 +85,15 @@ const PhoneChat: FC = () => {
                     isViewed={item.isViewed}
                     type={item.type}
                     sticker={item.sticker}
+                    time={item.time}
+                  />
+                )}
+                {item.image && (
+                  <MessageImage
+                    id={item.id}
+                    isViewed={item.isViewed}
+                    type={item.type}
+                    image={item.image}
                     time={item.time}
                   />
                 )}

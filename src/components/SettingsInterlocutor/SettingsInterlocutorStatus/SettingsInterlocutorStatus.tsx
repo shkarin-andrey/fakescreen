@@ -13,7 +13,7 @@ const SettingsInterlocutorStatus: FC = () => {
 
   const [time, setTime] = useState<string | number>('');
   const [format, setFormat] = useState('h:mm');
-  const [selectStatus, setSelectStatus] = useState(options[0]);
+  const [selectStatus, setSelectStatus] = useState(options[1]);
 
   const handleChangeStatus = (value: string, item: any) => {
     setSelectStatus(item);

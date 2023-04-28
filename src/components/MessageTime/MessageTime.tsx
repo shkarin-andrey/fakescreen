@@ -13,13 +13,13 @@ const MessageTime: FC<IMessageTime> = ({
 }) => {
   return (
     <div
-      className={`inline-block float-right text-right text-[10px] py-[1px] pl-[5px] pr-[3px] leading-none rounded-3xl ${
+      className={`flex items-end float-right text-right text-[10px] pb-[4px] pt-[1px] pl-[5px] pr-[3px] leading-none rounded-3xl ${
         isBackground ? 'bg-[#72839166]' : ''
       } ${
         type === 'owner' || isBackground ? 'text-white' : 'text-[#8C8C8C]'
       } ${className}`}
     >
-      <span>{time}</span>
+      <div className='leading-none'>{time}</div>
       {isViewed && type === 'owner' && <ViewedMessageIcon />}
       {!isViewed && type === 'owner' && <NoViewedMessageIcon />}
     </div>
