@@ -98,7 +98,7 @@ const SettingsChatMessage: FC = () => {
         <SettingsChatMessageSticker select={select} onSelect={onSelect} />
       </Form.Item>
       <Form.Item>
-        <Button type='primary' htmlType='submit'>
+        <Button type='primary' htmlType='submit' size='large'>
           Отправить
         </Button>
       </Form.Item>

@@ -11,7 +11,7 @@ import sticker10 from '../../../../assets/webp/10.webp';
 import sticker11 from '../../../../assets/webp/11.webp';
 import sticker12 from '../../../../assets/webp/12.webp';
 import sticker13 from '../../../../assets/webp/13.webp';
-import sticker14 from '../../../../assets/webp/14.webp';
+// import sticker14 from '../../../../assets/webp/14.webp';
 import sticker15 from '../../../../assets/webp/15.webp';
 import sticker16 from '../../../../assets/webp/16.webp';
 import sticker17 from '../../../../assets/webp/17.webp';
@@ -38,7 +38,7 @@ export default [
   sticker11,
   sticker12,
   sticker13,
-  sticker14,
+  // sticker14,
   sticker15,
   sticker16,
   sticker17,
