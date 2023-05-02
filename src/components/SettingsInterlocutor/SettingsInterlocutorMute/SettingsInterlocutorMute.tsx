@@ -3,11 +3,13 @@ import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { FC } from 'react';
 
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
+import { useAppSelector } from '../../../hooks/useAppSelector';
 import { setMute } from '../../../redux/state/configSlice';
 import Wrapper from '../../Wrapper';
 
 const SettingsInterlocutorMute: FC = () => {
   const dispatch = useAppDispatch();
+  const { mute } = useAppSelector((state) => state.config);
 
   const handleChangeMute = (e: CheckboxChangeEvent) => {
     dispatch(setMute(e.target.checked));
@@ -15,7 +17,7 @@ const SettingsInterlocutorMute: FC = () => {
 
   return (
     <Wrapper title='Без звука:'>
-      <Checkbox onChange={handleChangeMute} />
+      <Checkbox checked={mute} onChange={handleChangeMute} />
     </Wrapper>
   );
 };
