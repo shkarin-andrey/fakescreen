@@ -60,7 +60,7 @@ const PhoneChat: FC = () => {
       <div
         ref={ref}
         onScroll={handleScroll}
-        className='chat w-full h-full px-[9px] py-[7px] overflow-y-scroll flex flex-col-reverse scrollbar scrollbar-thumb-transparent scrollbar-track-transparent scrollbar-small'
+        className='chat w-full h-full pl-[9px] pr-[5px] py-[7px] overflow-y-scroll flex flex-col-reverse scrollbar scrollbar-thumb-transparent scrollbar-track-transparent scrollbar-small'
       >
         {data.map((item, index) => (
           <Fragment key={item.id}>
