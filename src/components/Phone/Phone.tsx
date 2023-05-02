@@ -1,9 +1,4 @@
-import {
-  ClearOutlined,
-  CopyOutlined,
-  SaveOutlined,
-  SettingOutlined,
-} from '@ant-design/icons';
+import { ClearOutlined, CopyOutlined, SaveOutlined } from '@ant-design/icons';
 import { FloatButton, notification } from 'antd';
 import html2canvas from 'html2canvas';
 import { FC, useRef } from 'react';
@@ -67,7 +62,7 @@ const Phone: FC = () => {
         trigger='hover'
         type='primary'
         style={{ right: 20 }}
-        icon={<SettingOutlined />}
+        icon={<SaveOutlined />}
       >
         <FloatButton
           onClick={handleResetChat}

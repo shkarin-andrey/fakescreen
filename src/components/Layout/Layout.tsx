@@ -18,7 +18,7 @@ const Layout: FC<ILayout> = ({ children }) => {
       <FloatButton.Group
         trigger='hover'
         type='primary'
-        style={{ left: 24 }}
+        style={{ right: 20, bottom: 100, zIndex: 0 }}
         icon={<GlobalOutlined />}
       >
         {local.map((lang) => (
