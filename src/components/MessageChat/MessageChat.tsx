@@ -111,7 +111,7 @@ const MessageChat: FC<IMessageChat> = ({
             />
           </div>
         )}
-        {isMessage && (
+        {isMessage ? (
           <>
             <div className={image ? classNameImagePadding : ''}>
               <div ref={ref} className='contents tracking-[0.6px] break-all' />
@@ -128,6 +128,16 @@ const MessageChat: FC<IMessageChat> = ({
               </div>
             )}
           </>
+        ) : (
+          <div className='absolute bottom-[6px] right-1'>
+            <MessageTime
+              className='mt-[8px] pb-0'
+              type={type}
+              time={time}
+              isViewed={isViewed}
+              isBackground
+            />
+          </div>
         )}
       </div>
 
