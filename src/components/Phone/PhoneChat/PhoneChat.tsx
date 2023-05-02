@@ -4,7 +4,6 @@ import GoDownButtonIcon from '../../../assets/icons/GoDownButtonIcon';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import type { Message } from '../../../redux/state/chatSlice';
 import MessageChat from '../../MessageChat';
-import MessageImage from '../../MessageImage';
 import MessageSticker from '../../MessageSticker';
 import TimeChat from '../../TimeChat';
 
@@ -68,12 +67,13 @@ const PhoneChat: FC = () => {
             {'chatTime' in item && <TimeChat id={item.id} chatTime={item.chatTime} />}
             {'type' in item && (
               <>
-                {item.message && (
+                {(item.message || item.image) && (
                   <MessageChat
                     id={item.id}
                     type={item.type}
                     message={item.message}
                     time={item.time}
+                    image={item.image}
                     isViewed={item.isViewed}
                     prevType={prevType(index)}
                     nextType={nextType(index)}
@@ -85,15 +85,6 @@ const PhoneChat: FC = () => {
                     isViewed={item.isViewed}
                     type={item.type}
                     sticker={item.sticker}
-                    time={item.time}
-                  />
-                )}
-                {item.image && (
-                  <MessageImage
-                    id={item.id}
-                    isViewed={item.isViewed}
-                    type={item.type}
-                    image={item.image}
                     time={item.time}
                   />
                 )}

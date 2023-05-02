@@ -13,9 +13,12 @@ const MessageChat: FC<IMessageChat> = ({
   isViewed,
   prevType,
   nextType,
+  image,
 }) => {
   const [isOpneModal, setIsOpneModal] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+
+  const isMessage = message.trim() !== '';
 
   useEffect(() => {
     if (ref.current) {
@@ -50,8 +53,36 @@ const MessageChat: FC<IMessageChat> = ({
       : '';
   };
 
+  const classNameRoundedImage = () => {
+    const className = [];
+
+    if (isMessage) {
+      className.push('rounded-t-[13px]');
+    } else {
+      className.push('rounded-[13px]');
+    }
+
+    if (type === 'owner') {
+      isPrevType && isNextType && nextType !== null
+        ? className.push('!rounded-tr-[5px]')
+        : !isPrevType && isNextType
+        ? className.push('!rounded-r-[5px]')
+        : '';
+    } else {
+      isPrevType && isNextType && nextType !== null
+        ? className.push('!rounded-tl-[5px]')
+        : !isPrevType && isNextType
+        ? className.push('!rounded-l-[5px]')
+        : '';
+    }
+
+    return className.join(' ');
+  };
+
   const classNamePrevTypeTail =
     isPrevType && type === 'owner' ? '-right-1' : '-left-1 -scale-x-100';
+
+  const classNameImagePadding = 'pl-[11px] pr-[6px] py-[4px]';
 
   const handleOpenModal = () => {
     setIsOpneModal(true);
@@ -62,23 +93,44 @@ const MessageChat: FC<IMessageChat> = ({
       <div
         aria-hidden={true}
         onClick={handleOpenModal}
-        className={`flex pl-[11px] pr-[6px] py-[4px] rounded-[13px] text-base max-w-[250px] w-fit relative leading-[134%] ${isOwner} ${classNameNextType} ${classNameRounded()}`}
+        className={`flex rounded-[13px] text-base max-w-[250px] w-fit relative leading-[134%] ${
+          image ? 'flex-col' : classNameImagePadding
+        } ${isOwner} ${classNameNextType} ${classNameRounded()}`}
       >
-        <div>
-          <div ref={ref} className='contents tracking-[0.6px] break-all' />
-          <MessageTime
-            className='mt-[8px] pb-0'
-            type={type}
-            time={time}
-            isViewed={isViewed}
-          />
-        </div>
-        {isPrevType && (
-          <div className={`absolute -bottom-[6px] ${classNamePrevTypeTail}`}>
-            <TailIcon type={type} />
+        {image && (
+          <div
+            className={`flex justify-center backdrop-blur-3xl ${classNameRoundedImage()}`}
+            style={{
+              background: `url('${image}') center center/cover no-repeat`,
+            }}
+          >
+            <img
+              className={`w-full max-w-[257px] max-h-[316px] min-w-[100px] min-h-[100px] object-contain backdrop-blur-md ${classNameRoundedImage()}`}
+              src={image}
+              alt='img'
+            />
           </div>
         )}
+        {isMessage && (
+          <>
+            <div className={image ? classNameImagePadding : ''}>
+              <div ref={ref} className='contents tracking-[0.6px] break-all' />
+              <MessageTime
+                className='mt-[8px] pb-0'
+                type={type}
+                time={time}
+                isViewed={isViewed}
+              />
+            </div>
+            {isPrevType && (
+              <div className={`absolute -bottom-[6px] ${classNamePrevTypeTail}`}>
+                <TailIcon type={type} />
+              </div>
+            )}
+          </>
+        )}
       </div>
+
       <ModalEditMessage
         id={id}
         type={type}

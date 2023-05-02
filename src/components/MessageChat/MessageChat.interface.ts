@@ -5,6 +5,7 @@ export interface IMessageChat {
   type: Message['type'];
   message: Message['message'];
   time: Message['time'];
+  image: Message['image'];
   isViewed: Message['isViewed'];
   prevType: Message['type'] | null;
   nextType: Message['type'] | null;
