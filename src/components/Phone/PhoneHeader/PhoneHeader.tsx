@@ -35,7 +35,7 @@ const PhoneHeader: FC = () => {
           </div>
         )}
 
-        <div className='mt-[3px] flex items-center gap-[2px]'>
+        <div className='mt-[3px] flex items-center gap-[3px]'>
           <NetworkHeader />
           <EthernetHeader />
           <BattaryIcon isCharge={isCharge} isEconom={isEconom} size={volumeBattary} />
