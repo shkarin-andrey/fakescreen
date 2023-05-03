@@ -14,6 +14,8 @@ import img12 from '../../../assets/images/bg-chat/BG_29-scaled.jpg';
 import img13 from '../../../assets/images/bg-chat/BG_30-scaled.jpg';
 import img14 from '../../../assets/images/bg-chat/BG_33-scaled.jpg';
 import img16 from '../../../assets/images/bg-chat/BG_N4-scaled.jpg';
+import img26 from '../../../assets/images/bg-chat/blackBG.jpg';
+import img27 from '../../../assets/images/bg-chat/grayBG.jpg';
 import img17 from '../../../assets/images/bg-chat/image 2.jpg';
 import img18 from '../../../assets/images/bg-chat/image 3.jpg';
 import img19 from '../../../assets/images/bg-chat/pattern-1 1.jpg';
@@ -50,4 +52,6 @@ export const gallary = [
   img23,
   img24,
   img25,
+  img26,
+  img27,
 ];
