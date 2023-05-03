@@ -17,7 +17,7 @@ const TimeChat: FC<ITimeChat> = ({ chatTime, id }) => {
       <div
         aria-hidden
         onClick={handleOpenModal}
-        className='bg-[#72839166] rounded-[27px] px-[6px] py-[2px] text-white text-xs w-fit mx-auto mt-[13px]'
+        className='bg-[#72839166] rounded-[27px] px-[6px] pt-[1px] pb-[3px] text-white text-xs w-fit mx-auto mt-[13px]'
       >
         {chatTime}
       </div>
