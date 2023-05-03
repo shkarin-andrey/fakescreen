@@ -37,8 +37,8 @@ const PhoneUserInfo: FC = () => {
         )}
       </div>
       <div className='text-sm col-span-5 flex flex-col items-center leading-none pb-[2px]'>
-        <div className='flex items-end gap-[4px]'>
-          <span className='font-semibold'>{username}</span>
+        <div className='w-full flex items-end justify-center gap-[4px]'>
+          <span className='font-semibold truncate'>{username}</span>
           {mute && (
             <div>
               <MuteIcon />
