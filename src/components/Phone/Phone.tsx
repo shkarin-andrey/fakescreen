@@ -67,7 +67,7 @@ const Phone: FC = () => {
   );
 
   return (
-    <div className='flex flex-col gap-5 max-w-[376px] w-full '>
+    <div className='flex flex-col gap-5 max-w-[376px] min-w-[376px] '>
       <div className='h-[746px] relative py-6 px-[27px]'>
         <img
           src={phoneImg}
