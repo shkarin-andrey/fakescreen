@@ -9,7 +9,8 @@ import Wrapper from '../../Wrapper';
 
 const SettingsInterlocutorUnread: FC = () => {
   const dispatch = useAppDispatch();
-  const { isUnread, unread } = useAppSelector((state) => state.config);
+  const isUnread = useAppSelector((state) => state.config.isUnread);
+  const unread = useAppSelector((state) => state.config.unread);
 
   const handleChangeIsUnread = (e: CheckboxChangeEvent): void => {
     dispatch(setIsUnread(e.target.checked));

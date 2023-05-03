@@ -1,10 +1,11 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 import WifiIcon from '../../assets/icons/WifiIcon';
 import { useAppSelector } from '../../hooks/useAppSelector';
 
 const EthernetHeader: FC = () => {
-  const { wifi, ethernet } = useAppSelector((state) => state.config);
+  const wifi = useAppSelector((state) => state.config.wifi);
+  const ethernet = useAppSelector((state) => state.config.ethernet);
 
   if (ethernet === 'wifi') {
     return <WifiIcon width='16' height='13' type={wifi} />;
@@ -17,4 +18,4 @@ const EthernetHeader: FC = () => {
   );
 };
 
-export default EthernetHeader;
+export default memo(EthernetHeader);

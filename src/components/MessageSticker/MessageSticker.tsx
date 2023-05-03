@@ -1,6 +1,5 @@
-import { DeleteOutlined } from '@ant-design/icons';
 import { Button, Popover } from 'antd';
-import { FC, useState } from 'react';
+import { FC, memo, useCallback, useState } from 'react';
 
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { deleteMessage } from '../../redux/state/chatSlice';
@@ -12,13 +11,13 @@ const MessageSticker: FC<IMessageSticker> = ({ id, isViewed, type, sticker, time
 
   const dispatch = useAppDispatch();
 
-  const handleHoverChange = (open: boolean) => {
+  const handleHoverChange = useCallback((open: boolean) => {
     setHovered(open);
-  };
+  }, []);
 
-  const handleDelete = () => {
+  const handleDelete = useCallback(() => {
     dispatch(deleteMessage(id));
-  };
+  }, []);
 
   return (
     <Popover
@@ -41,4 +40,4 @@ const MessageSticker: FC<IMessageSticker> = ({ id, isViewed, type, sticker, time
   );
 };
 
-export default MessageSticker;
+export default memo(MessageSticker);

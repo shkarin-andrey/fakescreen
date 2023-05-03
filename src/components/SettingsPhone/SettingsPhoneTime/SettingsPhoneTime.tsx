@@ -1,7 +1,7 @@
 import { TimePicker } from 'antd';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { FC } from 'react';
+import { FC, memo, useCallback } from 'react';
 
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
@@ -13,11 +13,11 @@ const SettingsPhoneTime: FC = () => {
   dayjs.extend(customParseFormat);
 
   const dispatch = useAppDispatch();
-  const { time } = useAppSelector((state) => state.config);
+  const time = useAppSelector((state) => state.config.time);
 
-  const handleChangeTime = (_: dayjs.Dayjs | null, value: string) => {
+  const handleChangeTime = useCallback((_: dayjs.Dayjs | null, value: string) => {
     dispatch(setTime(value));
-  };
+  }, []);
 
   return (
     <Wrapper title='Время на устройстве:'>
@@ -30,4 +30,4 @@ const SettingsPhoneTime: FC = () => {
   );
 };
 
-export default SettingsPhoneTime;
+export default memo(SettingsPhoneTime);

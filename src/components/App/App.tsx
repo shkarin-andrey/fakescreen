@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 import { IntlProvider } from 'react-intl';
 
 import { useAppSelector } from '../../hooks/useAppSelector';
@@ -14,11 +14,11 @@ import Title from '../Title';
 const App: FC = () => {
   const [current, setCurrent] = useState(2);
 
-  const { language } = useAppSelector((state) => state.language);
+  const language = useAppSelector((state) => state.language.language);
 
-  const onChange = (value: number) => {
+  const onChange = useCallback((value: number) => {
     setCurrent(value);
-  };
+  }, []);
 
   const items = useMemo(
     () => [

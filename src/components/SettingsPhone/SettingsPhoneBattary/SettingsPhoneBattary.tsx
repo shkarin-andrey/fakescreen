@@ -1,6 +1,6 @@
 import { Checkbox, InputNumber, Slider } from 'antd';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
-import { FC, useCallback } from 'react';
+import { FC, memo, useCallback } from 'react';
 
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
@@ -11,14 +11,16 @@ import {
 } from '../../../redux/state/configSlice';
 
 const SettingsPhoneBattary: FC = () => {
-  const { volumeBattary, isCharge, isEconom } = useAppSelector((state) => state.config);
+  const volumeBattary = useAppSelector((state) => state.config.volumeBattary);
+  const isCharge = useAppSelector((state) => state.config.isCharge);
+  const isEconom = useAppSelector((state) => state.config.isEconom);
   const dispatch = useAppDispatch();
 
   const handleChangeVolumeBattary = useCallback((newValue: any) => {
     dispatch(setVolumeBattary(newValue));
   }, []);
 
-  const handleChangeTypeBattary = (e: CheckboxChangeEvent) => {
+  const handleChangeTypeBattary = useCallback((e: CheckboxChangeEvent) => {
     if (e.target.value === 'charge') {
       dispatch(setIsCharge(e.target.checked));
     }
@@ -26,7 +28,7 @@ const SettingsPhoneBattary: FC = () => {
     if (e.target.value === 'econom') {
       dispatch(setIsEconom(e.target.checked));
     }
-  };
+  }, []);
 
   return (
     <div className='flex flex-col'>
@@ -58,4 +60,4 @@ const SettingsPhoneBattary: FC = () => {
   );
 };
 
-export default SettingsPhoneBattary;
+export default memo(SettingsPhoneBattary);

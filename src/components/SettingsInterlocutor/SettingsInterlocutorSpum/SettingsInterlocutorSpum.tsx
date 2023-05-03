@@ -10,7 +10,7 @@ import Wrapper from '../../Wrapper';
 const SettingsInterlocutorSpum: FC = () => {
   const dispatch = useAppDispatch();
 
-  const { spum } = useAppSelector((state) => state.config);
+  const spum = useAppSelector((state) => state.config.spum);
 
   const handleChangeSpum = (e: CheckboxChangeEvent) => {
     dispatch(setSpum(e.target.checked));

@@ -9,7 +9,7 @@ import Wrapper from '../../Wrapper';
 
 const SettingsInterlocutorMute: FC = () => {
   const dispatch = useAppDispatch();
-  const { mute } = useAppSelector((state) => state.config);
+  const mute = useAppSelector((state) => state.config.mute);
 
   const handleChangeMute = (e: CheckboxChangeEvent) => {
     dispatch(setMute(e.target.checked));

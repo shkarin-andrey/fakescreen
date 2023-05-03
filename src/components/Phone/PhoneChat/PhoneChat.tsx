@@ -1,4 +1,4 @@
-import { FC, Fragment, useCallback, useRef, useState } from 'react';
+import { FC, Fragment, memo, useCallback, useRef, useState } from 'react';
 
 import GoDownButtonIcon from '../../../assets/icons/GoDownButtonIcon';
 import { useAppSelector } from '../../../hooks/useAppSelector';
@@ -8,8 +8,8 @@ import MessageSticker from '../../MessageSticker';
 import TimeChat from '../../TimeChat';
 
 const PhoneChat: FC = () => {
-  const { bgImage } = useAppSelector((state) => state.config);
-  const { data } = useAppSelector((state) => state.chat);
+  const bgImage = useAppSelector((state) => state.config.bgImage);
+  const data = useAppSelector((state) => state.chat.data);
   const ref = useRef<HTMLDivElement>(null);
   const [scroll, setScroll] = useState(false);
 
@@ -39,13 +39,13 @@ const PhoneChat: FC = () => {
     [data],
   );
 
-  const handleScroll = (e: any) => {
+  const handleScroll = useCallback((e: any) => {
     if (e.target.scrollTop < -30) {
       setScroll(true);
     } else {
       setScroll(false);
     }
-  };
+  }, []);
 
   return (
     <div
@@ -102,4 +102,4 @@ const PhoneChat: FC = () => {
   );
 };
 
-export default PhoneChat;
+export default memo(PhoneChat);

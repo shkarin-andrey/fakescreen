@@ -13,7 +13,7 @@ import Wrapper from '../../Wrapper';
 const SettingsInterlocutorDownloadAvatar: FC = () => {
   const [loading, setLoading] = useState(false);
 
-  const { avatarFile } = useAppSelector((state) => state.config);
+  const avatarFile = useAppSelector((state) => state.config.avatarFile);
   const dispatch = useAppDispatch();
 
   const handleCustomRequest: UploadProps['customRequest'] = async ({

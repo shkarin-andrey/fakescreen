@@ -10,3 +10,14 @@ export interface IModalEditMessage {
   chatTime?: ChatTime['chatTime'] | null;
   message?: Message['message'];
 }
+
+export interface IModalEditMessageSave {
+  index: number;
+  data: {
+    type?: Message['time'];
+    isViewed?: Message['isViewed'];
+    time?: Message['time'];
+    chatTime?: ChatTime['chatTime'];
+    message?: Message['message'];
+  };
+}

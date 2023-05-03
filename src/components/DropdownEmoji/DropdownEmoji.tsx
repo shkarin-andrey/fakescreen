@@ -1,20 +1,19 @@
 import { DownOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
-import EmojiPicker, { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
-import { FC, useState } from 'react';
+import EmojiPicker, { EmojiStyle } from 'emoji-picker-react';
+import { FC, memo, useCallback, useState } from 'react';
 
 import EmojiIcon from '../../assets/icons/EmojiIcon';
+import { IDropdownEmoji } from './DropdownEmoji.interface';
 
-interface IDropdownEmoji {
-  onEmojiClick: (emoji: EmojiClickData, event: MouseEvent) => void;
-}
+const MemoEmojiPicker = memo(EmojiPicker);
 
 const DropdownEmoji: FC<IDropdownEmoji> = ({ onEmojiClick }) => {
   const [emojiVisible, setEmojiVisible] = useState(false);
 
-  const handleOpenEmoji = () => {
+  const handleOpenEmoji = useCallback(() => {
     setEmojiVisible((prev) => !prev);
-  };
+  }, []);
 
   return (
     <div className='relative'>
@@ -22,16 +21,19 @@ const DropdownEmoji: FC<IDropdownEmoji> = ({ onEmojiClick }) => {
         <EmojiIcon />
         <DownOutlined />
       </Button>
-      <div className={`absolute z-10 ${emojiVisible ? 'block' : 'hidden'}`}>
-        <EmojiPicker
-          emojiStyle={EmojiStyle.APPLE}
-          onEmojiClick={onEmojiClick}
-          lazyLoadEmojis
-          searchPlaceHolder='Поиск'
-        />
-      </div>
+      {emojiVisible && (
+        <div className={`absolute z-10 block`}>
+          <MemoEmojiPicker
+            emojiStyle={EmojiStyle.APPLE}
+            onEmojiClick={onEmojiClick}
+            lazyLoadEmojis
+            searchPlaceHolder='Поиск'
+            key={'emoji'}
+          />
+        </div>
+      )}
     </div>
   );
 };
 
-export default DropdownEmoji;
+export default memo(DropdownEmoji);

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { setBgImage } from '../../../redux/state/configSlice';
@@ -8,14 +8,14 @@ import { gallary } from './SettingsInterlocutorIGallary.config';
 
 const SettingsInterlocutorIGallary: FC = () => {
   const dispatch = useAppDispatch();
-  const { bgImage } = useAppSelector((state) => state.config);
+  const bgImage = useAppSelector((state) => state.config.bgImage);
 
-  const handleClick = (src: string) => {
+  const handleClick = useCallback((src: string) => {
     if (bgImage === src) {
       return;
     }
     dispatch(setBgImage(src));
-  };
+  }, []);
 
   return (
     <div className='flex flex-col gap-4'>

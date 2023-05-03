@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 const Title: FC = () => {
   return (
@@ -11,4 +11,4 @@ const Title: FC = () => {
   );
 };
 
-export default Title;
+export default memo(Title);

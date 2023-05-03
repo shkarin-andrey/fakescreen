@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 import BattaryIcon from '../../../assets/icons/BattaryIcon';
 import WaterMarkIcon from '../../../assets/icons/WaterMarkIcon';
@@ -10,8 +10,13 @@ import PhoneSpum from '../PhoneSpum';
 import PhoneUserInfo from '../PhoneUserInfo';
 
 const PhoneHeader: FC = () => {
-  const { volumeBattary, time, spum, watermark, geo, isCharge, isEconom } =
-    useAppSelector((state) => state.config);
+  const volumeBattary = useAppSelector((state) => state.config.volumeBattary);
+  const time = useAppSelector((state) => state.config.time);
+  const spum = useAppSelector((state) => state.config.spum);
+  const watermark = useAppSelector((state) => state.config.watermark);
+  const geo = useAppSelector((state) => state.config.geo);
+  const isCharge = useAppSelector((state) => state.config.isCharge);
+  const isEconom = useAppSelector((state) => state.config.isEconom);
 
   return (
     <>
@@ -42,4 +47,4 @@ const PhoneHeader: FC = () => {
   );
 };
 
-export default PhoneHeader;
+export default memo(PhoneHeader);

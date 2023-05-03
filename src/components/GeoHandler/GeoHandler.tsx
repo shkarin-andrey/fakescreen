@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 import GeoBlueIcon from '../../assets/icons/GeoBlueIcon';
 import GeoFillIcon from '../../assets/icons/GeoFillIcon';
@@ -6,7 +6,7 @@ import GeoOutlineIcon from '../../assets/icons/GeoOutlineIcon';
 import { useAppSelector } from '../../hooks/useAppSelector';
 
 const GeoHandler: FC = () => {
-  const { geo } = useAppSelector((state) => state.config);
+  const geo = useAppSelector((state) => state.config.geo);
 
   if (geo === 'outline') {
     return <GeoOutlineIcon className='mt-[1px]' />;
@@ -27,4 +27,4 @@ const GeoHandler: FC = () => {
   return null;
 };
 
-export default GeoHandler;
+export default memo(GeoHandler);

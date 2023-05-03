@@ -1,7 +1,7 @@
 import { ClearOutlined, CopyOutlined, SaveOutlined } from '@ant-design/icons';
 import { FloatButton, notification } from 'antd';
 import html2canvas from 'html2canvas';
-import { FC, useRef } from 'react';
+import { FC, useCallback, useRef } from 'react';
 
 import phoneImg from '../../assets/images/phone.svg';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
@@ -17,32 +17,37 @@ const Phone: FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const handleResetChat = () => {
+  const handleResetChat = useCallback(() => {
     dispatch(resetChat());
-  };
+  }, []);
 
-  const handleSaveScreenshot = (isSave: boolean) => {
-    if (ref.current) {
-      html2canvas(ref.current, {
-        scale: 3.5,
-        allowTaint: true,
-        useCORS: true,
-      })
-        .then((canvas) => {
-          if (isSave) {
-            downloadJPG(canvas);
-            notification.success({ message: 'Скриншот сделан успешно' });
-          } else {
-            canvas.toBlob(blobToClipboard);
-            notification.success({ message: 'Скриншот успешно сохранен в буфер обмена' });
-          }
+  const handleSaveScreenshot = useCallback(
+    (isSave: boolean) => {
+      if (ref.current) {
+        html2canvas(ref.current, {
+          scale: 3.5,
+          allowTaint: true,
+          useCORS: true,
         })
-        .catch((error) => {
-          console.error(error);
-          notification.error({ message: error.message });
-        });
-    }
-  };
+          .then((canvas) => {
+            if (isSave) {
+              downloadJPG(canvas);
+              notification.success({ message: 'Скриншот сделан успешно' });
+            } else {
+              canvas.toBlob(blobToClipboard);
+              notification.success({
+                message: 'Скриншот успешно сохранен в буфер обмена',
+              });
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+            notification.error({ message: error.message });
+          });
+      }
+    },
+    [ref.current],
+  );
 
   return (
     <div className='flex flex-col gap-5 max-w-[376px] w-full '>

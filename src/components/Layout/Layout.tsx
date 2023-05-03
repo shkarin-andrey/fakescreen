@@ -1,16 +1,24 @@
 import { GlobalOutlined } from '@ant-design/icons';
 import { FloatButton } from 'antd';
-import { FC } from 'react';
+import { FC, memo, useCallback } from 'react';
 
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { LOCALES } from '../../i18n/locales';
 import { setLanguage } from '../../redux/state/languageSlice';
 import { ILayout } from './Layout.interface';
 
-const Layout: FC<ILayout> = ({ children }) => {
-  const local = Object.values(LOCALES);
+const local = Object.values(LOCALES);
 
+const Layout: FC<ILayout> = ({ children }) => {
   const dispatch = useAppDispatch();
+
+  const descritpion = useCallback((lang: string) => {
+    return lang.split('-')[1];
+  }, []);
+
+  const handleClick = useCallback((lang: string) => {
+    dispatch(setLanguage(lang));
+  }, []);
 
   return (
     <div className='bg-gray-100 min-h-screen py-12'>
@@ -24,8 +32,8 @@ const Layout: FC<ILayout> = ({ children }) => {
         {local.map((lang) => (
           <FloatButton
             key={lang}
-            description={lang.split('-')[1]}
-            onClick={() => dispatch(setLanguage(lang))}
+            description={descritpion(lang)}
+            onClick={() => handleClick(lang)}
           />
         ))}
       </FloatButton.Group>
@@ -33,4 +41,4 @@ const Layout: FC<ILayout> = ({ children }) => {
   );
 };
 
-export default Layout;
+export default memo(Layout);

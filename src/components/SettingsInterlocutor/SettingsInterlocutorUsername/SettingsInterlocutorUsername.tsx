@@ -7,7 +7,7 @@ import { setUsername } from '../../../redux/state/configSlice';
 import Wrapper from '../../Wrapper';
 
 const SettingsInterlocutorUsername: FC = () => {
-  const { username } = useAppSelector((state) => state.config);
+  const username = useAppSelector((state) => state.config.username);
   const dispatch = useAppDispatch();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

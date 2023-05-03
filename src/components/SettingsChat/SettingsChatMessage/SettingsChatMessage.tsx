@@ -1,6 +1,6 @@
-import { Button, Checkbox, Form, Radio, TimePicker, Upload } from 'antd';
+import { Button, Checkbox, Form, Radio, TimePicker } from 'antd';
 import { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
-import { FC, SetStateAction, useCallback, useRef, useState } from 'react';
+import { FC, memo, useCallback, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { optionsTypeMessage } from '../../../config';
@@ -50,9 +50,9 @@ const SettingsChatMessage: FC = () => {
     }
   };
 
-  const onSelect = (sticker: string) => {
+  const onSelect = useCallback((sticker: string) => {
     setSelect(sticker);
-  };
+  }, []);
 
   const onEmojiClick = useCallback((event: EmojiClickData) => {
     const emoji = event.getImageUrl(EmojiStyle.APPLE);
@@ -106,4 +106,4 @@ const SettingsChatMessage: FC = () => {
   );
 };
 
-export default SettingsChatMessage;
+export default memo(SettingsChatMessage);

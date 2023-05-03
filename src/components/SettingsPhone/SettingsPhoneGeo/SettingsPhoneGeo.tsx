@@ -1,6 +1,6 @@
 import { CloseOutlined } from '@ant-design/icons';
 import { Radio, RadioChangeEvent } from 'antd';
-import { FC } from 'react';
+import { FC, memo, useCallback } from 'react';
 
 import GeoBlueIcon from '../../../assets/icons/GeoBlueIcon';
 import GeoFillIcon from '../../../assets/icons/GeoFillIcon';
@@ -12,11 +12,11 @@ import Wrapper from '../../Wrapper';
 
 const SettingsPhoneGeo: FC = () => {
   const dispatch = useAppDispatch();
-  const { geo } = useAppSelector((state) => state.config);
+  const geo = useAppSelector((state) => state.config.geo);
 
-  const handleChangeGeo = (e: RadioChangeEvent) => {
+  const handleChangeGeo = useCallback((e: RadioChangeEvent) => {
     dispatch(setGeo(e.target.value));
-  };
+  }, []);
 
   return (
     <Wrapper title='Геолокация:'>
@@ -38,4 +38,4 @@ const SettingsPhoneGeo: FC = () => {
   );
 };
 
-export default SettingsPhoneGeo;
+export default memo(SettingsPhoneGeo);

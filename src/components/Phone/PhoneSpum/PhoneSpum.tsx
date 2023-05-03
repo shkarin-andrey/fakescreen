@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 import CloseIcon from '../../../assets/icons/CloseIcon';
 
@@ -14,4 +14,4 @@ const PhoneSpum: FC = () => {
   );
 };
 
-export default PhoneSpum;
+export default memo(PhoneSpum);

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 
 import { getColorfromPercent } from '../../utils/getColorfromPercent';
 import ChargeIcon from './ChargeIcon';
@@ -12,7 +12,9 @@ interface IBattaryIcon {
 const BattaryIcon: FC<IBattaryIcon> = ({ size, isEconom, isCharge }) => {
   const costomWidth = 15.5;
 
-  const width = (costomWidth * size) / 100;
+  const width = useMemo(() => {
+    return (costomWidth * size) / 100;
+  }, [size]);
 
   return (
     <div className='relative mt-[2px]'>

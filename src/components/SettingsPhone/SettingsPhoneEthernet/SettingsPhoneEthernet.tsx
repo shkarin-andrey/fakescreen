@@ -1,5 +1,5 @@
 import { Radio, RadioChangeEvent } from 'antd';
-import { FC } from 'react';
+import { FC, memo, useCallback } from 'react';
 
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
@@ -9,11 +9,11 @@ import { items } from './SettingsPhoneEthernet.config';
 
 const SettingsPhoneEthernet: FC = () => {
   const dispatch = useAppDispatch();
-  const { ethernet } = useAppSelector((state) => state.config);
+  const ethernet = useAppSelector((state) => state.config.ethernet);
 
-  const handleChangeEthernet = (e: RadioChangeEvent) => {
+  const handleChangeEthernet = useCallback((e: RadioChangeEvent) => {
     dispatch(setEthernet(e.target.value));
-  };
+  }, []);
 
   return (
     <Wrapper title='Интернет:'>
@@ -28,4 +28,4 @@ const SettingsPhoneEthernet: FC = () => {
   );
 };
 
-export default SettingsPhoneEthernet;
+export default memo(SettingsPhoneEthernet);

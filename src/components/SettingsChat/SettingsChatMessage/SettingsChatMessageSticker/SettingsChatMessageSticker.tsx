@@ -1,4 +1,5 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 import stickers from './SettingsChatMessageSticker.config';
 import { ISettingsChatMessageSticker } from './SettingsChatMessageSticker.interface';
@@ -10,19 +11,19 @@ const SettingsChatMessageSticker: FC<ISettingsChatMessageSticker> = ({
   return (
     <div className='flex items-center flex-wrap gap-5'>
       {stickers.map((sticker: string) => (
-        <div
+        <LazyLoadImage
           key={sticker}
-          className={`w-20 cursor-pointer outline-offset-2 outline-green-300 ${
+          src={sticker}
+          alt={`sticker`}
+          className={`img-lazy w-20 cursor-pointer outline-offset-2 outline-green-300 ${
             select === sticker ? 'outline outline-4' : ''
           }`}
-          aria-hidden={true}
+          effect='blur' // opacity | black-and-white
           onClick={() => onSelect(sticker)}
-        >
-          <img className='w-full' src={sticker} alt='sticker' />
-        </div>
+        />
       ))}
     </div>
   );
 };
 
-export default SettingsChatMessageSticker;
+export default memo(SettingsChatMessageSticker);

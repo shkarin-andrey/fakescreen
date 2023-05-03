@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import AttachIcon from '../../../assets/icons/AttachIcon';
@@ -25,4 +25,4 @@ const PhoneFooter: FC = () => {
   );
 };
 
-export default PhoneFooter;
+export default memo(PhoneFooter);

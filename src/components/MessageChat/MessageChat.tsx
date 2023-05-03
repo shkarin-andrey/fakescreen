@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import TailIcon from '../../assets/icons/TailIcon';
 import MessageTime from '../MessageTime/MessageTime';
@@ -26,14 +26,26 @@ const MessageChat: FC<IMessageChat> = ({
     }
   }, [message]);
 
-  const isOwner =
-    type === 'owner' ? 'bg-[#007AFF] text-white ml-auto' : 'bg-white text-black';
+  const isOwner = useMemo(() => {
+    if (type === 'owner') {
+      return 'bg-[#007AFF] text-white ml-auto';
+    }
+
+    return 'bg-white text-black';
+  }, [type]);
 
   const isNextType = nextType === type;
   const isPrevType = prevType !== type;
 
-  const classNameNextType = isNextType ? 'mt-[2px]' : 'mt-[6px]';
-  const classNameRounded = () => {
+  const classNameNextType = useMemo(() => {
+    if (isNextType) {
+      return 'mt-[2px]';
+    }
+
+    return 'mt-[6px]';
+  }, [isNextType]);
+
+  const classNameRounded = useCallback(() => {
     if (type === 'owner') {
       return isPrevType && isNextType && nextType !== null
         ? 'rounded-tr-[5px]'
@@ -51,9 +63,9 @@ const MessageChat: FC<IMessageChat> = ({
       : !isPrevType && !isNextType
       ? 'rounded-bl-[5px]'
       : '';
-  };
+  }, [type, isPrevType, isNextType, nextType]);
 
-  const classNameRoundedImage = () => {
+  const classNameRoundedImage = useCallback(() => {
     const className = [];
 
     if (isMessage) {
@@ -77,16 +89,23 @@ const MessageChat: FC<IMessageChat> = ({
     }
 
     return className.join(' ');
-  };
+  }, [isMessage, type, isPrevType, isNextType, nextType]);
 
-  const classNamePrevTypeTail =
-    isPrevType && type === 'owner' ? '-right-1' : '-left-1 -scale-x-100';
+  const classNamePrevTypeTail = useMemo(() => {
+    if (isPrevType && type === 'owner') {
+      return '-right-1';
+    }
 
-  const classNameImagePadding = 'pl-[11px] pr-[6px] py-[4px]';
+    return '-left-1 -scale-x-100';
+  }, [isPrevType, type]);
 
-  const handleOpenModal = () => {
+  const classNameImagePadding = useMemo(() => {
+    return 'pl-[11px] pr-[6px] py-[4px]';
+  }, []);
+
+  const handleOpenModal = useCallback(() => {
     setIsOpneModal(true);
-  };
+  }, []);
 
   return (
     <>
@@ -154,4 +173,4 @@ const MessageChat: FC<IMessageChat> = ({
   );
 };
 
-export default MessageChat;
+export default memo(MessageChat);

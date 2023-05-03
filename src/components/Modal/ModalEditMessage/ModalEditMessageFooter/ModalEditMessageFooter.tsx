@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 import { IModalEditMessageFooter } from './ModalEditMessageFooter.interface';
 
@@ -23,4 +23,4 @@ const ModalEditMessageFooter: FC<IModalEditMessageFooter> = ({
   );
 };
 
-export default ModalEditMessageFooter;
+export default memo(ModalEditMessageFooter);

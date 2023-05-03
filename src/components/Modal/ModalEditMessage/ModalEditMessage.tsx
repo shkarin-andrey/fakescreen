@@ -2,14 +2,14 @@ import { Checkbox, Input, Modal, Radio, RadioChangeEvent, TimePicker } from 'ant
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import dayjs from 'dayjs';
 import { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, memo, useCallback, useEffect, useRef, useState } from 'react';
 
 import { optionsTypeMessage } from '../../../config';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { deleteMessage, updateMessage } from '../../../redux/state/chatSlice';
 import DropdownEmoji from '../../DropdownEmoji';
-import { IModalEditMessage } from './ModalEditMessage.interface';
+import { IModalEditMessage, IModalEditMessageSave } from './ModalEditMessage.interface';
 import ModalEditMessageFooter from './ModalEditMessageFooter';
 
 const ModalEditMessage: FC<IModalEditMessage> = ({
@@ -36,20 +36,20 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
   }, [isOpneModal]);
 
   const dispatch = useAppDispatch();
-  const { data } = useAppSelector((state) => state.chat);
+  const data = useAppSelector((state) => state.chat.data);
 
-  const handleDelete = () => {
+  const handleDelete = useCallback(() => {
     dispatch(deleteMessage(id));
-  };
+  }, []);
 
-  const handleCancel = () => {
+  const handleCancel = useCallback(() => {
     setIsOpneModal((prevOpen) => !prevOpen);
-  };
+  }, []);
 
-  const handleSave = () => {
+  const handleSave = useCallback(() => {
     const index = data.findIndex((el) => el.id === id);
 
-    const body: any = {
+    const body: IModalEditMessageSave = {
       index,
       data: {
         type: selectType,
@@ -68,38 +68,53 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
 
     dispatch(updateMessage(body));
     handleCancel();
-  };
+  }, [
+    data,
+    id,
+    selectType,
+    checkedViewed,
+    selectTime,
+    changeChatTime,
+    changeChatTime,
+    ref.current,
+  ]);
 
-  const handleChangeViewed = (e: CheckboxChangeEvent) => {
+  const handleChangeViewed = useCallback((e: CheckboxChangeEvent) => {
     setCheckedViewed(e.target.checked);
-  };
+  }, []);
 
-  const handleSelectType = (e: RadioChangeEvent) => {
+  const handleSelectType = useCallback((e: RadioChangeEvent) => {
     setSelectType(e.target.value);
-  };
+  }, []);
 
-  const handleChangeTime = (_: dayjs.Dayjs | null, value: string) => {
+  const handleChangeTime = useCallback((_: dayjs.Dayjs | null, value: string) => {
     setSelectTime(value);
-  };
+  }, []);
 
-  const handleChangeChatTime = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChangeChatTime(event.target.value);
-  };
+  const handleChangeChatTime = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setChangeChatTime(event.target.value);
+    },
+    [],
+  );
 
-  const handleChatMessage = (e: React.ChangeEvent<HTMLDivElement>) => {
-    if (ref.current) {
-      ref.current.innerHTML = e.currentTarget.innerHTML;
-    }
-  };
+  const handleChatMessage = useCallback(
+    (e: React.ChangeEvent<HTMLDivElement>) => {
+      if (ref.current) {
+        ref.current.innerHTML = e.currentTarget.innerHTML;
+      }
+    },
+    [ref.current],
+  );
 
-  const onEmojiClick = (event: EmojiClickData) => {
+  const onEmojiClick = useCallback((event: EmojiClickData) => {
     const emoji = event.getImageUrl(EmojiStyle.APPLE);
     const elEmoji = `<img class='w-[20px] h-[20px]' src='${emoji}' alt='${event.emoji}' />`;
 
     if (ref.current) {
       ref.current.innerHTML += elEmoji;
     }
-  };
+  }, []);
 
   return (
     <Modal
@@ -154,4 +169,4 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
   );
 };
 
-export default ModalEditMessage;
+export default memo(ModalEditMessage);

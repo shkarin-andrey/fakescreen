@@ -1,6 +1,6 @@
 import { Checkbox } from 'antd';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
@@ -9,11 +9,11 @@ import Wrapper from '../../Wrapper';
 
 const SettingsPhoneWatermark: FC = () => {
   const dispatch = useAppDispatch();
-  const { watermark } = useAppSelector((state) => state.config);
+  const watermark = useAppSelector((state) => state.config.watermark);
 
-  const handleChangeTime = (e: CheckboxChangeEvent) => {
+  const handleChangeTime = useCallback((e: CheckboxChangeEvent) => {
     dispatch(setWatermark(e.target.checked));
-  };
+  }, []);
 
   return (
     <Wrapper title='Watermark телеграм:'>

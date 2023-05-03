@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 import { useAppSelector } from '../../hooks/useAppSelector';
 import SettingsPhoneBattary from './SettingsPhoneBattary';
@@ -10,7 +10,7 @@ import SettingsPhoneWatermark from './SettingsPhoneWatermark';
 import SettingsPhoneWifi from './SettingsPhoneWifi';
 
 const SettingsPhone: FC = () => {
-  const { ethernet } = useAppSelector((state) => state.config);
+  const ethernet = useAppSelector((state) => state.config.ethernet);
 
   return (
     <div className='flex flex-col gap-10'>
@@ -25,4 +25,4 @@ const SettingsPhone: FC = () => {
   );
 };
 
-export default SettingsPhone;
+export default memo(SettingsPhone);

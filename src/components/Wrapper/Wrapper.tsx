@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 import { IWrapper } from './Wrapper.interface';
 
@@ -11,4 +11,4 @@ const Wrapper: FC<IWrapper> = ({ children, title }) => {
   );
 };
 
-export default Wrapper;
+export default memo(Wrapper);

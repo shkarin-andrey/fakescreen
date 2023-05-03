@@ -7,7 +7,7 @@ import { setBgAvatarColor } from '../../../redux/state/configSlice';
 import Wrapper from '../../Wrapper';
 
 const SettingsInterlocutorAvatar: FC = () => {
-  const { bgAvatarColor } = useAppSelector((state) => state.config);
+  const bgAvatarColor = useAppSelector((state) => state.config.bgAvatarColor);
   const dispatch = useAppDispatch();
 
   const handleClickBgAvatarColor = (bg: string): void => {
