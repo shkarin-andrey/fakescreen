@@ -81,9 +81,9 @@ const Phone: FC = () => {
         </div>
       </div>
       <FloatButton.Group
-        trigger='hover'
+        trigger='click'
         type='primary'
-        style={{ right: 20 }}
+        style={{ right: 20, zIndex: 101 }}
         icon={<SaveOutlined />}
       >
         <FloatButton

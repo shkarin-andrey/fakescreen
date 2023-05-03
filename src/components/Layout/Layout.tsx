@@ -24,9 +24,9 @@ const Layout: FC<ILayout> = ({ children }) => {
     <div className='bg-gray-100 min-h-screen py-12'>
       <div className='container mx-auto'>{children}</div>
       <FloatButton.Group
-        trigger='hover'
+        trigger='click'
         type='primary'
-        style={{ right: 20, bottom: 100, zIndex: 0 }}
+        style={{ right: 20, bottom: 104, zIndex: 100 }}
         icon={<GlobalOutlined />}
       >
         {local.map((lang) => (
