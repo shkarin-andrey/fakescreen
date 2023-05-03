@@ -1,7 +1,12 @@
-import { ClearOutlined, CopyOutlined, SaveOutlined } from '@ant-design/icons';
-import { FloatButton, notification } from 'antd';
+import {
+  ClearOutlined,
+  CopyOutlined,
+  InfoCircleOutlined,
+  SaveOutlined,
+} from '@ant-design/icons';
+import { FloatButton, Modal, notification } from 'antd';
 import html2canvas from 'html2canvas';
-import { FC, useCallback, useRef } from 'react';
+import { FC, useCallback, useMemo, useRef } from 'react';
 
 import phoneImg from '../../assets/images/phone.svg';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
@@ -12,6 +17,8 @@ import PhoneChat from './PhoneChat';
 import PhoneFooter from './PhoneFooter';
 import PhoneHeader from './PhoneHeader';
 
+const { confirm } = Modal;
+
 const Phone: FC = () => {
   const ref = useRef(null);
 
@@ -20,6 +27,16 @@ const Phone: FC = () => {
   const handleResetChat = useCallback(() => {
     dispatch(resetChat());
   }, []);
+
+  const config = useMemo(
+    () => ({
+      icon: <InfoCircleOutlined />,
+      title: 'Очищение переписки',
+      content: <div>Вы действительно хотите очистить всю переписку?</div>,
+      onOk: () => handleResetChat(),
+    }),
+    [],
+  );
 
   const handleSaveScreenshot = useCallback(
     (isSave: boolean) => {
@@ -70,7 +87,9 @@ const Phone: FC = () => {
         icon={<SaveOutlined />}
       >
         <FloatButton
-          onClick={handleResetChat}
+          onClick={() => {
+            confirm(config);
+          }}
           icon={<ClearOutlined />}
           tooltip={'Очистить переписку'}
         />
