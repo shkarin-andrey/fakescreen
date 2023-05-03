@@ -12,7 +12,7 @@ import StepsScreen from '../StepsScreen';
 import Title from '../Title';
 
 const App: FC = () => {
-  const [current, setCurrent] = useState(2);
+  const [current, setCurrent] = useState(0);
 
   const language = useAppSelector((state) => state.language.language);
 
