@@ -20,7 +20,7 @@ const PhoneUserInfo: FC = () => {
     return status.props.id === options[1].label || status.props.id === options[0].label
       ? 'text-[#32A8E6]'
       : 'text-[#787878]';
-  }, []);
+  }, [status.props.id]);
 
   return (
     <div className='w-full bg-[#F6F6F6] h-[38px] pl-[6px] pr-[5px] grid grid-cols-9 items-center text-xs font-semibold text-[#171717] border-b border-0 border-solid border-[#E8E8E8]'>
