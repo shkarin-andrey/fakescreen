@@ -1,4 +1,5 @@
-import { FC, useCallback } from 'react';
+import path from 'path';
+import { FC, useCallback, useEffect } from 'react';
 
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { setBgImage } from '../../../redux/state/configSlice';
@@ -16,6 +17,20 @@ const SettingsInterlocutorIGallary: FC = () => {
     }
     dispatch(setBgImage(src));
   }, []);
+
+  // const directoryPath = path.join(__dirname);
+
+  // fs.readdir(directoryPath, function (err, files) {
+  //   if (err) {
+  //     console.log('Error getting directory information.');
+  //   } else {
+  //     files.forEach(function (file) {
+  //       console.log(file);
+  //     });
+  //   }
+  // });
+
+  // console.log('directoryPath: ', directoryPath);
 
   return (
     <div className='flex flex-col gap-4'>

@@ -77,14 +77,22 @@ const MessageChat: FC<IMessageChat> = ({
     if (type === 'owner') {
       isPrevType && isNextType && nextType !== null
         ? className.push('!rounded-tr-[5px]')
-        : !isPrevType && isNextType
+        : !isPrevType && isNextType && !isMessage
         ? className.push('!rounded-r-[5px]')
+        : !isPrevType && isNextType && !isMessage
+        ? className.push('!rounded-tr-[5px]')
+        : !isPrevType && !isNextType && !isMessage
+        ? className.push('rounded-br-[5px]')
         : '';
     } else {
       isPrevType && isNextType && nextType !== null
         ? className.push('!rounded-tl-[5px]')
-        : !isPrevType && isNextType
+        : !isPrevType && isNextType && !isMessage
         ? className.push('!rounded-l-[5px]')
+        : !isPrevType && isNextType && !isMessage
+        ? className.push('!rounded-tl-[5px]')
+        : !isPrevType && !isNextType && !isMessage
+        ? className.push('rounded-bl-[5px]')
         : '';
     }
 
