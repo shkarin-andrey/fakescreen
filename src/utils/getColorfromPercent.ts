@@ -7,16 +7,12 @@ export const getColorfromPercent = (
     return '#FFCC0A';
   }
 
-  if (size > 50 && isCharge) {
+  if (size > 20 && isCharge) {
     return '#34C759';
   }
 
-  if (size > 50) {
+  if (size > 20) {
     return 'black';
-  }
-
-  if (size <= 50 && size > 20) {
-    return '#FFCC0A';
   }
 
   return '#FF3B30';
