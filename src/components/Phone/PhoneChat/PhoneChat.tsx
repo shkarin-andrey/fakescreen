@@ -49,7 +49,7 @@ const PhoneChat: FC = () => {
 
   return (
     <div
-      className='relative flex-1 overflow-hidden z-10'
+      className='relative flex-1 overflow-hidden z-10 h-full w-full'
       style={{
         backgroundImage: `url('${bgImage}')`,
         backgroundPosition: 'center',

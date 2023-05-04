@@ -19,7 +19,7 @@ interface ConfigState {
   time: string;
   spum: boolean;
   mute: boolean;
-  bgImage: string;
+  bgImage: string | undefined;
   geo: Geo;
   status: any;
   bgAvatarColor: string;
@@ -39,7 +39,7 @@ const initialState: ConfigState = {
   time: '09:41',
   spum: false,
   mute: false,
-  bgImage: gallary[0],
+  bgImage: gallary[0].preview,
   geo: undefined,
   status: <FormattedMessage id={options[1].label} />,
   bgAvatarColor: listColorsBgAvatar[0],

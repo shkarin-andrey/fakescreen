@@ -1,45 +1,63 @@
-import path from 'path';
-import { FC, useCallback, useEffect } from 'react';
+import { PlusOutlined } from '@ant-design/icons';
+import { Upload, UploadFile, UploadProps } from 'antd';
+import { RcFile } from 'antd/es/upload';
+import { FC, useState } from 'react';
 
-import { useAppSelector } from '../../../hooks/useAppSelector';
 import { setBgImage } from '../../../redux/state/configSlice';
-import Image from '../../Image';
+import { beforeUploadPNGAndJPEG } from '../../../utils/beforeUploadPNGAndJPEG';
 import { useAppDispatch } from './../../../hooks/useAppDispatch';
 import { gallary } from './SettingsInterlocutorIGallary.config';
 
+const getBase64 = (file: RcFile): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+  });
+
 const SettingsInterlocutorIGallary: FC = () => {
   const dispatch = useAppDispatch();
-  const bgImage = useAppSelector((state) => state.config.bgImage);
 
-  const handleClick = useCallback((src: string) => {
-    if (bgImage === src) {
-      return;
+  const [fileList, setFileList] = useState<UploadFile[]>(gallary);
+
+  const handlePreview = async (file: UploadFile) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj as RcFile);
     }
-    dispatch(setBgImage(src));
-  }, []);
 
-  // const directoryPath = path.join(__dirname);
+    dispatch(setBgImage(file.preview));
+  };
 
-  // fs.readdir(directoryPath, function (err, files) {
-  //   if (err) {
-  //     console.log('Error getting directory information.');
-  //   } else {
-  //     files.forEach(function (file) {
-  //       console.log(file);
-  //     });
-  //   }
-  // });
+  const handleChange: UploadProps['onChange'] = (info) => {
+    setFileList(info.fileList);
+  };
 
-  // console.log('directoryPath: ', directoryPath);
+  const handleCustomRequest: UploadProps['customRequest'] = async ({
+    onSuccess,
+  }: any) => {
+    setTimeout(() => {
+      onSuccess('ok');
+    }, 0);
+  };
 
   return (
     <div className='flex flex-col gap-4'>
       <div className='font-medium text-base'>Галерея:</div>
-      <div className='flex flex-wrap gap-5'>
-        {gallary.map((img) => (
-          <Image key={img} src={img} onClick={handleClick} select={bgImage} />
-        ))}
-      </div>
+
+      <Upload
+        listType='picture-card'
+        fileList={fileList}
+        onChange={handleChange}
+        onPreview={handlePreview}
+        customRequest={handleCustomRequest}
+        beforeUpload={beforeUploadPNGAndJPEG}
+      >
+        <div>
+          <PlusOutlined />
+          <div style={{ marginTop: 8 }}>Загрузить</div>
+        </div>
+      </Upload>
     </div>
   );
 };
