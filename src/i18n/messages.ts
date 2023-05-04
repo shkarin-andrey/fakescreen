@@ -14,6 +14,9 @@ export const messages = {
     interlocutor_status_yesterday: 'was yesterday in {time}',
     interlocutor_status_write: 'typing',
 
+    interlocutor_spum_block: 'Block User',
+    interlocutor_spum_add: 'Add to Contacts',
+
     header_phone_back: 'Back',
 
     minute_age: 'minute age',
@@ -31,6 +34,9 @@ export const messages = {
     interlocutor_status_today: 'был(а) сегодня в {time}',
     interlocutor_status_yesterday: 'был(а) вчера в {time}',
     interlocutor_status_write: 'печатает',
+
+    interlocutor_spum_block: 'Заблокировать',
+    interlocutor_spum_add: 'Добавить',
 
     header_phone_back: 'Назад',
 
