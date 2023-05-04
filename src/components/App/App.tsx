@@ -13,7 +13,6 @@ import Title from '../Title';
 
 const App: FC = () => {
   const [current, setCurrent] = useState(0);
-
   const language = useAppSelector((state) => state.language.language);
 
   const onChange = useCallback((value: number) => {
