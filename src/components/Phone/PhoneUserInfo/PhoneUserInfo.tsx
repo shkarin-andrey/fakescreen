@@ -38,14 +38,14 @@ const PhoneUserInfo: FC = () => {
       </div>
       <div className='text-sm col-span-5 flex flex-col items-center leading-none pb-[2px]'>
         <div className='w-full flex items-end justify-center gap-[4px]'>
-          <span className='font-semibold truncate'>{username}</span>
+          <span className='font-semibold truncate pb-[1px]'>{username}</span>
           {mute && (
             <div>
               <MuteIcon />
             </div>
           )}
         </div>
-        <div className={`text-[11px] pt-[1px] font-normal ${isStatusOnline}`}>
+        <div className={`text-[11px] font-normal ${isStatusOnline}`}>
           {status.props.id === options[0].label ? (
             <div className='flex items-center gap-1'>
               <div>
