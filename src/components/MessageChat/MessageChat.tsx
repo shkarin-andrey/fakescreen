@@ -17,7 +17,6 @@ const MessageChat: FC<IMessageChat> = ({
 }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [width, setWidth] = useState<number | 'auto'>('auto');
-  const [maxWidth, setMaxWidth] = useState<number | 'auto'>('auto');
   const messageRef = useRef<HTMLDivElement>(null);
   const messageWrapperRef = useRef<HTMLDivElement>(null);
 
@@ -31,7 +30,6 @@ const MessageChat: FC<IMessageChat> = ({
 
       if (messageWrapperRef.current.offsetHeight > 30) {
         setWidth(messageRef.current.offsetWidth + 1);
-        setMaxWidth(245);
       }
     }
   }, [message, messageRef.current, messageWrapperRef.current]);
@@ -155,7 +153,6 @@ const MessageChat: FC<IMessageChat> = ({
               className={image ? classNameImagePadding : ''}
               style={{
                 width: image ? undefined : width,
-                maxWidth: image ? undefined : maxWidth,
               }}
             >
               <span ref={messageRef} className='tracking-[0.6px]' />
