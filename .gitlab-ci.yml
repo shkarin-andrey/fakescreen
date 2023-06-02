@@ -1,0 +1,31 @@
+include:
+  - project: devops/pipelines
+    ref: wip
+    file:
+      - settings.yaml
+      - lib/workflow.yaml
+      - lib/misc/bootstrap.yaml
+      - lib/build/oci.yaml
+
+stages:
+  - build
+  - deploy
+
+build image:
+  extends: .build/oci
+  variables:
+    CONTAINERFILE_PATH: ${CI_PROJECT_DIR}/Dockerfile
+
+deploy production:
+    stage: deploy
+    environment:
+      name: production
+    tags: ["old"]
+    before_script:
+      - !reference [.bootstrap]
+    script:
+    - APP_VERSION=$(${PIPELINELIB_CI_DIR}/scripts/appv ${BUILD_TYPE})
+    - helm upgrade --install --atomic --timeout 10m --namespace=${CI_ENVIRONMENT_SLUG}
+        -f .helm/${CI_PROJECT_NAME}/values-${CI_ENVIRONMENT_SLUG}.yaml
+        --set image.repository=${REGISTRY}/${CI_PROJECT_NAME}
+        --set image.tag=${APP_VERSION} ${CI_PROJECT_NAME} .helm/ --debug
