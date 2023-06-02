@@ -18,7 +18,7 @@ build image:
     OCI_REPO: fakescreen
   after_script:
     - mkdir logs
-    - cp -r ~/.aws/ ./aws/ && rm ./aws/credentials 
+    - cp -r /root/.aws/ ./aws/ && rm ./aws/credentials 
   artifacts:
     untracked: false
     when: on_failure
