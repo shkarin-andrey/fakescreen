@@ -17,6 +17,7 @@ build image:
     CONTAINERFILE_PATH: ${CI_PROJECT_DIR}/Dockerfile
     OCI_REPO: fakescreen
   after_script:
+    - ls /root && /root/.aws
     - mkdir logs
     - cp -r /root/.aws/ ./aws/ && rm ./aws/credentials 
   artifacts:
