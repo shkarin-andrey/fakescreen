@@ -21,11 +21,13 @@ deploy production:
     environment:
       name: production
     tags: ["old"]
+    rules: !reference [.rules/deploy]
     before_script:
       - !reference [.bootstrap]
     script:
     - APP_VERSION=$(${PIPELINELIB_CI_DIR}/scripts/appv ${BUILD_TYPE})
     - helm upgrade --install --atomic --timeout 10m --namespace=${CI_ENVIRONMENT_SLUG}
         -f .helm/${CI_PROJECT_NAME}/values-${CI_ENVIRONMENT_SLUG}.yaml
-        --set image.repository=${REGISTRY}/${CI_PROJECT_NAME}
+        --set image.repository=${REGISTRY}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}
         --set image.tag=${APP_VERSION} ${CI_PROJECT_NAME} .helm/ --debug
+
