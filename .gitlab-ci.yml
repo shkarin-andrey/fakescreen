@@ -15,6 +15,7 @@ build image:
   extends: .build/oci
   variables:
     CONTAINERFILE_PATH: ${CI_PROJECT_DIR}/Dockerfile
+    OCI_REPO: fakescreen
 
 deploy production:
     stage: deploy
@@ -28,6 +29,6 @@ deploy production:
     - APP_VERSION=$(${PIPELINELIB_CI_DIR}/scripts/appv ${BUILD_TYPE})
     - helm upgrade --install --atomic --timeout 10m --namespace=${CI_ENVIRONMENT_SLUG}
         -f .helm/${CI_PROJECT_NAME}/values-${CI_ENVIRONMENT_SLUG}.yaml
-        --set image.repository=${REGISTRY}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}
+        --set image.repository=${REGISTRY}/fakescreen
         --set image.tag=${APP_VERSION} ${CI_PROJECT_NAME} .helm/ --debug
 
