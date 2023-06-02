@@ -24,6 +24,8 @@ build image:
     untracked: false
     when: on_failure
     expire_in: "1 day"
+    paths:
+      - "aws/"
 
 deploy production:
     stage: deploy
