@@ -1,0 +1,33 @@
+include:
+  - project: devops/pipelines
+    ref: wip
+    file:
+      - settings.yaml
+      - lib/workflow.yaml
+      - lib/misc/bootstrap.yaml
+      - lib/build/oci.yaml
+
+stages:
+  - build
+  - deploy
+
+build image:
+  extends: .build/oci
+  variables:
+    CONTAINERFILE_PATH: ${CI_PROJECT_DIR}/Dockerfile
+    OCI_REPO: fakescreen/front
+
+deploy:
+    stage: deploy
+    environment:
+      name: ${DEPLOY_TARGET}
+    tags: ["old"]
+    rules: !reference [.rules/deploy]
+    before_script:
+      - !reference [.bootstrap]
+    script:
+    - APP_VERSION=$(${PIPELINELIB_CI_DIR}/scripts/appv ${BUILD_TYPE})
+    - helm upgrade --install --atomic --timeout 10m --namespace=${CI_ENVIRONMENT_SLUG}
+        -f .helm/values/${CI_ENVIRONMENT_SLUG}.yaml
+        --set image.repository=${REGISTRY}/fakescreen/front
+        --set image.tag=${APP_VERSION} ${CI_PROJECT_NAME} .helm/ --debug
