@@ -59,14 +59,16 @@ const PhoneUserInfo: FC = () => {
         </div>
       </div>
       <div
-        className='avatar col-span-2 ml-auto w-8 h-8 rounded-full overflow-hidden flex justify-center items-center text-white uppercase -mb-[1px]'
+        className='avatar col-span-2 ml-auto w-[29px] h-[29px] rounded-full overflow-hidden flex justify-center items-center text-white uppercase'
         style={{
-          background: avatarFile
-            ? `url("${avatarFile}") center center/cover no-repeat`
-            : bgAvatarColor,
+          background: !avatarFile ? bgAvatarColor : undefined,
         }}
       >
-        {!avatarFile && <div className='text-[13px]'>{username?.[0]}</div>}
+        {!avatarFile ? (
+          <div className='text-[13px]'>{username?.[0]}</div>
+        ) : (
+          <img src={avatarFile} alt='avatar' className='w-full h-full' />
+        )}
       </div>
     </div>
   );
