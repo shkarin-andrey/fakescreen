@@ -11,7 +11,7 @@ image:
   tag: ""
 
 imagePullSecrets:
-  - gitlab-cr
+  - name: gitlab-cr
 nameOverride: ""
 fullnameOverride: ""
 
