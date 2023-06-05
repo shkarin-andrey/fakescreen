@@ -42,7 +42,7 @@ const Phone: FC = () => {
     (isSave: boolean) => {
       if (ref.current) {
         html2canvas(ref.current, {
-          scale: 3.5,
+          scale: 2.568,
           allowTaint: true,
           useCORS: true,
         })
