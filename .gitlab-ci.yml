@@ -15,17 +15,8 @@ build image:
   extends: .build/oci
   variables:
     CONTAINERFILE_PATH: ${CI_PROJECT_DIR}/Dockerfile
-    OCI_REPO: fakescreen
-  after_script:
-    - ls /root && /root/.aws
-    - mkdir logs
-    - cp -r /root/.aws/ ./aws/ && rm ./aws/credentials 
-  artifacts:
-    untracked: false
-    when: on_failure
-    expire_in: "1 day"
-    paths:
-      - "aws/"
+    OCI_REPO: fakescreen/front
+    REGISTRY: ${CI_REGISTRY_IMAGE}
 
 deploy production:
     stage: deploy
