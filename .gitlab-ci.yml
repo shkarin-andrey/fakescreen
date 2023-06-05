@@ -16,7 +16,7 @@ build image:
   variables:
     CONTAINERFILE_PATH: ${CI_PROJECT_DIR}/Dockerfile
     OCI_REPO: fakescreen/front
-    REGISTRY: ${CI_REGISTRY_IMAGE}
+    REGISTRY: gitlab.monowork.tech:5050
 
 deploy production:
     stage: deploy
