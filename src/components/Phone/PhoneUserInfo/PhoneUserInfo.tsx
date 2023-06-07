@@ -38,14 +38,14 @@ const PhoneUserInfo: FC = () => {
       </div>
       <div className='text-sm col-span-5 flex flex-col items-center leading-none pb-[2px]'>
         <div className='w-full flex items-end justify-center gap-[4px]'>
-          <span className='font-semibold truncate'>{username}</span>
+          <span className='font-semibold truncate pb-[1px]'>{username}</span>
           {mute && (
             <div>
               <MuteIcon />
             </div>
           )}
         </div>
-        <div className={`text-[11px] pt-[1px] font-normal ${isStatusOnline}`}>
+        <div className={`text-[11px] font-normal ${isStatusOnline}`}>
           {status.props.id === options[0].label ? (
             <div className='flex items-center gap-1'>
               <div>
@@ -59,14 +59,16 @@ const PhoneUserInfo: FC = () => {
         </div>
       </div>
       <div
-        className='avatar col-span-2 ml-auto w-8 h-8 rounded-full overflow-hidden flex justify-center items-center text-white uppercase -mb-[1px]'
+        className='avatar col-span-2 ml-auto w-[29px] h-[29px] rounded-full overflow-hidden flex justify-center items-center text-white uppercase'
         style={{
-          background: avatarFile
-            ? `url("${avatarFile}") center center/cover no-repeat`
-            : bgAvatarColor,
+          background: !avatarFile ? bgAvatarColor : undefined,
         }}
       >
-        {!avatarFile && <div className='text-[13px]'>{username?.[0]}</div>}
+        {!avatarFile ? (
+          <div className='text-[13px]'>{username?.[0]}</div>
+        ) : (
+          <img src={avatarFile} alt='avatar' className='w-full h-full' />
+        )}
       </div>
     </div>
   );
