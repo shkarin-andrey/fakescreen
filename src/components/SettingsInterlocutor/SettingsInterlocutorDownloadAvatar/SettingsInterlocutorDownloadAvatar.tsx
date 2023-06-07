@@ -1,5 +1,7 @@
+/* eslint-disable simple-import-sort/imports */
 import { DeleteOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { Upload, UploadProps } from 'antd';
+import ImgCrop from 'antd-img-crop';
 import { RcFile } from 'antd/es/upload';
 import { FC, useState } from 'react';
 
@@ -51,28 +53,30 @@ const SettingsInterlocutorDownloadAvatar: FC = () => {
 
   return (
     <Wrapper title='Загрузить аватарку:'>
-      <Upload
-        listType='picture-circle'
-        showUploadList={false}
-        onChange={handleChange}
-        customRequest={handleCustomRequest}
-        beforeUpload={beforeUploadPNGAndJPEG}
-      >
-        {avatarFile ? (
-          <div className='group w-full h-full overflow-hidden rounded-full relative'>
-            <img src={avatarFile} alt='avatar' className='w-full h-full object-cover' />
-            <div
-              aria-hidden
-              onClick={handleDeleteAvatar}
-              className='absolute w-full h-full top-0 left-0 flex justify-center items-center bg-gray-700/80 text-white opacity-0 group-hover:opacity-100 transition-all'
-            >
-              <DeleteOutlined className='text-red-600 text-3xl' />
+      <ImgCrop rotationSlider modalTitle='Редактирование аватарки'>
+        <Upload
+          listType='picture-circle'
+          showUploadList={false}
+          onChange={handleChange}
+          customRequest={handleCustomRequest}
+          beforeUpload={beforeUploadPNGAndJPEG}
+        >
+          {avatarFile ? (
+            <div className='group w-full h-full overflow-hidden rounded-full relative'>
+              <img src={avatarFile} alt='avatar' className='w-full h-full object-cover' />
+              <div
+                aria-hidden
+                onClick={handleDeleteAvatar}
+                className='absolute w-full h-full top-0 left-0 flex justify-center items-center bg-gray-700/80 text-white opacity-0 group-hover:opacity-100 transition-all'
+              >
+                <DeleteOutlined className='text-red-600 text-3xl' />
+              </div>
             </div>
-          </div>
-        ) : (
-          uploadButton
-        )}
-      </Upload>
+          ) : (
+            uploadButton
+          )}
+        </Upload>
+      </ImgCrop>
     </Wrapper>
   );
 };
