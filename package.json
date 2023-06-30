@@ -16,13 +16,18 @@
     "@reduxjs/toolkit": "^1.9.3",
     "antd": "^5.4.0",
     "antd-img-crop": "^4.12.2",
+    "dom-to-image": "^2.6.0",
     "emoji-picker-react": "^4.4.8",
+    "file-saver": "^2.0.5",
+    "html-to-image": "^1.11.11",
     "html2canvas": "^1.4.1",
+    "node-html-to-image": "^3.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-intl": "^6.4.1",
     "react-lazy-load-image-component": "^1.5.6",
     "react-redux": "^8.0.5",
+    "react-router-dom": "6.3",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
