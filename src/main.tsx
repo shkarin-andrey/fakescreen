@@ -1,5 +1,3 @@
-import 'antd/dist/reset.css';
-import 'react-lazy-load-image-component/src/effects/blur.css';
 import './index.css';
 
 import { ConfigProvider } from 'antd';

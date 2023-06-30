@@ -14,17 +14,27 @@ const MessageChat: FC<IMessageChat> = ({
   prevType,
   nextType,
   image,
+  className,
+  style,
 }) => {
-  const [isOpneModal, setIsOpneModal] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [width, setWidth] = useState<number | 'auto'>('auto');
+  const messageRef = useRef<HTMLDivElement>(null);
+  const messageWrapperRef = useRef<HTMLDivElement>(null);
 
   const isMessage = message.trim() !== '';
 
   useEffect(() => {
-    if (ref.current) {
-      ref.current.innerHTML = message;
+    setWidth('auto');
+
+    if (messageRef.current && messageWrapperRef.current) {
+      messageRef.current.innerHTML = message;
+
+      if (messageWrapperRef.current.offsetHeight > 30) {
+        setWidth(messageRef.current.offsetWidth + 1);
+      }
     }
-  }, [message]);
+  }, [message, messageRef.current, messageWrapperRef.current]);
 
   const isOwner = useMemo(() => {
     if (type === 'owner') {
@@ -112,17 +122,19 @@ const MessageChat: FC<IMessageChat> = ({
   }, []);
 
   const handleOpenModal = useCallback(() => {
-    setIsOpneModal(true);
+    setIsOpenModal(true);
   }, []);
 
   return (
     <>
       <div
+        ref={messageWrapperRef}
         aria-hidden={true}
         onClick={handleOpenModal}
         className={`flex rounded-[13px] text-base max-w-[250px] w-fit relative leading-[134%] ${
           image ? 'flex-col' : classNameImagePadding
-        } ${isOwner} ${classNameNextType} ${classNameRounded()}`}
+        } ${isOwner} ${classNameNextType} ${classNameRounded()} ${className}`}
+        style={style}
       >
         {image && (
           <div
@@ -140,8 +152,13 @@ const MessageChat: FC<IMessageChat> = ({
         )}
         {isMessage ? (
           <>
-            <div className={image ? classNameImagePadding : ''}>
-              <div ref={ref} className='contents tracking-[0.6px]' />
+            <div
+              className={image ? classNameImagePadding : ''}
+              style={{
+                width: image ? undefined : width,
+              }}
+            >
+              <span ref={messageRef} className='tracking-[0.6px]' />
               <MessageTime
                 className='mt-[8px] pb-0'
                 type={type}
@@ -173,8 +190,8 @@ const MessageChat: FC<IMessageChat> = ({
         type={type}
         time={time}
         isViewed={isViewed}
-        isOpneModal={isOpneModal}
-        setIsOpneModal={setIsOpneModal}
+        isOpneModal={isOpenModal}
+        setIsOpneModal={setIsOpenModal}
         message={message}
       />
     </>

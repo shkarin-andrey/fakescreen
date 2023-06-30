@@ -23,12 +23,12 @@ const PhoneUserInfo: FC = () => {
   }, [status.props.id]);
 
   return (
-    <div className='w-full bg-[#F6F6F6] h-[38px] pl-[6px] pr-[5px] grid grid-cols-9 items-center text-xs font-semibold text-[#171717] border-b border-0 border-solid border-[#E8E8E8]'>
+    <div className='absolute top-[34px] left-0 z-[13] w-full h-[38px] pl-[6px] pr-[5px] grid grid-cols-9 items-center text-xs font-semibold text-[#171717] border-b border-0 border-solid border-[#E8E8E8]'>
       <div className='text-[#037EE5] col-span-2 flex items-center gap-[6px] text-sm mt-[2px]'>
         <ShapeIcon />
         {isUnread ? (
           <div className='flex justify-center items-center text-white px-[5px] h-fit py-[1px] leading-none bg-[#007AFF] rounded-full text-[10px] font-normal'>
-            <div className='mb-[2px]'>{unread}</div>
+            <div className='mb-[1px]'>{unread}</div>
           </div>
         ) : (
           <span className='font-normal'>
@@ -38,14 +38,14 @@ const PhoneUserInfo: FC = () => {
       </div>
       <div className='text-sm col-span-5 flex flex-col items-center leading-none pb-[2px]'>
         <div className='w-full flex items-end justify-center gap-[4px]'>
-          <span className='font-semibold truncate'>{username}</span>
+          <span className='font-semibold truncate pb-[1px]'>{username}</span>
           {mute && (
             <div>
               <MuteIcon />
             </div>
           )}
         </div>
-        <div className={`text-[11px] pt-[1px] font-normal ${isStatusOnline}`}>
+        <div className={`text-[11px] font-normal ${isStatusOnline}`}>
           {status.props.id === options[0].label ? (
             <div className='flex items-center gap-1'>
               <div>
@@ -59,14 +59,16 @@ const PhoneUserInfo: FC = () => {
         </div>
       </div>
       <div
-        className='avatar col-span-2 ml-auto w-8 h-8 rounded-full overflow-hidden flex justify-center items-center text-white uppercase -mb-[1px]'
+        className='avatar col-span-2 ml-auto w-[29px] h-[29px] rounded-full overflow-hidden flex justify-center items-center text-white uppercase'
         style={{
-          background: avatarFile
-            ? `url("${avatarFile}") center center/cover no-repeat`
-            : bgAvatarColor,
+          background: !avatarFile ? bgAvatarColor : undefined,
         }}
       >
-        {!avatarFile && <div className='text-[13px]'>{username?.[0]}</div>}
+        {!avatarFile ? (
+          <div className='text-[13px]'>{username?.[0]}</div>
+        ) : (
+          <img src={avatarFile} alt='avatar' className='w-full h-full' />
+        )}
       </div>
     </div>
   );

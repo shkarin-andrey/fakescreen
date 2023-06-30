@@ -1,17 +1,20 @@
 import { FC, Fragment, memo, useCallback, useRef, useState } from 'react';
 
 import GoDownButtonIcon from '../../../assets/icons/GoDownButtonIcon';
+import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
-import type { Message } from '../../../redux/state/chatSlice';
+import { type Message, setBlurMessage } from '../../../redux/state/chatSlice';
 import MessageChat from '../../MessageChat';
 import MessageSticker from '../../MessageSticker';
 import TimeChat from '../../TimeChat';
+import { IPhoneChat } from './PhoneChat.interface';
 
-const PhoneChat: FC = () => {
+const PhoneChat: FC<IPhoneChat> = ({ className }) => {
+  const dispatch = useAppDispatch();
   const bgImage = useAppSelector((state) => state.config.bgImage);
   const data = useAppSelector((state) => state.chat.data);
-  const ref = useRef<HTMLDivElement>(null);
   const [scroll, setScroll] = useState(false);
+  const chatRef = useRef<HTMLDivElement>(null);
 
   const prevType = useCallback(
     (index: number): Message['type'] | null => {
@@ -40,6 +43,22 @@ const PhoneChat: FC = () => {
   );
 
   const handleScroll = useCallback((e: any) => {
+    dispatch(setBlurMessage([]));
+    const arr: any[] = [];
+    e.target.childNodes.forEach((el: any, index: number) => {
+      const coords = el.getBoundingClientRect();
+      console.log(coords);
+
+      if (coords.top < 150 && coords.top > 0) {
+        arr.push({
+          top: coords.top,
+          index,
+        });
+      }
+    });
+
+    dispatch(setBlurMessage(arr));
+
     if (e.target.scrollTop < -30) {
       setScroll(true);
     } else {
@@ -58,9 +77,9 @@ const PhoneChat: FC = () => {
       }}
     >
       <div
-        ref={ref}
+        ref={chatRef}
         onScroll={handleScroll}
-        className='chat w-full h-full pl-[9px] pr-[5px] py-[7px] overflow-y-scroll flex flex-col-reverse scrollbar scrollbar-thumb-transparent scrollbar-track-transparent scrollbar-small'
+        className={`chat w-full h-full pl-[9px] pr-[5px] pb-[7px] pt-[79px] flex flex-col-reverse scrollbar scrollbar-thumb-transparent scrollbar-track-transparent scrollbar-small ${className}`}
       >
         {data.map((item, index) => (
           <Fragment key={item.id}>
