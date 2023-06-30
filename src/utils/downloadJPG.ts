@@ -1,6 +1,6 @@
-export const downloadJPG = (canvas: HTMLCanvasElement) => {
+export const downloadJPG = (dataUrl: string) => {
   const link = document.createElement('a');
   link.download = 'screenshot.jpg';
-  link.href = canvas.toDataURL('image/jpeg', 1);
+  link.href = dataUrl;
   link.click();
 };

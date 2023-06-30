@@ -14,6 +14,8 @@ const MessageChat: FC<IMessageChat> = ({
   prevType,
   nextType,
   image,
+  className,
+  style,
 }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [width, setWidth] = useState<number | 'auto'>('auto');
@@ -131,7 +133,8 @@ const MessageChat: FC<IMessageChat> = ({
         onClick={handleOpenModal}
         className={`flex rounded-[13px] text-base max-w-[250px] w-fit relative leading-[134%] ${
           image ? 'flex-col' : classNameImagePadding
-        } ${isOwner} ${classNameNextType} ${classNameRounded()}`}
+        } ${isOwner} ${classNameNextType} ${classNameRounded()} ${className}`}
+        style={style}
       >
         {image && (
           <div

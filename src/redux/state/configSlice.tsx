@@ -114,6 +114,27 @@ export const configSlice = createSlice({
     setIsCharge: (state, action: PayloadAction<ConfigState['isCharge']>) => {
       state.isCharge = action.payload;
     },
+    setGlobalConfig: (state, action: PayloadAction<ConfigState>) => {
+      state.volumeBattary = action.payload.volumeBattary;
+      state.wifi = action.payload.wifi;
+      state.ethernet = action.payload.ethernet;
+      state.username = action.payload.username;
+      state.time = action.payload.time;
+      state.spum = action.payload.spum;
+      state.mute = action.payload.mute;
+      state.bgImage = action.payload.bgImage;
+      state.geo = action.payload.geo;
+      // state.status = action.payload.status;
+      state.bgAvatarColor = action.payload.bgAvatarColor;
+      state.avatarFile = action.payload.avatarFile;
+      state.network = action.payload.network;
+      state.stateSim = action.payload.stateSim;
+      state.isUnread = action.payload.isUnread;
+      state.unread = action.payload.unread;
+      state.watermark = action.payload.watermark;
+      state.isEconom = action.payload.isEconom;
+      state.isCharge = action.payload.isCharge;
+    },
   },
 });
 
@@ -137,6 +158,7 @@ export const {
   setWatermark,
   setIsCharge,
   setIsEconom,
+  setGlobalConfig,
 } = configSlice.actions;
 
 export default configSlice.reducer;

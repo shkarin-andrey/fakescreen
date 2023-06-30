@@ -23,7 +23,7 @@ const PhoneUserInfo: FC = () => {
   }, [status.props.id]);
 
   return (
-    <div className='w-full bg-[#F6F6F6] h-[38px] pl-[6px] pr-[5px] grid grid-cols-9 items-center text-xs font-semibold text-[#171717] border-b border-0 border-solid border-[#E8E8E8]'>
+    <div className='absolute top-[34px] left-0 z-[13] w-full h-[38px] pl-[6px] pr-[5px] grid grid-cols-9 items-center text-xs font-semibold text-[#171717] border-b border-0 border-solid border-[#E8E8E8]'>
       <div className='text-[#037EE5] col-span-2 flex items-center gap-[6px] text-sm mt-[2px]'>
         <ShapeIcon />
         {isUnread ? (
