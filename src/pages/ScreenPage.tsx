@@ -15,7 +15,7 @@ const ScreenPage: FC = () => {
   // const [globalState, setGlobalState] = useState({});
 
   useEffect(() => {
-    fetch('blob:http://localhost:3000' + location.pathname)
+    fetch('blob:https://fakescreen-beta.vercel.app' + location.pathname)
       .then((res) => res.json())
       // .then((data) => setGlobalState(data));
       .then((data) => {
