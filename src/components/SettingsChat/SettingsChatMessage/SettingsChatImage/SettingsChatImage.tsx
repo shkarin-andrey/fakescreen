@@ -1,10 +1,8 @@
 import { DeleteOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { Upload, UploadProps } from 'antd';
-import { RcFile } from 'antd/es/upload';
 import { FC, useState } from 'react';
 
 import { beforeUploadPNGAndJPEG } from '../../../../utils/beforeUploadPNGAndJPEG';
-import { getBase64 } from '../../../../utils/getBase64';
 import Wrapper from '../../../Wrapper';
 import { ISettingsChatImage } from './SettingsChatImage.interface';
 
@@ -26,10 +24,9 @@ const SettingsChatImage: FC<ISettingsChatImage> = ({ image, setImage }) => {
     }
 
     if (info.file.status === 'done') {
-      getBase64(info.file.originFileObj as RcFile, (url) => {
-        setLoading(false);
-        setImage(url);
-      });
+      const url = URL.createObjectURL(info.file.originFileObj as any);
+      setLoading(false);
+      setImage(url);
     }
   };
 

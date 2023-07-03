@@ -1,8 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+const { VITE_APP_BASE_URL } = import.meta.env;
+
 export const stateApi = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://ac65-3-125-188-66.ngrok-free.app/api/v1',
+    baseUrl: VITE_APP_BASE_URL,
     mode: 'cors',
     credentials: 'omit',
   }),
@@ -17,7 +19,16 @@ export const stateApi = createApi({
     getStateId: build.query<any, string>({
       query: (id) => `state/${id}`,
     }),
+    getScreenshot: build.query<any, string>({
+      query: (id) => ({
+        url: `state/screenshot/${id}`,
+        method: 'GET',
+        responseHandler: async (response) => await response.blob(),
+        cache: 'no-cache',
+      }),
+    }),
   }),
 });
 
-export const { useSaveStateMutation, useGetStateIdQuery } = stateApi;
+export const { useSaveStateMutation, useGetStateIdQuery, useLazyGetScreenshotQuery } =
+  stateApi;
