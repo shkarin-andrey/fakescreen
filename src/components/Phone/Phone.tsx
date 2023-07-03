@@ -5,16 +5,14 @@ import {
   SaveOutlined,
 } from '@ant-design/icons';
 import { FloatButton, Modal, notification } from 'antd';
-import { toPng } from 'html-to-image';
-import { FC, useCallback, useMemo, useRef, useState } from 'react';
+import { FC, useCallback, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import phoneImg from '../../assets/images/phone.svg';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
+import { useSaveStateMutation } from '../../redux/api/state';
 import { resetChat } from '../../redux/state/chatSlice';
-import { copyImgToClipboard } from '../../utils/copyImgToClipboard';
-import { downloadJPG } from '../../utils/downloadJPG';
 import PhoneChat from './PhoneChat';
 import PhoneFooter from './PhoneFooter';
 import PhoneHeader from './PhoneHeader';
@@ -22,12 +20,14 @@ import PhoneHeader from './PhoneHeader';
 const { confirm } = Modal;
 
 const Phone: FC = () => {
+  const [saveState] = useSaveStateMutation();
   const navigate = useNavigate();
 
   const ref = useRef<HTMLDivElement>(null);
-  const [chatClass, setChatClass] = useState('overflow-y-scroll');
   const dispatch = useAppDispatch();
-  const allState = useAppSelector((state) => state);
+  const chatState = useAppSelector((state) => state.chat);
+  const configState = useAppSelector((state) => state.config);
+  const languageState = useAppSelector((state) => state.language);
 
   const handleResetChat = useCallback(() => {
     dispatch(resetChat());
@@ -45,52 +45,23 @@ const Phone: FC = () => {
 
   const handleSaveScreenshot = useCallback(
     async (isSave: boolean) => {
-      // if (ref.current) {
-      // setChatClass('overflow-hidden');
-
-      // toPng(ref.current, {
-      //   quality: 1,
-      //   canvasWidth: 828,
-      //   canvasHeight: 1792,
-      // })
-      //   .then((dataUrl) => {
-      //     if (isSave) {
-      //       downloadJPG(dataUrl);
-      //       notification.success({ message: 'Скриншот успешно загружен' });
-      //     } else {
-      //       copyImgToClipboard(dataUrl);
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     notification.error({ message: error.message });
-      //   })
-      //   .finally(() => {
-      //     setChatClass('overflow-auto');
-      //   });
-
-      const blob = await new Blob([JSON.stringify(allState)], {
-        type: 'application/json',
-      });
-      const url = await URL.createObjectURL(blob);
-      // navigate(url);
-      console.log(url);
-
-      // const newBlob = new Blob([url], {
-      //   type: 'application/json',
-      // });
-      // console.log(blob, newBlob);
-      // console.log(JSON.stringify(allState).length);
-      // console.log(allState);
-      // console.log(new URL(JSON.stringify(allState)));
-
-      // console.log(url);
-
-      // fetch(url)
-      //   .then((res) => res.json())
-      //   .then((data) => console.log(data));
-      // }
+      saveState({
+        data: {
+          chat: chatState,
+          config: configState,
+          language: languageState,
+        },
+      })
+        .unwrap()
+        .then((res) => {
+          navigate(res._id);
+        })
+        .catch((error) => {
+          notification.error({ message: error.message.join('\b') });
+          console.error(error);
+        });
     },
-    [allState],
+    [chatState, configState, languageState],
   );
 
   return (
@@ -103,7 +74,7 @@ const Phone: FC = () => {
         />
         <div id='phone' ref={ref} className='w-full h-full flex flex-col relative'>
           <PhoneHeader />
-          <PhoneChat className={chatClass} />
+          <PhoneChat />
           <PhoneFooter />
         </div>
       </div>
