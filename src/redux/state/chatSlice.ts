@@ -18,12 +18,10 @@ export type Message = {
 
 interface ChatState {
   data: (Message | ChatTime)[];
-  blurMessage: any[];
 }
 
 const initialState: ChatState = {
   data: [],
-  blurMessage: [],
 };
 
 export const chatSlice = createSlice({
@@ -43,15 +41,11 @@ export const chatSlice = createSlice({
       const data = { ...state.data[action.payload.index], ...action.payload.data };
       state.data.splice(action.payload.index, 1, data);
     },
-    setBlurMessage: (state, action: PayloadAction<ChatState['blurMessage']>) => {
-      state.blurMessage = action.payload;
-    },
     resetChat: (state) => {
       state.data = [];
     },
     setGlobalChat: (state, action: PayloadAction<ChatState>) => {
       state.data = action.payload.data;
-      state.blurMessage = action.payload.blurMessage;
     },
   },
 });
@@ -62,7 +56,6 @@ export const {
   deleteMessage,
   updateMessage,
   resetChat,
-  setBlurMessage,
   setGlobalChat,
 } = chatSlice.actions;
 

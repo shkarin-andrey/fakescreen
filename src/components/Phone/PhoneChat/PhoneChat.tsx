@@ -1,16 +1,13 @@
 import { FC, Fragment, memo, useCallback, useRef, useState } from 'react';
 
 import GoDownButtonIcon from '../../../assets/icons/GoDownButtonIcon';
-import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
-import { type Message, setBlurMessage } from '../../../redux/state/chatSlice';
+import { type Message } from '../../../redux/state/chatSlice';
 import MessageChat from '../../MessageChat';
 import MessageSticker from '../../MessageSticker';
 import TimeChat from '../../TimeChat';
-import { IPhoneChat } from './PhoneChat.interface';
 
-const PhoneChat: FC<IPhoneChat> = ({ className }) => {
-  const dispatch = useAppDispatch();
+const PhoneChat: FC = () => {
   const bgImage = useAppSelector((state) => state.config.bgImage);
   const data = useAppSelector((state) => state.chat.data);
   const [scroll, setScroll] = useState(false);
@@ -43,22 +40,6 @@ const PhoneChat: FC<IPhoneChat> = ({ className }) => {
   );
 
   const handleScroll = useCallback((e: any) => {
-    dispatch(setBlurMessage([]));
-    const arr: any[] = [];
-    e.target.childNodes.forEach((el: any, index: number) => {
-      const coords = el.getBoundingClientRect();
-      console.log(coords);
-
-      if (coords.top < 150 && coords.top > 0) {
-        arr.push({
-          top: coords.top,
-          index,
-        });
-      }
-    });
-
-    dispatch(setBlurMessage(arr));
-
     if (e.target.scrollTop < -30) {
       setScroll(true);
     } else {
@@ -79,7 +60,7 @@ const PhoneChat: FC<IPhoneChat> = ({ className }) => {
       <div
         ref={chatRef}
         onScroll={handleScroll}
-        className={`chat w-full h-full pl-[9px] pr-[5px] pb-[7px] pt-[79px] flex flex-col-reverse scrollbar scrollbar-thumb-transparent scrollbar-track-transparent scrollbar-small ${className}`}
+        className={`chat w-full h-full pl-[9px] pr-[5px] pb-[7px] pt-[79px] flex flex-col-reverse scrollbar scrollbar-thumb-transparent scrollbar-track-transparent scrollbar-small overflow-y-scroll`}
       >
         {data.map((item, index) => (
           <Fragment key={item.id}>
