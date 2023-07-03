@@ -6,13 +6,14 @@ import {
 } from '@ant-design/icons';
 import { FloatButton, Modal, notification } from 'antd';
 import { FC, useCallback, useMemo, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import phoneImg from '../../assets/images/phone.svg';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import { useSaveStateMutation } from '../../redux/api/state';
+import { useLazyGetScreenshotQuery, useSaveStateMutation } from '../../redux/api/state';
 import { resetChat } from '../../redux/state/chatSlice';
+import { blobToClipboard } from '../../utils/blobToClipboard';
+import { downloadJPG } from './../../utils/downloadJPG';
 import PhoneChat from './PhoneChat';
 import PhoneFooter from './PhoneFooter';
 import PhoneHeader from './PhoneHeader';
@@ -20,8 +21,9 @@ import PhoneHeader from './PhoneHeader';
 const { confirm } = Modal;
 
 const Phone: FC = () => {
+  const [getScreenshot] = useLazyGetScreenshotQuery();
+
   const [saveState] = useSaveStateMutation();
-  const navigate = useNavigate();
 
   const ref = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
@@ -43,8 +45,30 @@ const Phone: FC = () => {
     [],
   );
 
+  const handleGetScreenshot = useCallback(
+    (id: string, isSave: boolean) => {
+      getScreenshot(id)
+        .unwrap()
+        .then((blobScreen) => {
+          if (isSave) {
+            downloadJPG(URL.createObjectURL(blobScreen));
+            notification.success({ message: 'Скриншот успешно сгенерирован' });
+          } else {
+            blobToClipboard(blobScreen);
+            notification.success({
+              message: 'Скриншот успешно сохранен в буфер обмена',
+            });
+          }
+        })
+        .catch((err) => {
+          throw new Error(err.message);
+        });
+    },
+    [getScreenshot],
+  );
+
   const handleSaveScreenshot = useCallback(
-    async (isSave: boolean) => {
+    (isSave: boolean) => {
       saveState({
         data: {
           chat: chatState,
@@ -53,15 +77,18 @@ const Phone: FC = () => {
         },
       })
         .unwrap()
-        .then((res) => {
-          navigate(res._id);
+        .then((res: any) => {
+          handleGetScreenshot(res._id, isSave);
         })
-        .catch((error) => {
-          notification.error({ message: error.message.join('\b') });
-          console.error(error);
+        .catch((error: any) => {
+          if (Array.isArray(error.message)) {
+            return notification.error({ message: error.message.join('\b') });
+          }
+
+          return notification.error({ message: error.message });
         });
     },
-    [chatState, configState, languageState],
+    [chatState, configState, languageState, handleGetScreenshot],
   );
 
   return (

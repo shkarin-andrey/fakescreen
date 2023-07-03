@@ -1,15 +1,12 @@
-/* eslint-disable simple-import-sort/imports */
 import { DeleteOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { Upload, UploadProps } from 'antd';
 import ImgCrop from 'antd-img-crop';
-import { RcFile } from 'antd/es/upload';
 import { FC, useState } from 'react';
 
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { setAvatarFile } from '../../../redux/state/configSlice';
 import { beforeUploadPNGAndJPEG } from '../../../utils/beforeUploadPNGAndJPEG';
-import { getBase64 } from '../../../utils/getBase64';
 import Wrapper from '../../Wrapper';
 
 const SettingsInterlocutorDownloadAvatar: FC = () => {
@@ -33,10 +30,10 @@ const SettingsInterlocutorDownloadAvatar: FC = () => {
     }
 
     if (info.file.status === 'done') {
-      getBase64(info.file.originFileObj as RcFile, (url) => {
-        setLoading(false);
-        dispatch(setAvatarFile(url));
-      });
+      const url = URL.createObjectURL(info.file.originFileObj as any);
+
+      setLoading(false);
+      dispatch(setAvatarFile(url));
     }
   };
 
