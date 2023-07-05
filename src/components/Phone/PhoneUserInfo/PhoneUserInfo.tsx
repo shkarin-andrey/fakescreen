@@ -1,4 +1,4 @@
-import { FC, memo, useMemo } from 'react';
+import { FC, memo, useEffect, useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import MuteIcon from '../../../assets/icons/MuteIcon';
@@ -23,12 +23,12 @@ const PhoneUserInfo: FC = () => {
   }, [status.props.id]);
 
   return (
-    <div className='absolute top-[34px] left-0 z-[13] w-full h-[38px] pl-[6px] pr-[5px] grid grid-cols-9 items-center text-xs font-semibold text-[#171717] border-b border-0 border-solid border-[#E8E8E8]'>
-      <div className='text-[#037EE5] col-span-2 flex items-center gap-[6px] text-sm mt-[2px]'>
+    <div className='absolute top-[34px] left-0 z-[13] w-full h-[38px] pl-[6px] pr-[5px] grid grid-cols-9 items-center text-xs font-semibold text-[#171717]'>
+      <div className='text-[#037EE5] col-span-2 flex items-center gap-[3px] text-sm mt-[3px]'>
         <ShapeIcon />
         {isUnread ? (
-          <div className='flex justify-center items-center text-white px-[5px] h-fit py-[1px] leading-none bg-[#007AFF] rounded-full text-[10px] font-normal'>
-            <div className='mb-[1px]'>{unread}</div>
+          <div className='flex justify-center items-center text-white px-[4px] h-fit py-[1.5px] leading-none bg-[#007AFF] rounded-full text-[10px] font-normal'>
+            <div className='mb-[1px] pb-[0.5px]'>{unread}</div>
           </div>
         ) : (
           <span className='font-normal'>
@@ -38,7 +38,9 @@ const PhoneUserInfo: FC = () => {
       </div>
       <div className='text-sm col-span-5 flex flex-col items-center leading-none pb-[2px]'>
         <div className='w-full flex items-end justify-center gap-[4px]'>
-          <span className='font-semibold truncate pb-[1px]'>{username}</span>
+          <span className='font-semibold truncate -tracking-[0.5px] text-[13px] pt-[5px] pb-[1px]'>
+            {username}
+          </span>
           {mute && (
             <div>
               <MuteIcon />
@@ -59,7 +61,7 @@ const PhoneUserInfo: FC = () => {
         </div>
       </div>
       <div
-        className='avatar col-span-2 ml-auto w-[29px] h-[29px] rounded-full overflow-hidden flex justify-center items-center text-white uppercase'
+        className='avatar col-span-2 mt-[4px] ml-auto -pr-[0.5px] w-[29px] h-[29px] rounded-full overflow-hidden flex justify-center items-center text-white uppercase'
         style={{
           background: !avatarFile ? bgAvatarColor : undefined,
         }}

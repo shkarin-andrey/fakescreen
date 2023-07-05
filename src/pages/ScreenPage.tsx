@@ -27,7 +27,7 @@ const ScreenPage: FC = () => {
     <div className='relative  min-h-[2000px]'>
       <div
         id='phone'
-        className='h-[698px] w-[322px] flex flex-col  scale-[2.572] absolute top-[549px] left-[253px]'
+        className='h-[697px] w-[322px] flex flex-col  scale-[2.572] absolute top-[549px] left-[253px]'
       >
         <PhoneHeader />
         <PhoneChat />

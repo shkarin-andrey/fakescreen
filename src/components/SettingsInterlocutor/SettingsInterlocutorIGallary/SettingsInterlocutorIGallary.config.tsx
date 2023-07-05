@@ -27,6 +27,7 @@ import img23 from '../../../assets/images/bg-chat/pattern-7.jpg';
 import img24 from '../../../assets/images/bg-chat/pattern-8.jpg';
 import img25 from '../../../assets/images/bg-chat/pattern-9.jpg';
 import img20 from '../../../assets/images/bg-chat/pattern-10.jpg';
+import img28 from '../../../assets/images/bg-chat/pattern-11.jpg';
 
 export const gallary: UploadFile[] = [
   {
@@ -203,6 +204,13 @@ export const gallary: UploadFile[] = [
     status: 'done',
     thumbUrl: img25,
     preview: img25,
+  },
+  {
+    uid: 'pattern-11.jpg',
+    name: 'pattern-11.jpg',
+    status: 'done',
+    thumbUrl: img28,
+    preview: img28,
   },
   {
     uid: 'pattern-9.jpg',

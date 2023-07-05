@@ -39,7 +39,7 @@ const initialState: ConfigState = {
   time: '09:41',
   spum: false,
   mute: false,
-  bgImage: gallary[0].preview,
+  bgImage: gallary[25].preview,
   geo: undefined,
   status: <FormattedMessage id={options[1].label} />,
   bgAvatarColor: listColorsBgAvatar[0],

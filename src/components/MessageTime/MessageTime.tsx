@@ -17,10 +17,10 @@ const MessageTime: FC<IMessageTime> = ({
     }
 
     if (type === 'owner') {
-      return 'text-[#CDE5FF]';
+      return 'text-[#C0DDFC]';
     }
 
-    return 'text-[#8C8C8C]';
+    return 'text-[#ADADAD]';
   }, [isBackground, type]);
 
   const classNameBg = useMemo(() => {
@@ -31,7 +31,7 @@ const MessageTime: FC<IMessageTime> = ({
 
   return (
     <div
-      className={`flex items-end gap-[2px] float-right text-right text-[10px] pb-[3px] pt-[1px] pl-[5px] pr-[3px] leading-none rounded-3xl ${classNameBg} ${classNameTextColor} ${className}`}
+      className={`flex items-end gap-[1px] float-right text-right text-[8.56px] font-light pb-[3px] pt-[1px] pl-[5px] leading-none rounded-3xl ${classNameBg} ${classNameTextColor} ${className}`}
     >
       <div className='leading-none'>{time}</div>
       {isViewed && type === 'owner' && <ViewedMessageIcon />}

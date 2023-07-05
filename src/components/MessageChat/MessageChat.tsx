@@ -38,7 +38,7 @@ const MessageChat: FC<IMessageChat> = ({
 
   const isOwner = useMemo(() => {
     if (type === 'owner') {
-      return 'bg-[#007AFF] text-white ml-auto';
+      return 'bg-gradient-to-b from-[#5FA2F4] to-[#5DA0F5] text-white ml-auto';
     }
 
     return 'bg-white text-black';
@@ -118,7 +118,7 @@ const MessageChat: FC<IMessageChat> = ({
   }, [isPrevType, type]);
 
   const classNameImagePadding = useMemo(() => {
-    return 'pl-[11px] pr-[6px] py-[4px]';
+    return 'px-[8.5px] pt-[3.5px] pb-[3.1px]';
   }, []);
 
   const handleOpenModal = useCallback(() => {
@@ -131,7 +131,7 @@ const MessageChat: FC<IMessageChat> = ({
         ref={messageWrapperRef}
         aria-hidden={true}
         onClick={handleOpenModal}
-        className={`flex rounded-[13px] text-base max-w-[250px] w-fit relative leading-[134%] ${
+        className={`flex rounded-[13px] font-light text-[13.26px] max-w-[271px] w-fit relative leading-[134%] ${
           image ? 'flex-col' : classNameImagePadding
         } ${isOwner} ${classNameNextType} ${classNameRounded()} ${className}`}
         style={style}
@@ -158,9 +158,9 @@ const MessageChat: FC<IMessageChat> = ({
                 width: image ? undefined : width,
               }}
             >
-              <span ref={messageRef} className='tracking-[0.6px]' />
+              <span ref={messageRef} className='-tracking-[0.3px]' />
               <MessageTime
-                className='mt-[8px] pb-0'
+                className='mt-[6px] pb-0'
                 type={type}
                 time={time}
                 isViewed={isViewed}
@@ -175,7 +175,7 @@ const MessageChat: FC<IMessageChat> = ({
         ) : (
           <div className='absolute bottom-[6px] right-1'>
             <MessageTime
-              className='mt-[8px] pb-0'
+              className='mt-[6px] pb-0'
               type={type}
               time={time}
               isViewed={isViewed}
