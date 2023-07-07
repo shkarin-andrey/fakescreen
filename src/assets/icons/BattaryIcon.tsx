@@ -1,5 +1,6 @@
 import { FC, useMemo } from 'react';
 
+import { useAppSelector } from '../../hooks/useAppSelector';
 import { getColorfromPercent } from '../../utils/getColorfromPercent';
 import ChargeIcon from './ChargeIcon';
 
@@ -11,6 +12,7 @@ interface IBattaryIcon {
 
 const BattaryIcon: FC<IBattaryIcon> = ({ size, isEconom, isCharge }) => {
   const costomWidth = 15.5;
+  const theme = useAppSelector((state) => state.theme.theme);
 
   const width = useMemo(() => {
     return (costomWidth * size) / 100;
@@ -42,7 +44,7 @@ const BattaryIcon: FC<IBattaryIcon> = ({ size, isEconom, isCharge }) => {
           width={width}
           height='5.5805'
           rx='0.858538'
-          fill={getColorfromPercent(size, isEconom, isCharge)}
+          fill={getColorfromPercent(size, isEconom, isCharge, theme)}
         />
       </svg>
     </div>

@@ -1,5 +1,6 @@
 import { DeleteOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { Upload, UploadProps } from 'antd';
+import { RcFile } from 'antd/es/upload';
 import ImgCrop from 'antd-img-crop';
 import { FC, useState } from 'react';
 
@@ -7,6 +8,7 @@ import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { setAvatarFile } from '../../../redux/state/configSlice';
 import { beforeUploadPNGAndJPEG } from '../../../utils/beforeUploadPNGAndJPEG';
+import { getBase64 } from '../../../utils/getBase64';
 import Wrapper from '../../Wrapper';
 
 const SettingsInterlocutorDownloadAvatar: FC = () => {
@@ -30,10 +32,10 @@ const SettingsInterlocutorDownloadAvatar: FC = () => {
     }
 
     if (info.file.status === 'done') {
-      const url = URL.createObjectURL(info.file.originFileObj as any);
-
-      setLoading(false);
-      dispatch(setAvatarFile(url));
+      getBase64(info.file.originFileObj as RcFile, (url) => {
+        setLoading(false);
+        dispatch(setAvatarFile(url));
+      });
     }
   };
 

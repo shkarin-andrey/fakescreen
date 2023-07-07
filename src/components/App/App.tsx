@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { IntlProvider } from 'react-intl';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
@@ -6,11 +6,18 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import { messages } from '../../i18n/messages';
 import GenerateScreenPage from '../../pages/GenerateScreenPage';
 import ScreenPage from '../../pages/ScreenPage';
-import Layout from '../Layout';
-import Title from '../Title';
 
 const App: FC = () => {
   const language = useAppSelector((state) => state.language.language);
+  const theme = useAppSelector((state) => state.theme.theme);
+
+  useEffect(() => {
+    if (theme === 'dark' || window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
 
   return (
     <IntlProvider
