@@ -1,4 +1,4 @@
-import { FC, memo, useEffect, useMemo } from 'react';
+import { FC, memo, useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import MuteIcon from '../../../assets/icons/MuteIcon';
@@ -27,18 +27,18 @@ const PhoneUserInfo: FC = () => {
       <div className='text-[#037EE5] col-span-2 flex items-center gap-[3px] text-sm mt-[3px]'>
         <ShapeIcon />
         {isUnread ? (
-          <div className='flex justify-center items-center text-white px-[4px] h-fit py-[1.5px] leading-none bg-[#007AFF] rounded-full text-[10px] font-normal'>
+          <div className='flex justify-center items-center text-white dark:text-black px-[4px] h-fit py-[1.5px] leading-none bg-[#007AFF] dark:bg-white rounded-full text-[10px] font-normal'>
             <div className='mb-[1px] pb-[0.5px]'>{unread}</div>
           </div>
         ) : (
-          <span className='font-normal'>
+          <span className='font-normal dark:text-white'>
             <FormattedMessage id='header_phone_back' />
           </span>
         )}
       </div>
       <div className='text-sm col-span-5 flex flex-col items-center leading-none pb-[2px]'>
         <div className='w-full flex items-end justify-center gap-[4px]'>
-          <span className='font-semibold truncate -tracking-[0.5px] text-[13px] pt-[5px] pb-[1px]'>
+          <span className='font-semibold truncate -tracking-[0.5px] text-[13px] pt-[5px] pb-[1px] dark:text-white'>
             {username}
           </span>
           {mute && (

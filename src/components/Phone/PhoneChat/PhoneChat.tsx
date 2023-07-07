@@ -8,7 +8,6 @@ import MessageSticker from '../../MessageSticker';
 import TimeChat from '../../TimeChat';
 
 const PhoneChat: FC = () => {
-  const bgImage = useAppSelector((state) => state.config.bgImage);
   const data = useAppSelector((state) => state.chat.data);
   const [scroll, setScroll] = useState(false);
   const chatRef = useRef<HTMLDivElement>(null);
@@ -48,19 +47,11 @@ const PhoneChat: FC = () => {
   }, []);
 
   return (
-    <div
-      className='relative flex-1 overflow-hidden z-10 h-full w-full'
-      style={{
-        backgroundImage: `url('${bgImage}')`,
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
-      }}
-    >
+    <>
       <div
         ref={chatRef}
         onScroll={handleScroll}
-        className={`chat w-full h-full pl-[9px] pr-[5px] pb-[7px] pt-[79px] flex flex-col-reverse scrollbar scrollbar-thumb-transparent scrollbar-track-transparent scrollbar-small overflow-y-scroll`}
+        className={`chat w-full h-full pl-[9px] pr-[5px] pb-[7px] pt-[79px] flex flex-col-reverse scrollbar scrollbar-thumb-transparent scrollbar-track-transparent scrollbar-small overflow-y-scroll z-10`}
       >
         {data.map((item, index) => (
           <Fragment key={item.id}>
@@ -98,7 +89,7 @@ const PhoneChat: FC = () => {
           <GoDownButtonIcon />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

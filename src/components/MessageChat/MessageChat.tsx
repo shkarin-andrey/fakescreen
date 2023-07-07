@@ -38,10 +38,10 @@ const MessageChat: FC<IMessageChat> = ({
 
   const isOwner = useMemo(() => {
     if (type === 'owner') {
-      return 'bg-gradient-to-b from-[#5FA2F4] to-[#5DA0F5] text-white ml-auto';
+      return 'bg-gradient-to-b from-[#5FA2F4] to-[#5DA0F5] dark:from-[#313131] dark:to-[#313131] text-white ml-auto';
     }
 
-    return 'bg-white text-black';
+    return 'bg-white dark:bg-[#1A1A1A] text-black dark:text-white';
   }, [type]);
 
   const isNextType = nextType === type;
@@ -131,7 +131,7 @@ const MessageChat: FC<IMessageChat> = ({
         ref={messageWrapperRef}
         aria-hidden={true}
         onClick={handleOpenModal}
-        className={`flex rounded-[13px] font-light text-[13.26px] max-w-[271px] w-fit relative leading-[134%] ${
+        className={`flex rounded-[13px] font-light text-[13.26px] max-w-[250px] w-fit relative leading-[134%] ${
           image ? 'flex-col' : classNameImagePadding
         } ${isOwner} ${classNameNextType} ${classNameRounded()} ${className}`}
         style={style}

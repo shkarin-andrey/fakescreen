@@ -12,12 +12,9 @@ import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useLazyGetScreenshotQuery, useSaveStateMutation } from '../../redux/api/state';
 import { resetChat } from '../../redux/state/chatSlice';
-import { blobToClipboard } from '../../utils/blobToClipboard';
-import { downloadJPG } from './../../utils/downloadJPG';
 import PhoneChat from './PhoneChat';
 import PhoneFooter from './PhoneFooter';
 import PhoneHeader from './PhoneHeader';
-
 const { confirm } = Modal;
 
 const Phone: FC = () => {
@@ -30,6 +27,28 @@ const Phone: FC = () => {
   const chatState = useAppSelector((state) => state.chat);
   const configState = useAppSelector((state) => state.config);
   const languageState = useAppSelector((state) => state.language);
+  const themeState = useAppSelector((state) => state.theme);
+  const bgImage = useAppSelector((state) => state.config.bgImage);
+
+  const openWindow = (url: string) => {
+    // Specify the desired width and height of the window
+    const width = 828;
+    const height = 1792;
+    const menubar = 'yes';
+    const toolbar = 'yes';
+    const scrollbars = 'no';
+
+    // Calculate the position to center the window on the screen
+    const left = width;
+    const top = height;
+
+    // Open a new browser window with the specified size and position
+    window.open(
+      url,
+      'screenshot',
+      `width=${width},height=${height},left=${left},top=${top},menubar=${menubar},toolbar=${toolbar},scrollbars=${scrollbars}`,
+    );
+  };
 
   const handleResetChat = useCallback(() => {
     dispatch(resetChat());
@@ -47,22 +66,7 @@ const Phone: FC = () => {
 
   const handleGetScreenshot = useCallback(
     (id: string, isSave: boolean) => {
-      getScreenshot(id)
-        .unwrap()
-        .then((blobScreen) => {
-          if (isSave) {
-            downloadJPG(URL.createObjectURL(blobScreen));
-            notification.success({ message: 'Скриншот успешно сгенерирован' });
-          } else {
-            blobToClipboard(blobScreen);
-            notification.success({
-              message: 'Скриншот успешно сохранен в буфер обмена',
-            });
-          }
-        })
-        .catch((err) => {
-          throw new Error(err.message);
-        });
+      openWindow('https://2488-93-170-233-204.ngrok-free.app/' + id);
     },
     [getScreenshot],
   );
@@ -74,6 +78,7 @@ const Phone: FC = () => {
           chat: chatState,
           config: configState,
           language: languageState,
+          theme: themeState,
         },
       })
         .unwrap()
@@ -88,7 +93,7 @@ const Phone: FC = () => {
           return notification.error({ message: error.message });
         });
     },
-    [chatState, configState, languageState, handleGetScreenshot],
+    [chatState, configState, languageState, themeState, handleGetScreenshot],
   );
 
   return (
@@ -99,7 +104,17 @@ const Phone: FC = () => {
           alt='FakeScreen Pro phone'
           className='absolute top-0 left-0 w-full h-full z-10'
         />
-        <div id='phone' ref={ref} className='w-full h-full flex flex-col relative'>
+        <div
+          id='phone'
+          ref={ref}
+          className='w-full h-full flex flex-col relative flex-1'
+          style={{
+            backgroundImage: `url('${bgImage}')`,
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+          }}
+        >
           <PhoneHeader />
           <PhoneChat />
           <PhoneFooter />
@@ -108,7 +123,7 @@ const Phone: FC = () => {
       <FloatButton.Group
         trigger='click'
         type='primary'
-        style={{ right: 20, zIndex: 101 }}
+        style={{ right: 20, zIndex: 102 }}
         icon={<SaveOutlined />}
       >
         <FloatButton
