@@ -6,13 +6,19 @@ interface IWifiIcon {
   type: number;
   width?: string;
   height?: string;
+  isSettings?: boolean;
 }
 
-const WifiIcon: FC<IWifiIcon> = ({ type, width = '13', height = '10' }) => {
+const WifiIcon: FC<IWifiIcon> = ({
+  type,
+  width = '13',
+  height = '10',
+  isSettings = true,
+}) => {
   const theme = useAppSelector((state) => state.theme.theme);
 
   const color = useMemo(() => {
-    if (theme === 'dark') {
+    if (theme === 'dark' && !isSettings) {
       return 'white';
     }
 
@@ -20,13 +26,7 @@ const WifiIcon: FC<IWifiIcon> = ({ type, width = '13', height = '10' }) => {
   }, [theme]);
 
   return (
-    <svg
-      width={width}
-      height={height}
-      viewBox='0 0 13 10'
-      fill='none'
-      xmlns='http://www.w3.org/2000/svg'
-    >
+    <svg width={width} height={height} viewBox='0 0 13 10' fill='none'>
       <g clipPath='url(#clip0_556_10388)'>
         <path
           d='M6.50721 6.8584C7.07877 6.8584 7.63413 7.00859 8.12347 7.29496L8.32174 7.411C8.47205 7.49897 8.49849 7.70484 8.37525 7.82774L6.68241 9.51588C6.57843 9.61957 6.40984 9.61957 6.30586 9.51588L4.62391 7.83859C4.50121 7.71623 4.52678 7.5114 4.67582 7.42279L4.87187 7.30622C5.3657 7.0126 5.92811 6.8584 6.50721 6.8584Z'

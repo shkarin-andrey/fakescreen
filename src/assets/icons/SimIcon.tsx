@@ -6,13 +6,14 @@ interface ISimIcon {
   type: number;
   width?: string;
   height?: string;
+  isSettings?: boolean;
 }
 
-const SimIcon: FC<ISimIcon> = ({ type, width = '20', height = '14' }) => {
+const SimIcon: FC<ISimIcon> = ({ type, width = '20', height = '14', isSettings }) => {
   const theme = useAppSelector((state) => state.theme.theme);
 
   const color = useMemo(() => {
-    if (theme === 'dark') {
+    if (theme === 'dark' && !isSettings) {
       return 'white';
     }
 
