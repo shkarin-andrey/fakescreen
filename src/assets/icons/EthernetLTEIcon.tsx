@@ -15,7 +15,7 @@ const EthernetLTEIcon: FC = () => {
 
   return (
     <svg width='12' height='10' viewBox='0 0 12 10' fill='none'>
-      <path d='M0 8H3.45888V7.09771H1.02238V2H0V8Z' fill='black' />
+      <path d='M0 8H3.45888V7.09771H1.02238V2H0V8Z' fill={color} />
       <path
         d='M4.85306 8H5.87544V2.90229H7.2555V2H3.4755V2.90229H4.85306V8Z'
         fill={color}
