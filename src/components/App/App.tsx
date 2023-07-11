@@ -12,7 +12,7 @@ const App: FC = () => {
   const theme = useAppSelector((state) => state.theme.theme);
 
   useEffect(() => {
-    if (theme === 'dark' || window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    if (theme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
