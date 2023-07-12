@@ -15,7 +15,10 @@ import { resetChat } from '../../redux/state/chatSlice';
 import PhoneChat from './PhoneChat';
 import PhoneFooter from './PhoneFooter';
 import PhoneHeader from './PhoneHeader';
+
 const { confirm } = Modal;
+
+const { VITE_APP_BASE_URL } = import.meta.env;
 
 const Phone: FC = () => {
   const [getScreenshot] = useLazyGetScreenshotQuery();
@@ -66,7 +69,7 @@ const Phone: FC = () => {
 
   const handleGetScreenshot = useCallback(
     (id: string, isSave: boolean) => {
-      openWindow('https://2488-93-170-233-204.ngrok-free.app/' + id);
+      openWindow(VITE_APP_BASE_URL + id);
     },
     [getScreenshot],
   );

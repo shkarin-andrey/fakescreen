@@ -15,8 +15,12 @@ const MessageTime: FC<IMessageTime> = ({
   const theme = useAppSelector((state) => state.theme.theme);
 
   const classNameTextColor = useMemo(() => {
-    if (isBackground) {
+    if (isBackground && theme === 'dark') {
       return 'text-white';
+    }
+
+    if (isBackground) {
+      return 'text-[#8C8E93]';
     }
 
     if (theme === 'dark' && type === 'owner') {
@@ -36,7 +40,7 @@ const MessageTime: FC<IMessageTime> = ({
 
   const classNameBg = useMemo(() => {
     if (isBackground) {
-      return 'bg-[#72839166]';
+      return 'bg-[#ffffff]/75 dark:bg-[#0000003f]';
     }
   }, [isBackground]);
 
@@ -45,8 +49,10 @@ const MessageTime: FC<IMessageTime> = ({
       className={`flex items-end gap-[1px] float-right text-right text-[8.56px] font-light pb-[3px] pt-[1px] pl-[5px] leading-none rounded-3xl ${classNameBg} ${classNameTextColor} ${className}`}
     >
       <div className='leading-none'>{time}</div>
-      {isViewed && type === 'owner' && <ViewedMessageIcon />}
-      {!isViewed && type === 'owner' && <NoViewedMessageIcon />}
+      {isViewed && type === 'owner' && <ViewedMessageIcon isBackground={isBackground} />}
+      {!isViewed && type === 'owner' && (
+        <NoViewedMessageIcon isBackground={isBackground} />
+      )}
     </div>
   );
 };
