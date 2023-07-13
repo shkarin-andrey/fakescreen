@@ -1,9 +1,4 @@
-import {
-  ClearOutlined,
-  CopyOutlined,
-  InfoCircleOutlined,
-  SaveOutlined,
-} from '@ant-design/icons';
+import { ClearOutlined, InfoCircleOutlined, SaveOutlined } from '@ant-design/icons';
 import { FloatButton, Modal, notification } from 'antd';
 import { FC, useCallback, useMemo, useRef } from 'react';
 
@@ -33,26 +28,6 @@ const Phone: FC = () => {
   const themeState = useAppSelector((state) => state.theme);
   const bgImage = useAppSelector((state) => state.config.bgImage);
 
-  const openWindow = (url: string) => {
-    // Specify the desired width and height of the window
-    const width = 828;
-    const height = 1792;
-    const menubar = 'yes';
-    const toolbar = 'yes';
-    const scrollbars = 'no';
-
-    // Calculate the position to center the window on the screen
-    const left = width;
-    const top = height;
-
-    // Open a new browser window with the specified size and position
-    window.open(
-      url,
-      'screenshot',
-      `width=${width},height=${height},left=${left},top=${top},menubar=${menubar},toolbar=${toolbar},scrollbars=${scrollbars}`,
-    );
-  };
-
   const handleResetChat = useCallback(() => {
     dispatch(resetChat());
   }, []);
@@ -67,37 +42,32 @@ const Phone: FC = () => {
     [],
   );
 
-  const handleGetScreenshot = useCallback(
-    (id: string, isSave: boolean) => {
-      openWindow(VITE_APP_BASE_URL + id);
-    },
-    [getScreenshot],
-  );
+  const handleGetScreenshot = useCallback((id: string) => {
+    const url = VITE_APP_BASE_URL + id;
+    window.open(url, '_blank', 'noreferrer');
+  }, []);
 
-  const handleSaveScreenshot = useCallback(
-    (isSave: boolean) => {
-      saveState({
-        data: {
-          chat: chatState,
-          config: configState,
-          language: languageState,
-          theme: themeState,
-        },
+  const handleSaveScreenshot = useCallback(() => {
+    saveState({
+      data: {
+        chat: chatState,
+        config: configState,
+        language: languageState,
+        theme: themeState,
+      },
+    })
+      .unwrap()
+      .then((res: any) => {
+        handleGetScreenshot(res._id);
       })
-        .unwrap()
-        .then((res: any) => {
-          handleGetScreenshot(res._id, isSave);
-        })
-        .catch((error: any) => {
-          if (Array.isArray(error.message)) {
-            return notification.error({ message: error.message.join('\b') });
-          }
+      .catch((error: any) => {
+        if (Array.isArray(error.message)) {
+          return notification.error({ message: error.message.join('\b') });
+        }
 
-          return notification.error({ message: error.message });
-        });
-    },
-    [chatState, configState, languageState, themeState, handleGetScreenshot],
-  );
+        return notification.error({ message: error.message });
+      });
+  }, [chatState, configState, languageState, themeState, handleGetScreenshot]);
 
   return (
     <div className='flex flex-col gap-5 max-w-[376px] min-w-[376px] '>
@@ -137,14 +107,9 @@ const Phone: FC = () => {
           tooltip={'Очистить переписку'}
         />
         <FloatButton
-          onClick={() => handleSaveScreenshot(false)}
-          icon={<CopyOutlined />}
-          tooltip={'Скопировать скриншот'}
-        />
-        <FloatButton
-          onClick={() => handleSaveScreenshot(true)}
+          onClick={handleSaveScreenshot}
           icon={<SaveOutlined />}
-          tooltip={'Сохранить скриншот'}
+          tooltip={'Просмотреть превью'}
         />
       </FloatButton.Group>
     </div>
