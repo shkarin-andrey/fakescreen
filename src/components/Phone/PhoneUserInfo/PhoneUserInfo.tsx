@@ -95,13 +95,13 @@ const PhoneUserInfo: FC = () => {
           )}
         </div>
         <div className={`text-[10px] font-normal -mt-[1px] -ml-[1px] ${isStatusOnline}`}>
-          {status === options[0].label ? (
+          {status.id === options[0].label ? (
             <div className='flex items-center gap-1'>
-              <div>
+              <div className='-translate-y-[1px]'>
                 <WriteIcon />
               </div>
               <span>
-                <FormattedMessage id={status} />
+                <FormattedMessage id={status.id} />
               </span>
             </div>
           ) : (

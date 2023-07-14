@@ -21,7 +21,7 @@ const BattaryIcon: FC<IBattaryIcon> = ({ size, isEconom, isCharge }) => {
   return (
     <div className='relative mt-[4px]'>
       {isCharge && (
-        <div className='absolute left-1/2 top-1/2 -translate-y-[45%] -translate-x-[55%]'>
+        <div className='absolute left-1/2 top-1/2 -translate-y-[52%] -translate-x-[62%]'>
           <ChargeIcon />
         </div>
       )}
