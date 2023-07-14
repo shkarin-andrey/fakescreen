@@ -1,7 +1,7 @@
 import { Button, Select, TimePicker } from 'antd';
 import dayjs from 'dayjs';
 import { FC, useState } from 'react';
-import { FormattedMessage, FormattedRelativeTime } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import { options } from '../../../config';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
@@ -47,36 +47,34 @@ const SettingsInterlocutorStatus: FC = () => {
     const str = selectStatus.label;
 
     if (selectStatus.value === 'minutesAgo') {
-      const el = (
-        <FormattedMessage
-          id={str}
-          values={{
-            time: <FormattedRelativeTime value={-time} unit='minute' />,
-          }}
-        />
+      dispatch(
+        setStatus({
+          id: str,
+          time: -time,
+          unit: 'minute',
+        }),
       );
-      dispatch(setStatus(el));
     } else if (selectStatus.value === 'hourseAgo') {
-      const el = (
-        <FormattedMessage
-          id={str}
-          values={{ time: <FormattedRelativeTime value={-time} unit='hour' /> }}
-        />
+      dispatch(
+        setStatus({
+          id: str,
+          time: -time,
+          unit: 'hour',
+        }),
       );
-      dispatch(setStatus(el));
     } else if (selectStatus.value === 'today' || selectStatus.value === 'yesterday') {
-      const el = (
-        <FormattedMessage
-          id={str}
-          values={{
-            time,
-          }}
-        />
+      dispatch(
+        setStatus({
+          id: str,
+          time: time,
+        }),
       );
-      dispatch(setStatus(el));
     } else {
-      const el = <FormattedMessage id={str} />;
-      dispatch(setStatus(el));
+      dispatch(
+        setStatus({
+          id: str,
+        }),
+      );
     }
   };
 

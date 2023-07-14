@@ -56,7 +56,7 @@ const SettingsChatMessage: FC = () => {
 
   const onEmojiClick = useCallback((event: EmojiClickData) => {
     const emoji = event.getImageUrl(EmojiStyle.APPLE);
-    const elEmoji = `<img class='w-[20px] h-[20px]' src='${emoji}' alt='${event.emoji}' />`;
+    const elEmoji = `<img class='w-[16px] h-[16px]' src='${emoji}' alt='${event.emoji}' />`;
 
     if (ref.current) {
       ref.current.innerHTML += elEmoji;

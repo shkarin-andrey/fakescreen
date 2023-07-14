@@ -147,7 +147,7 @@ const MessageChat: FC<IMessageChat> = ({
         ref={messageWrapperRef}
         aria-hidden={true}
         onClick={handleOpenModal}
-        className={`flex rounded-[13px] font-light text-[13.26px] max-w-[272px] w-fit relative leading-[134%] ${
+        className={`flex rounded-[13px] font-light text-[13.26px] max-w-[278px] w-fit relative leading-[134%] ${
           image ? 'flex-col' : classNameImagePadding
         } ${isOwner} ${classNameNextType} ${classNameRounded()} ${className}`}
         style={style}
@@ -176,7 +176,7 @@ const MessageChat: FC<IMessageChat> = ({
             >
               <span ref={messageRef} className='-tracking-[0.3px]' />
               <MessageTime
-                className='mt-[7px] pb-0'
+                className='mt-[5px] pb-0 translate-x-[6px]'
                 type={type}
                 time={time}
                 isViewed={isViewed}
@@ -191,7 +191,7 @@ const MessageChat: FC<IMessageChat> = ({
         ) : (
           <div className='absolute bottom-[6px] right-1'>
             <MessageTime
-              className='mt-[7px] pb-0'
+              className='mt-[8px] pb-0'
               type={type}
               time={time}
               isViewed={isViewed}
