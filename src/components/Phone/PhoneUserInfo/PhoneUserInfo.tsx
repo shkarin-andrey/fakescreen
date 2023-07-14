@@ -80,12 +80,16 @@ const PhoneUserInfo: FC = () => {
         )}
       </div>
       <div className='text-sm flex flex-col items-center leading-none pb-[2px]'>
-        <div className='w-full flex items-end justify-center'>
+        <div
+          className={`w-full flex items-end justify-center ${
+            mute ? 'translate-x-[4px]' : ''
+          }`}
+        >
           <div className='font-semibold truncate -tracking-[0.4px] text-[13px] pt-[5px] pb-[2px] dark:text-white mr-[3px]'>
             {username}
           </div>
           {mute && (
-            <div>
+            <div className='-translate-y-[2px]'>
               <MuteIcon />
             </div>
           )}

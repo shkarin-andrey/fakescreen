@@ -85,7 +85,7 @@ const PhoneChat: FC = () => {
         ))}
       </div>
       {scroll && (
-        <div className='absolute -bottom-[2px] right-[2px]'>
+        <div className='z-[11] absolute bottom-[61px] right-[3px]'>
           <GoDownButtonIcon />
         </div>
       )}
