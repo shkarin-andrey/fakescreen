@@ -23,15 +23,15 @@ const PhoneFooter: FC = () => {
     >
       <div className='flex items-center gap-[2px] pt-[4px] pb-[3px]'>
         <AttachIcon />
-        <div className='relative flex items-center h-[26px] pl-[10px] pr-[7px] border-[0.2px] border-[#E8E8E8] dark:border-[#1D1D1D] border-solid rounded-[14px] bg-white dark:bg-[#060606] w-full'>
+        <div className='relative flex items-center h-[26px] pl-[10px] pt-[2px] pr-[7px] border-[0.2px] border-[#E8E8E8] dark:border-[#1D1D1D] border-solid rounded-[14px] bg-white dark:bg-[#060606] w-full'>
           <span className='text-[#BFBFBF] dark:text-[#7B7B7B] -tracking-[0.4px] text-[13px]'>
             <FormattedMessage id='footer_phone_message' />
           </span>
-          <div className='absolute right-[6px] top-[4px]'>
+          <div className='absolute right-[6px] top-[5px]'>
             <StickersIcon />
           </div>
         </div>
-        <div className='ml-[5px] mt-[1px]'>
+        <div className='ml-[5px] mt-[3px] translate-y-[1px]'>
           <RecordAudioImage />
         </div>
       </div>
