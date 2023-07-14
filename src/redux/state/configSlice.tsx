@@ -1,6 +1,5 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import { FormattedMessage } from 'react-intl';
 
 import { gallary } from '../../components/SettingsInterlocutor/SettingsInterlocutorIGallary/SettingsInterlocutorIGallary.config';
 import { listColorsBgAvatar, options } from '../../config';
@@ -41,7 +40,9 @@ const initialState: ConfigState = {
   mute: false,
   bgImage: gallary[25].preview,
   geo: undefined,
-  status: <FormattedMessage id={options[1].label} />,
+  status: {
+    id: options[1].label,
+  },
   bgAvatarColor: listColorsBgAvatar[0],
   avatarFile: null,
   network: 'sim',
@@ -124,7 +125,7 @@ export const configSlice = createSlice({
       state.mute = action.payload.mute;
       state.bgImage = action.payload.bgImage;
       state.geo = action.payload.geo;
-      // state.status = action.payload.status;
+      state.status = action.payload.status;
       state.bgAvatarColor = action.payload.bgAvatarColor;
       state.avatarFile = action.payload.avatarFile;
       state.network = action.payload.network;

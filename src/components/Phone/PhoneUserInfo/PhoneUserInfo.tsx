@@ -1,5 +1,5 @@
 import { FC, memo, useMemo } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, FormattedRelativeTime } from 'react-intl';
 
 import MuteIcon from '../../../assets/icons/MuteIcon';
 import ShapeIcon from '../../../assets/icons/ShapeIcon';
@@ -18,7 +18,7 @@ const PhoneUserInfo: FC = () => {
   const theme = useAppSelector((state) => state.theme.theme);
 
   const isStatusOnline = useMemo(() => {
-    if (status.props.id === options[1].label || status.props.id === options[0].label) {
+    if (status.id === options[1].label || status.id === options[0].label) {
       if (theme === 'dark') {
         return 'text-white';
       } else {
@@ -27,7 +27,43 @@ const PhoneUserInfo: FC = () => {
     }
 
     return 'text-[#787878]';
-  }, [status.props.id, theme]);
+  }, [status.id, theme]);
+
+  const getStatus = () => {
+    if (status.id === 'interlocutor_status_minutesAgo') {
+      return (
+        <FormattedMessage
+          id={status.id}
+          values={{
+            time: <FormattedRelativeTime value={status?.time} unit={status?.unit} />,
+          }}
+        />
+      );
+    } else if (status.id === 'interlocutor_status_hourseAgo') {
+      return (
+        <FormattedMessage
+          id={status.id}
+          values={{
+            time: <FormattedRelativeTime value={status?.time} unit={status?.unit} />,
+          }}
+        />
+      );
+    } else if (
+      status.id === 'interlocutor_status_today' ||
+      status.id === 'interlocutor_status_yesterday'
+    ) {
+      return (
+        <FormattedMessage
+          id={status.id}
+          values={{
+            time: status?.time,
+          }}
+        />
+      );
+    } else {
+      return <FormattedMessage id={status.id} />;
+    }
+  };
 
   return (
     <div className='z-[13] w-full h-[37px] pl-[6px] pr-[5px] grid grid-cols-[56px_1fr_56px] items-center text-xs font-semibold text-[#171717]'>
@@ -55,15 +91,17 @@ const PhoneUserInfo: FC = () => {
           )}
         </div>
         <div className={`text-[10px] font-normal -mt-[1px] -ml-[1px] ${isStatusOnline}`}>
-          {status.props.id === options[0].label ? (
+          {status === options[0].label ? (
             <div className='flex items-center gap-1'>
               <div>
                 <WriteIcon />
               </div>
-              <span>{status}</span>
+              <span>
+                <FormattedMessage id={status} />
+              </span>
             </div>
           ) : (
-            status
+            getStatus()
           )}
         </div>
       </div>
