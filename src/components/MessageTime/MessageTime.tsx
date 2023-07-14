@@ -36,7 +36,7 @@ const MessageTime: FC<IMessageTime> = ({
 
   const classNameBg = useMemo(() => {
     if (isBackground) {
-      return 'bg-[#ffffff]/25';
+      return 'bg-black/25';
     }
   }, [isBackground]);
 

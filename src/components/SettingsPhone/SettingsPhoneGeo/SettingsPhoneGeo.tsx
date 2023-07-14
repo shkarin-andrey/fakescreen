@@ -4,7 +4,6 @@ import { FC, memo, useCallback } from 'react';
 
 import GeoBlueIcon from '../../../assets/icons/GeoBlueIcon';
 import GeoFillIcon from '../../../assets/icons/GeoFillIcon';
-import GeoOutlineIcon from '../../../assets/icons/GeoOutlineIcon';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { setGeo } from '../../../redux/state/configSlice';
@@ -21,9 +20,6 @@ const SettingsPhoneGeo: FC = () => {
   return (
     <Wrapper title='Геолокация:'>
       <Radio.Group onChange={handleChangeGeo} value={geo} className='flex'>
-        <Radio.Button value='outline' className='flex justify-center items-center'>
-          <GeoOutlineIcon isSettings />
-        </Radio.Button>
         <Radio.Button value='fill' className='flex justify-center items-center'>
           <GeoFillIcon isSettings />
         </Radio.Button>

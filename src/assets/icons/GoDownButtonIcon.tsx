@@ -1,54 +1,33 @@
 import { FC } from 'react';
 
+import { useAppSelector } from '../../hooks/useAppSelector';
+
 const GoDownButtonIcon: FC = () => {
+  const theme = useAppSelector((state) => state.theme.theme);
+
   return (
-    <svg width='40' height='40' viewBox='0 0 40 40' fill='none'>
-      <g filter='url(#filter0_d_466_8645)'>
-        <circle cx='20' cy='20' r='16' fill='white' />
-        <path
-          d='M27 18.3994L20 25.3994L13 18.3994'
-          stroke='#868686'
-          strokeWidth='1.3125'
-          strokeLinecap='round'
-          strokeLinejoin='round'
-        />
-      </g>
-      <defs>
-        <filter
-          id='filter0_d_466_8645'
-          x='0.833333'
-          y='0.833333'
-          width='38.3333'
-          height='38.3333'
-          filterUnits='userSpaceOnUse'
-          colorInterpolationFilters='sRGB'
-        >
-          <feFlood floodOpacity='0' result='BackgroundImageFix' />
-          <feColorMatrix
-            in='SourceAlpha'
-            type='matrix'
-            values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0'
-            result='hardAlpha'
-          />
-          <feOffset />
-          <feGaussianBlur stdDeviation='1.58333' />
-          <feColorMatrix
-            type='matrix'
-            values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0'
-          />
-          <feBlend
-            mode='normal'
-            in2='BackgroundImageFix'
-            result='effect1_dropShadow_466_8645'
-          />
-          <feBlend
-            mode='normal'
-            in='SourceGraphic'
-            in2='effect1_dropShadow_466_8645'
-            result='shape'
-          />
-        </filter>
-      </defs>
+    <svg
+      width='31'
+      height='31'
+      viewBox='0 0 31 31'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+    >
+      <circle
+        cx='15.1797'
+        cy='15.1797'
+        r='14.805'
+        fill={theme === 'dark' ? '#1F2229' : 'white'}
+        stroke={theme === 'dark' ? '#3F3F43' : '#B2B2B2'}
+        strokeWidth='0.39'
+      />
+      <path
+        d='M21.2639 13.2294L14.712 19.7812L8.16022 13.2294'
+        stroke={theme === 'dark' ? 'white' : '#88888D'}
+        strokeWidth='1.18464'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
     </svg>
   );
 };
