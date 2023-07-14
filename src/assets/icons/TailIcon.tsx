@@ -9,8 +9,17 @@ interface ITailIcon {
 
 const TailIcon: FC<ITailIcon> = ({ type }) => {
   const theme = useAppSelector((state) => state.theme.theme);
+  const bgImage = useAppSelector((state) => state.config.bgImage);
 
   const color = useMemo(() => {
+    if (
+      bgImage === '/src/assets/images/bg-chat/pattern-12.jpg' &&
+      type !== 'owner' &&
+      theme !== 'dark'
+    ) {
+      return '#F1F1F4';
+    }
+
     if (theme === 'dark' && type === 'owner') {
       return '#313131';
     }
@@ -24,7 +33,7 @@ const TailIcon: FC<ITailIcon> = ({ type }) => {
     }
 
     return 'white';
-  }, [theme, type]);
+  }, [theme, type, bgImage]);
 
   return (
     <svg width='11' height='17' viewBox='0 0 11 17' fill='none'>

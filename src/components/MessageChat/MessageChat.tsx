@@ -1,6 +1,7 @@
 import { FC, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import TailIcon from '../../assets/icons/TailIcon';
+import { useAppSelector } from '../../hooks/useAppSelector';
 import MessageTime from '../MessageTime/MessageTime';
 import ModalEditMessage from '../Modal/ModalEditMessage';
 import { IMessageChat } from './MessageChat.interface';
@@ -14,13 +15,15 @@ const MessageChat: FC<IMessageChat> = ({
   prevType,
   nextType,
   image,
-  className,
+  className = '',
   style,
 }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [width, setWidth] = useState<number | 'auto'>('auto');
   const messageRef = useRef<HTMLDivElement>(null);
   const messageWrapperRef = useRef<HTMLDivElement>(null);
+
+  const bgImage = useAppSelector((state) => state.config.bgImage);
 
   const isMessage = message.trim() !== '';
 
@@ -31,18 +34,31 @@ const MessageChat: FC<IMessageChat> = ({
       messageRef.current.innerHTML = message;
 
       if (messageWrapperRef.current.offsetHeight > 30) {
+        console.log(
+          messageWrapperRef.current.offsetWidth,
+          messageRef.current.offsetWidth,
+        );
+
         setWidth(messageRef.current.offsetWidth + 1);
       }
     }
   }, [message, messageRef.current, messageWrapperRef.current]);
+
+  const bgMessage = useMemo(() => {
+    if (bgImage === '/src/assets/images/bg-chat/pattern-12.jpg') {
+      return 'bg-[#F1F1F4]';
+    }
+
+    return 'bg-white';
+  }, [bgImage]);
 
   const isOwner = useMemo(() => {
     if (type === 'owner') {
       return 'bg-gradient-to-b from-[#5FA2F4] to-[#5DA0F5] dark:from-[#313131] dark:to-[#313131] text-white ml-auto';
     }
 
-    return 'bg-white dark:bg-[#1A1A1A] text-black dark:text-white';
-  }, [type]);
+    return `${bgMessage} dark:bg-[#1A1A1A] text-black dark:text-white`;
+  }, [type, bgMessage]);
 
   const isNextType = nextType === type;
   const isPrevType = prevType !== type;
@@ -118,7 +134,7 @@ const MessageChat: FC<IMessageChat> = ({
   }, [isPrevType, type]);
 
   const classNameImagePadding = useMemo(() => {
-    return 'px-[8.5px] pt-[3.5px] pb-[3.1px]';
+    return 'px-[8px] pt-[3.5px] pb-[3.1px]';
   }, []);
 
   const handleOpenModal = useCallback(() => {
@@ -131,7 +147,7 @@ const MessageChat: FC<IMessageChat> = ({
         ref={messageWrapperRef}
         aria-hidden={true}
         onClick={handleOpenModal}
-        className={`flex rounded-[13px] font-light text-[13.26px] max-w-[250px] w-fit relative leading-[134%] ${
+        className={`flex rounded-[13px] font-light text-[13.26px] max-w-[272px] w-fit relative leading-[134%] ${
           image ? 'flex-col' : classNameImagePadding
         } ${isOwner} ${classNameNextType} ${classNameRounded()} ${className}`}
         style={style}
@@ -160,7 +176,7 @@ const MessageChat: FC<IMessageChat> = ({
             >
               <span ref={messageRef} className='-tracking-[0.3px]' />
               <MessageTime
-                className='mt-[6px] pb-0'
+                className='mt-[7px] pb-0'
                 type={type}
                 time={time}
                 isViewed={isViewed}
@@ -175,7 +191,7 @@ const MessageChat: FC<IMessageChat> = ({
         ) : (
           <div className='absolute bottom-[6px] right-1'>
             <MessageTime
-              className='mt-[6px] pb-0'
+              className='mt-[7px] pb-0'
               type={type}
               time={time}
               isViewed={isViewed}

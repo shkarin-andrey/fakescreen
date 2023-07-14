@@ -27,6 +27,15 @@ const ScreenPage: FC = () => {
     dispatch(setTheme(dataState.data.theme.theme));
   }, [dataState]);
 
+  useEffect(() => {
+    if (bgImage) {
+      document.body.style.backgroundImage = `url('${bgImage}')`;
+      document.body.style.backgroundPosition = 'center';
+      document.body.style.backgroundRepeat = 'no-repeat';
+      document.body.style.backgroundSize = 'cover';
+    }
+  }, [bgImage]);
+
   return (
     <div className='relative min-h-[1792px]'>
       <div

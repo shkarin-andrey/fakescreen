@@ -15,15 +15,22 @@ const PhoneUserInfo: FC = () => {
   const unread = useAppSelector((state) => state.config.unread);
   const avatarFile = useAppSelector((state) => state.config.avatarFile);
   const mute = useAppSelector((state) => state.config.mute);
+  const theme = useAppSelector((state) => state.theme.theme);
 
   const isStatusOnline = useMemo(() => {
-    return status.props.id === options[1].label || status.props.id === options[0].label
-      ? 'text-[#32A8E6]'
-      : 'text-[#787878]';
-  }, [status.props.id]);
+    if (status.props.id === options[1].label || status.props.id === options[0].label) {
+      if (theme === 'dark') {
+        return 'text-white';
+      } else {
+        return 'text-[#2F7BF4]';
+      }
+    }
+
+    return 'text-[#787878]';
+  }, [status.props.id, theme]);
 
   return (
-    <div className='z-[13] w-full h-[38px] pl-[6px] pr-[5px] grid grid-cols-[56px_1fr_56px] items-center text-xs font-semibold text-[#171717]'>
+    <div className='z-[13] w-full h-[37px] pl-[6px] pr-[5px] grid grid-cols-[56px_1fr_56px] items-center text-xs font-semibold text-[#171717]'>
       <div className='text-[#037EE5] flex items-center gap-[3px] text-sm mt-[3px]'>
         <ShapeIcon />
         {isUnread ? (
@@ -31,23 +38,23 @@ const PhoneUserInfo: FC = () => {
             <div className='mb-[1px] pb-[0.5px]'>{unread}</div>
           </div>
         ) : (
-          <span className='font-normal dark:text-white'>
+          <span className='dark:text-white ml-[2px] mt-[1px] text-[13px] font-light -tracking-[0.1px]'>
             <FormattedMessage id='header_phone_back' />
           </span>
         )}
       </div>
       <div className='text-sm flex flex-col items-center leading-none pb-[2px]'>
         <div className='w-full flex items-end justify-center'>
-          <span className='font-semibold truncate -tracking-[0.4px] text-[13px] pt-[5px] pb-[1px] dark:text-white mr-[3px]'>
+          <div className='font-semibold truncate -tracking-[0.4px] text-[13px] pt-[5px] pb-[2px] dark:text-white mr-[3px]'>
             {username}
-          </span>
+          </div>
           {mute && (
             <div>
               <MuteIcon />
             </div>
           )}
         </div>
-        <div className={`text-[11px] font-normal ${isStatusOnline}`}>
+        <div className={`text-[10px] font-normal -mt-[1px] -ml-[1px] ${isStatusOnline}`}>
           {status.props.id === options[0].label ? (
             <div className='flex items-center gap-1'>
               <div>
