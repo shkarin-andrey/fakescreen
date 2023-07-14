@@ -34,11 +34,6 @@ const MessageChat: FC<IMessageChat> = ({
       messageRef.current.innerHTML = message;
 
       if (messageWrapperRef.current.offsetHeight > 30) {
-        console.log(
-          messageWrapperRef.current.offsetWidth,
-          messageRef.current.offsetWidth,
-        );
-
         setWidth(messageRef.current.offsetWidth + 1);
       }
     }
@@ -74,20 +69,20 @@ const MessageChat: FC<IMessageChat> = ({
   const classNameRounded = useCallback(() => {
     if (type === 'owner') {
       return isPrevType && isNextType && nextType !== null
-        ? 'rounded-tr-[5px]'
+        ? 'rounded-tr-[6px]'
         : !isPrevType && isNextType
-        ? 'rounded-r-[5px]'
+        ? 'rounded-r-[6px]'
         : !isPrevType && !isNextType
-        ? 'rounded-br-[5px]'
+        ? 'rounded-br-[6px]'
         : '';
     }
 
     return isPrevType && isNextType && nextType !== null
-      ? 'rounded-tl-[5px]'
+      ? 'rounded-tl-[6px]'
       : !isPrevType && isNextType
-      ? 'rounded-l-[5px]'
+      ? 'rounded-l-[6px]'
       : !isPrevType && !isNextType
-      ? 'rounded-bl-[5px]'
+      ? 'rounded-bl-[6px]'
       : '';
   }, [type, isPrevType, isNextType, nextType]);
 
@@ -102,23 +97,23 @@ const MessageChat: FC<IMessageChat> = ({
 
     if (type === 'owner') {
       isPrevType && isNextType && nextType !== null
-        ? className.push('!rounded-tr-[5px]')
+        ? className.push('!rounded-tr-[6px]')
         : !isPrevType && isNextType && !isMessage
-        ? className.push('!rounded-r-[5px]')
+        ? className.push('!rounded-r-[6px]')
         : !isPrevType && isNextType && !isMessage
-        ? className.push('!rounded-tr-[5px]')
+        ? className.push('!rounded-tr-[6px]')
         : !isPrevType && !isNextType && !isMessage
-        ? className.push('rounded-br-[5px]')
+        ? className.push('rounded-br-[6px]')
         : '';
     } else {
       isPrevType && isNextType && nextType !== null
-        ? className.push('!rounded-tl-[5px]')
+        ? className.push('!rounded-tl-[6px]')
         : !isPrevType && isNextType && !isMessage
-        ? className.push('!rounded-l-[5px]')
+        ? className.push('!rounded-l-[6px]')
         : !isPrevType && isNextType && !isMessage
-        ? className.push('!rounded-tl-[5px]')
+        ? className.push('!rounded-tl-[6px]')
         : !isPrevType && !isNextType && !isMessage
-        ? className.push('rounded-bl-[5px]')
+        ? className.push('rounded-bl-[6px]')
         : '';
     }
 
@@ -176,7 +171,9 @@ const MessageChat: FC<IMessageChat> = ({
             >
               <span ref={messageRef} className='-tracking-[0.3px]' />
               <MessageTime
-                className='mt-[5px] pb-0 translate-x-[6px]'
+                className={`mt-[5px] pb-0 ${
+                  type === 'owner' ? 'translate-x-[7px]' : 'translate-x-[1px]'
+                }`}
                 type={type}
                 time={time}
                 isViewed={isViewed}
