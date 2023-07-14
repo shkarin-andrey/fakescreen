@@ -22,7 +22,7 @@ const PhoneUserInfo: FC = () => {
       if (theme === 'dark') {
         return 'text-white';
       } else {
-        return 'text-[#32A8E6]';
+        return 'text-[#2F7BF4]';
       }
     }
 

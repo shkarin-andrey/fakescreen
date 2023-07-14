@@ -31,6 +31,6 @@ export const itemsNetwork = [
   },
   {
     value: 'avia',
-    label: <AviaIcon />,
+    label: <AviaIcon isSettings />,
   },
 ];

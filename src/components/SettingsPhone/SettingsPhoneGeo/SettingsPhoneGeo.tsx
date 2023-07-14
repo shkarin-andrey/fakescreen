@@ -22,10 +22,10 @@ const SettingsPhoneGeo: FC = () => {
     <Wrapper title='Геолокация:'>
       <Radio.Group onChange={handleChangeGeo} value={geo} className='flex'>
         <Radio.Button value='outline' className='flex justify-center items-center'>
-          <GeoOutlineIcon />
+          <GeoOutlineIcon isSettings />
         </Radio.Button>
         <Radio.Button value='fill' className='flex justify-center items-center'>
-          <GeoFillIcon />
+          <GeoFillIcon isSettings />
         </Radio.Button>
         <Radio.Button value='blue' className='flex justify-center items-center'>
           <GeoBlueIcon />
