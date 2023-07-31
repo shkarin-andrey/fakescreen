@@ -9,6 +9,7 @@ export interface IModalEditMessage {
   time?: Message['time'];
   chatTime?: ChatTime['chatTime'] | null;
   message?: Message['message'];
+  seconds?: number;
 }
 
 export interface IModalEditMessageSave {
@@ -19,5 +20,6 @@ export interface IModalEditMessageSave {
     time?: Message['time'];
     chatTime?: ChatTime['chatTime'];
     message?: Message['message'];
+    audioMessage?: Message['audioMessage'];
   };
 }

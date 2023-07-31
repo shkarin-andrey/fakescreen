@@ -73,6 +73,7 @@ const PhoneChat: FC = () => {
                 )}
                 {item.audioMessage && (
                   <AudioMessage
+                    id={item.id}
                     seconds={item.audioMessage}
                     time={item.time}
                     type={item.type}
