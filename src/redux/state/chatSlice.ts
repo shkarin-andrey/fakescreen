@@ -12,6 +12,7 @@ export type Message = {
   message: string;
   isViewed: boolean;
   time: string;
+  audioMessage?: number;
   sticker?: string;
   image?: string;
 };

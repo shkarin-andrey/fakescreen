@@ -3,4 +3,5 @@ export const initialValue = {
   message: '',
   time: null,
   isViewed: true,
+  audioMessage: null,
 };
