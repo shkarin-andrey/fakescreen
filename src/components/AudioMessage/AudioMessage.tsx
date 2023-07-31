@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react';
 
-import DownloadIcon from '../../assets/icons/DownloadIcon';
+import PlayIcon from '../../assets/icons/PlayIcon';
 import TailIcon from '../../assets/icons/TailIcon';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { formatedCount } from '../../utils/formatedCount';
@@ -88,17 +88,29 @@ const AudioMessage: FC<IAudioMessage> = ({
     return `${bgMessage} dark:bg-[#1A1A1A] text-black dark:text-white`;
   }, [type, bgMessage]);
 
+  const bgColorLine = useMemo(() => {
+    if (type === 'owner') {
+      return 'bg-white';
+    }
+
+    return 'bg-[#5FA2F4]';
+  }, []);
+
   return (
     <div
-      className={`relative ${isOwner} rounded-[13px] mt-[2px] pt-[8.58px] pl-[8.58px] pb-[3.5px] pr-[13.26px] max-w-[278px] w-fit text-[8.56px] ${typeClassName} ${classNameNextType} ${classNameRounded()}`}
+      className={`relative rounded-[13px] mt-[2px] pt-[8.58px] pl-[8.58px] pb-[3.5px] pr-[13.26px] max-w-[278px] w-fit text-[8.56px] ${isOwner} ${typeClassName} ${classNameNextType} ${classNameRounded()}`}
     >
       <div className='flex gap-[6.24px] items-center'>
-        <DownloadIcon />
+        <PlayIcon type={type} />
         <div className='flex flex-col gap-1'>
-          <AudioLine count={formatedCount(seconds)} />
-          <div className='text-[#ADADAD] flex items-center gap-1'>
+          <AudioLine count={formatedCount(seconds)} className={bgColorLine} />
+          <div
+            className={`flex items-center gap-1 ${
+              type === 'owner' ? 'text-white' : 'text-[#ADADAD]'
+            }`}
+          >
             <span>{formatted}</span>
-            <div className='w-[3.12px] h-[3.12px] rounded-full bg-[#5286EF]'></div>
+            <div className={`w-[3.12px] h-[3.12px] rounded-full ${bgColorLine}`}></div>
           </div>
         </div>
       </div>
@@ -109,7 +121,7 @@ const AudioMessage: FC<IAudioMessage> = ({
         isViewed={isViewed}
       />
       {isPrevType && (
-        <div className={`absolute -bottom-[6px] ${classNamePrevTypeTail}`}>
+        <div className={`absolute -bottom-[4px] ${classNamePrevTypeTail}`}>
           <TailIcon type={type} />
         </div>
       )}
