@@ -21,10 +21,12 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
   isViewed,
   chatTime = null,
   message,
+  seconds,
 }) => {
   const [checkedViewed, setCheckedViewed] = useState(isViewed);
   const [selectType, setSelectType] = useState(type);
   const [selectTime, setSelectTime] = useState(time);
+  const [selectSeconds, setSelectSeconds] = useState(seconds?.toString());
   const [changeChatTime, setChangeChatTime] = useState(chatTime);
 
   const ref = useRef<HTMLDivElement>(null);
@@ -62,6 +64,10 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
       body.data.chatTime = changeChatTime;
     }
 
+    if (selectSeconds) {
+      body.data.audioMessage = parseInt(selectSeconds, 10);
+    }
+
     if (message) {
       body.data.message = ref.current?.innerHTML;
     }
@@ -74,7 +80,7 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
     selectType,
     checkedViewed,
     selectTime,
-    changeChatTime,
+    selectSeconds,
     changeChatTime,
     ref.current,
   ]);
@@ -89,6 +95,10 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
 
   const handleChangeTime = useCallback((_: dayjs.Dayjs | null, value: string) => {
     setSelectTime(value);
+  }, []);
+
+  const handleChangeSeconds = useCallback((_: dayjs.Dayjs | null, value: string) => {
+    setSelectSeconds(value);
   }, []);
 
   const handleChangeChatTime = useCallback(
@@ -163,6 +173,13 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
             />
             <DropdownEmoji onEmojiClick={onEmojiClick} />
           </div>
+        )}
+        {seconds && (
+          <TimePicker
+            value={dayjs(selectSeconds, 'ss')}
+            onChange={handleChangeSeconds}
+            format={'ss'}
+          />
         )}
       </div>
     </Modal>
