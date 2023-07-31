@@ -3,6 +3,7 @@ import { FC, Fragment, memo, useCallback, useRef, useState } from 'react';
 import GoDownButtonIcon from '../../../assets/icons/GoDownButtonIcon';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { type Message } from '../../../redux/state/chatSlice';
+import AudioMessage from '../../AudioMessage';
 import MessageChat from '../../MessageChat';
 import MessageSticker from '../../MessageSticker';
 import TimeChat from '../../TimeChat';
@@ -65,6 +66,16 @@ const PhoneChat: FC = () => {
                     message={item.message}
                     time={item.time}
                     image={item.image}
+                    isViewed={item.isViewed}
+                    prevType={prevType(index)}
+                    nextType={nextType(index)}
+                  />
+                )}
+                {item.audioMessage && (
+                  <AudioMessage
+                    seconds={item.audioMessage}
+                    time={item.time}
+                    type={item.type}
                     isViewed={item.isViewed}
                     prevType={prevType(index)}
                     nextType={nextType(index)}

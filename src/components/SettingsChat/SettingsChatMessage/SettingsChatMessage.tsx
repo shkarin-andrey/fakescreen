@@ -17,6 +17,8 @@ const SettingsChatMessage: FC = () => {
   const [image, setImage] = useState<string | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 
+  const [form] = Form.useForm();
+
   const dispatch = useAppDispatch();
 
   const handleChatMessage = (e: React.ChangeEvent<HTMLDivElement>) => {
@@ -41,6 +43,10 @@ const SettingsChatMessage: FC = () => {
       data.image = image;
     }
 
+    if (values.audioMessage) {
+      data.audioMessage = parseInt(values.audioMessage.format('ss'), 10);
+    }
+
     dispatch(setMessage(data));
     setSelect(null);
     setImage(null);
@@ -48,6 +54,8 @@ const SettingsChatMessage: FC = () => {
     if (ref.current) {
       ref.current.innerHTML = '';
     }
+
+    form.setFieldValue('audioMessage', null);
   };
 
   const onSelect = useCallback((sticker: string) => {
@@ -65,6 +73,7 @@ const SettingsChatMessage: FC = () => {
 
   return (
     <Form
+      form={form}
       initialValues={initialValue}
       onFinish={onFinishMessage}
       autoComplete='off'
@@ -73,6 +82,11 @@ const SettingsChatMessage: FC = () => {
       <Form.Item name='type'>
         <Radio.Group options={optionsTypeMessage} />
       </Form.Item>
+      <Wrapper title='Голосовое сообщение:'>
+        <Form.Item name='audioMessage'>
+          <TimePicker format={'ss'} />
+        </Form.Item>
+      </Wrapper>
       <Wrapper title='Сообщение:'>
         <div
           ref={ref}
