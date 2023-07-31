@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 
 import { IAudioLine } from './AudioLine.interface';
 
-const AudioLine: FC<IAudioLine> = ({ count = 1 }) => {
+const AudioLine: FC<IAudioLine> = ({ count = 1, className }) => {
   const [arr, setArr] = useState<number[]>([]);
   const min = 1.56;
   const max = 12.09;
@@ -24,7 +24,7 @@ const AudioLine: FC<IAudioLine> = ({ count = 1 }) => {
       {arr.map((item, index) => (
         <div
           key={`${item}_${index}`}
-          className='rounded-[0.78px] w-[1.56px] bg-[#5286EF]'
+          className={`rounded-[0.78px] w-[1.56px] dark:bg-white ${className}`}
           style={{
             height: item,
           }}
