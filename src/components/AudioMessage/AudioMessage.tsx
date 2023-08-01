@@ -107,7 +107,11 @@ const AudioMessage: FC<IAudioMessage> = ({
         <div className='flex gap-[6.24px] items-center'>
           <PlayIcon type={type} />
           <div className='flex flex-col gap-1'>
-            <AudioLine count={formatedCount(seconds)} type={type} />
+            <AudioLine
+              count={formatedCount(seconds)}
+              type={type}
+              isListened={isListened}
+            />
             <div
               className={`flex items-center gap-1 ${
                 type === 'owner' ? 'text-white' : 'text-[#ADADAD]'
