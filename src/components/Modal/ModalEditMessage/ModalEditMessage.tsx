@@ -92,17 +92,14 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
   const handleChangeViewed = useCallback((e: CheckboxChangeEvent) => {
     setCheckedViewed(e.target.checked);
 
-    if (!checkedViewed) {
+    if (!e.target.checked) {
       setCheckedListened(false);
     }
   }, []);
 
-  const handleChangeListened = useCallback(
-    (e: CheckboxChangeEvent) => {
-      setCheckedListened(e.target.checked);
-    },
-    [checkedViewed],
-  );
+  const handleChangeListened = useCallback((e: CheckboxChangeEvent) => {
+    setCheckedListened(e.target.checked);
+  }, []);
 
   const handleSelectType = useCallback((e: RadioChangeEvent) => {
     setSelectType(e.target.value);
@@ -202,7 +199,7 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
             disabled={!checkedViewed}
             onChange={handleChangeListened}
           >
-            Прослушанно
+            Прослушано
           </Checkbox>
         )}
       </div>
