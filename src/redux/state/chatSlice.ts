@@ -11,6 +11,7 @@ export type Message = {
   type: string;
   message: string;
   isViewed: boolean;
+  isListened: boolean;
   time: string;
   audioMessage?: number;
   sticker?: string;

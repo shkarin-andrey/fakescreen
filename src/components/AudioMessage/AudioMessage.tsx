@@ -1,5 +1,6 @@
 import { FC, useCallback, useMemo, useState } from 'react';
 
+import DotIcon from '../../assets/icons/DotIcon';
 import PlayIcon from '../../assets/icons/PlayIcon';
 import TailIcon from '../../assets/icons/TailIcon';
 import { useAppSelector } from '../../hooks/useAppSelector';
@@ -17,6 +18,7 @@ const AudioMessage: FC<IAudioMessage> = ({
   nextType,
   prevType,
   isViewed,
+  isListened,
 }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const bgImage = useAppSelector((state) => state.config.bgImage);
@@ -26,7 +28,7 @@ const AudioMessage: FC<IAudioMessage> = ({
   const sec = seconds % 60;
 
   const formatted = useMemo(
-    () => [min.toString().padStart(2, '0'), sec.toString().padStart(2, '0')].join(':'),
+    () => [min.toString().padStart(1, '0'), sec.toString().padStart(2, '0')].join(':'),
     [sec, min],
   );
 
@@ -41,7 +43,7 @@ const AudioMessage: FC<IAudioMessage> = ({
 
   const classNameNextType = useMemo(() => {
     if (isNextType) {
-      return 'mt-[2px]';
+      return 'mt-[1px]';
     }
 
     return 'mt-[6px]';
@@ -91,14 +93,6 @@ const AudioMessage: FC<IAudioMessage> = ({
     return `${bgMessage} dark:bg-[#1A1A1A] text-black dark:text-white`;
   }, [type, bgMessage]);
 
-  const bgColorLine = useMemo(() => {
-    if (type === 'owner') {
-      return 'bg-white';
-    }
-
-    return 'bg-[#5FA2F4]';
-  }, [type]);
-
   const handleOpenModal = useCallback(() => {
     setIsOpenModal(true);
   }, []);
@@ -108,24 +102,28 @@ const AudioMessage: FC<IAudioMessage> = ({
       <div
         aria-hidden={true}
         onClick={handleOpenModal}
-        className={`relative rounded-[13px] mt-[2px] pt-[8.58px] pl-[8.58px] pb-[3.5px] pr-[13.26px] max-w-[278px] w-fit text-[8.56px] ${isOwner} ${typeClassName} ${classNameNextType} ${classNameRounded()}`}
+        className={`relative rounded-[13px] pt-[7.58px] pl-[7.58px] pb-[2.5px] pr-[13px] max-w-[278px] w-fit text-[8.56px] ${isOwner} ${typeClassName} ${classNameNextType} ${classNameRounded()}`}
       >
         <div className='flex gap-[6.24px] items-center'>
           <PlayIcon type={type} />
           <div className='flex flex-col gap-1'>
-            <AudioLine count={formatedCount(seconds)} className={bgColorLine} />
+            <AudioLine count={formatedCount(seconds)} type={type} />
             <div
               className={`flex items-center gap-1 ${
                 type === 'owner' ? 'text-white' : 'text-[#ADADAD]'
               }`}
             >
               <span>{formatted}</span>
-              <div className={`w-[3.12px] h-[3.12px] rounded-full ${bgColorLine}`}></div>
+              {!isListened && (
+                <div className='translate-x-[1px]'>
+                  <DotIcon type={type} />
+                </div>
+              )}
             </div>
           </div>
         </div>
         <MessageTime
-          className='!p-0 translate-x-[6.63px]'
+          className='!p-0 translate-x-[6.63px] -translate-y-[1px]'
           type={type}
           time={time}
           isViewed={isViewed}
@@ -141,6 +139,7 @@ const AudioMessage: FC<IAudioMessage> = ({
         type={type}
         time={time}
         isViewed={isViewed}
+        isListened={isListened}
         isOpneModal={isOpenModal}
         setIsOpneModal={setIsOpenModal}
         seconds={seconds}

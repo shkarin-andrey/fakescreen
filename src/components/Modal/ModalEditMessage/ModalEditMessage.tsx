@@ -19,11 +19,13 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
   type,
   time,
   isViewed,
+  isListened,
   chatTime = null,
   message,
   seconds,
 }) => {
   const [checkedViewed, setCheckedViewed] = useState(isViewed);
+  const [checkedListened, setCheckedListened] = useState(isListened);
   const [selectType, setSelectType] = useState(type);
   const [selectTime, setSelectTime] = useState(time);
   const [selectSeconds, setSelectSeconds] = useState(seconds?.toString());
@@ -57,6 +59,7 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
         type: selectType,
         isViewed: checkedViewed,
         time: selectTime,
+        isListened: checkedListened,
       },
     };
 
@@ -79,6 +82,7 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
     id,
     selectType,
     checkedViewed,
+    checkedListened,
     selectTime,
     selectSeconds,
     changeChatTime,
@@ -87,6 +91,10 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
 
   const handleChangeViewed = useCallback((e: CheckboxChangeEvent) => {
     setCheckedViewed(e.target.checked);
+  }, []);
+
+  const handleChangeListened = useCallback((e: CheckboxChangeEvent) => {
+    setCheckedListened(e.target.checked);
   }, []);
 
   const handleSelectType = useCallback((e: RadioChangeEvent) => {
@@ -180,6 +188,11 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
             onChange={handleChangeSeconds}
             format={'ss'}
           />
+        )}
+        {isListened !== undefined && (
+          <Checkbox checked={checkedListened} onChange={handleChangeListened}>
+            Прослушанно
+          </Checkbox>
         )}
       </div>
     </Modal>

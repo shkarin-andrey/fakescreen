@@ -78,6 +78,7 @@ const PhoneChat: FC = () => {
                     time={item.time}
                     type={item.type}
                     isViewed={item.isViewed}
+                    isListened={item.isListened}
                     prevType={prevType(index)}
                     nextType={nextType(index)}
                   />
