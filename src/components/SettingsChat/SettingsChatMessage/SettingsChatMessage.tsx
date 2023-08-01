@@ -87,14 +87,6 @@ const SettingsChatMessage: FC = () => {
       <Form.Item name='type'>
         <Radio.Group options={optionsTypeMessage} />
       </Form.Item>
-      <Wrapper title='Голосовое сообщение:'>
-        <Form.Item name='audioMessage'>
-          <TimePicker format={'ss'} />
-        </Form.Item>
-      </Wrapper>
-      <Form.Item name='isListened' valuePropName='checked'>
-        <Checkbox>Прослушанно</Checkbox>
-      </Form.Item>
       <Wrapper title='Сообщение:'>
         <div
           ref={ref}
@@ -114,7 +106,14 @@ const SettingsChatMessage: FC = () => {
       <Form.Item name='isViewed' valuePropName='checked'>
         <Checkbox>Прочитано</Checkbox>
       </Form.Item>
-
+      <Wrapper title='Голосовое сообщение:'>
+        <Form.Item name='audioMessage'>
+          <TimePicker format={'ss'} />
+        </Form.Item>
+      </Wrapper>
+      <Form.Item name='isListened' valuePropName='checked'>
+        <Checkbox>Прослушано</Checkbox>
+      </Form.Item>
       <SettingsChatImage image={image} setImage={setImage} />
       <Form.Item name='sticker'>
         <SettingsChatMessageSticker select={select} onSelect={onSelect} />
