@@ -3,7 +3,7 @@ import { FC, useEffect, useMemo, useState } from 'react';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { IAudioLine } from './AudioLine.interface';
 
-const AudioLine: FC<IAudioLine> = ({ count = 1, type }) => {
+const AudioLine: FC<IAudioLine> = ({ count = 1, type, isListened }) => {
   const theme = useAppSelector((state) => state.theme.theme);
 
   const [arr, setArr] = useState<number[]>([]);
@@ -17,12 +17,28 @@ const AudioLine: FC<IAudioLine> = ({ count = 1, type }) => {
   );
 
   const bgColorLine = useMemo(() => {
+    if (isListened) {
+      if (theme === 'dark' && type === 'owner') {
+        return '#8C8C8C';
+      }
+
+      if (theme === 'dark' && type !== 'owner') {
+        return '#878787';
+      }
+
+      if (type === 'owner') {
+        return '#C0DDFC';
+      }
+
+      return '#BEBEBE';
+    }
+
     if (type === 'owner' || theme === 'dark') {
       return 'white';
     }
 
     return '#5FA2F4';
-  }, [type, theme]);
+  }, [type, theme, isListened]);
 
   useEffect(() => {
     const newArr: number[] = [];
