@@ -5,7 +5,7 @@ import { FC, useCallback, useMemo, useRef } from 'react';
 import phoneImg from '../../assets/images/phone.svg';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import { useLazyGetScreenshotQuery, useSaveStateMutation } from '../../redux/api/state';
+import { useSaveStateMutation } from '../../redux/api/state';
 import { resetChat } from '../../redux/state/chatSlice';
 import PhoneChat from './PhoneChat';
 import PhoneFooter from './PhoneFooter';
@@ -16,8 +16,6 @@ const { confirm } = Modal;
 const { VITE_APP_BASE_URL } = import.meta.env;
 
 const Phone: FC = () => {
-  const [getScreenshot] = useLazyGetScreenshotQuery();
-
   const [saveState] = useSaveStateMutation();
 
   const ref = useRef<HTMLDivElement>(null);
@@ -70,17 +68,20 @@ const Phone: FC = () => {
   }, [chatState, configState, languageState, themeState, handleGetScreenshot]);
 
   return (
-    <div className='flex flex-col gap-5 max-w-[376px] min-w-[376px] '>
-      <div className='h-[746px] relative py-6 px-[27px]'>
-        <img
-          src={phoneImg}
-          alt='FakeScreen Pro phone'
-          className='absolute top-0 left-0 w-full h-full z-10'
-        />
+    <div className='flex flex-col gap-5 max-w-[376px] min-w-[376px]'>
+      <div
+        className='h-[746px] relative py-6 px-[27px]'
+        style={{
+          borderImageSource: `url(${phoneImg})`,
+          borderImageSlice: '120 100 140 fill',
+          borderImageRepeat: 'repeat stretch',
+          borderImageWidth: '115px 101px 133px',
+        }}
+      >
         <div
           id='phone'
           ref={ref}
-          className='w-full h-full flex flex-col relative flex-1'
+          className='w-full h-full flex flex-col relative flex-1 rounded-[30px] overflow-hidden'
           style={{
             backgroundImage: `url('${bgImage}')`,
             backgroundPosition: 'center',

@@ -6,6 +6,7 @@ export interface IModalEditMessage {
   setIsOpneModal: React.Dispatch<React.SetStateAction<boolean>>;
   type?: Message['type'];
   isViewed?: Message['isViewed'];
+  isListened?: Message['isListened'];
   time?: Message['time'];
   chatTime?: ChatTime['chatTime'] | null;
   message?: Message['message'];
@@ -17,6 +18,7 @@ export interface IModalEditMessageSave {
   data: {
     type?: Message['time'];
     isViewed?: Message['isViewed'];
+    isListened?: Message['isListened'];
     time?: Message['time'];
     chatTime?: ChatTime['chatTime'];
     message?: Message['message'];

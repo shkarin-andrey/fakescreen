@@ -33,6 +33,7 @@ const SettingsChatMessage: FC = () => {
       id: uuidv4(),
       time: values.time.format('HH:mm'),
       message: ref.current?.innerHTML,
+      audioMessage: null,
     };
 
     if (select) {
@@ -44,7 +45,11 @@ const SettingsChatMessage: FC = () => {
     }
 
     if (values.audioMessage) {
-      data.audioMessage = parseInt(values.audioMessage.format('ss'), 10);
+      const seconds = parseInt(values.audioMessage.format('ss'), 10);
+
+      if (seconds > 0) {
+        data.audioMessage = seconds;
+      }
     }
 
     dispatch(setMessage(data));
@@ -87,6 +92,9 @@ const SettingsChatMessage: FC = () => {
           <TimePicker format={'ss'} />
         </Form.Item>
       </Wrapper>
+      <Form.Item name='isListened' valuePropName='checked'>
+        <Checkbox>Прослушанно</Checkbox>
+      </Form.Item>
       <Wrapper title='Сообщение:'>
         <div
           ref={ref}

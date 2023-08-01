@@ -19,16 +19,7 @@ export const stateApi = createApi({
     getStateId: build.query<any, string>({
       query: (id) => `state/${id}`,
     }),
-    getScreenshot: build.query<any, string>({
-      query: (id) => ({
-        url: `state/screenshot/${id}`,
-        method: 'GET',
-        responseHandler: async (response) => await response.blob(),
-        cache: 'no-cache',
-      }),
-    }),
   }),
 });
 
-export const { useSaveStateMutation, useGetStateIdQuery, useLazyGetScreenshotQuery } =
-  stateApi;
+export const { useSaveStateMutation, useGetStateIdQuery } = stateApi;

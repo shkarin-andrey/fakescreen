@@ -6,6 +6,7 @@ export interface IAudioMessage {
   time: Message['time'];
   type: Message['type'];
   isViewed: Message['isViewed'];
+  isListened: Message['isListened'];
   prevType: Message['type'] | null;
   nextType: Message['type'] | null;
 }

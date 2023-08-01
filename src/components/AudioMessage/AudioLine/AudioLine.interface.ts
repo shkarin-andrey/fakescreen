@@ -1,4 +1,6 @@
+import { Message } from '../../../redux/state/chatSlice';
+
 export interface IAudioLine {
   count?: number;
-  className: string;
+  type: Message['type'];
 }
