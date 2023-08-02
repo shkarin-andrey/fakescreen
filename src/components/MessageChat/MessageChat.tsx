@@ -1,6 +1,8 @@
 import { FC, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import TailIcon from '../../assets/icons/TailIcon';
+import maskLeft from '../../assets/images/mask-message-left.svg';
+import maskRight from '../../assets/images/mask-message-right.svg';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import MessageTime from '../MessageTime/MessageTime';
 import ModalEditMessage from '../Modal/ModalEditMessage';
@@ -136,6 +138,42 @@ const MessageChat: FC<IMessageChat> = ({
     setIsOpenModal(true);
   }, []);
 
+  const maskImage = useMemo(() => {
+    const styleObj: React.CSSProperties = {};
+
+    if (image && !isMessage && isPrevType) {
+      if (type === 'owner') {
+        styleObj.WebkitMaskPosition = 'right bottom';
+        styleObj.WebkitMaskImage = `url(${maskRight})`;
+        styleObj.borderBottomRightRadius = 0;
+        styleObj.transform = 'translateX(3px)';
+      } else {
+        styleObj.WebkitMaskPosition = 'left bottom';
+        styleObj.WebkitMaskImage = `url(${maskLeft})`;
+        styleObj.borderBottomLeftRadius = 0;
+        styleObj.transform = 'translateX(-3px)';
+      }
+    }
+
+    return styleObj;
+  }, [image, isMessage, isPrevType, type]);
+
+  const borderRadiusImageMask = useMemo(() => {
+    const styleObj: React.CSSProperties = {
+      background: `url('${image}') center center/cover no-repeat`,
+    };
+
+    if (image && !isMessage && isPrevType) {
+      if (type === 'owner') {
+        styleObj.borderBottomRightRadius = 0;
+      } else {
+        styleObj.borderBottomLeftRadius = 0;
+      }
+    }
+
+    return styleObj;
+  }, [image, isMessage, isPrevType, type]);
+
   return (
     <>
       <div
@@ -145,14 +183,12 @@ const MessageChat: FC<IMessageChat> = ({
         className={`flex rounded-[13px] font-light text-[13.26px] max-w-[278px] w-fit relative leading-[134%] ${
           image ? 'flex-col' : classNameImagePadding
         } ${isOwner} ${classNameNextType} ${classNameRounded()} ${className}`}
-        style={style}
+        style={{ ...maskImage, ...style }}
       >
         {image && (
           <div
             className={`flex justify-center backdrop-blur-3xl ${classNameRoundedImage()}`}
-            style={{
-              background: `url('${image}') center center/cover no-repeat`,
-            }}
+            style={borderRadiusImageMask}
           >
             <img
               className={`w-full max-w-[257px] max-h-[316px] min-w-[100px] min-h-[100px] object-contain backdrop-blur-md ${classNameRoundedImage()}`}
