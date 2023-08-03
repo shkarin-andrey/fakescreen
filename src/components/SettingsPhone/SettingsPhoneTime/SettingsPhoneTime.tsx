@@ -25,6 +25,7 @@ const SettingsPhoneTime: FC = () => {
         defaultValue={dayjs(time, format)}
         onChange={handleChangeTime}
         format={format}
+        clearIcon={null}
       />
     </Wrapper>
   );
