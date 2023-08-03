@@ -31,7 +31,7 @@ const PhoneUserInfo: FC = () => {
     }
 
     return 'text-[#787878]';
-  }, [status.id, theme]);
+  }, [status.id, theme, network]);
 
   const getStatus = () => {
     if (status.id === 'interlocutor_status_minutesAgo') {
