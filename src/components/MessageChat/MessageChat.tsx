@@ -1,8 +1,14 @@
 import { FC, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import TailIcon from '../../assets/icons/TailIcon';
-import maskLeft from '../../assets/images/mask-message-left.svg';
-import maskRight from '../../assets/images/mask-message-right.svg';
+import maskHorizontalLeft from '../../assets/images/mask-message-horizontal-left.svg';
+import maskHorizontalRight from '../../assets/images/mask-message-horizontal-right.svg';
+import maskHorizontalRoundLeft from '../../assets/images/mask-message-horizontal-round-left.svg';
+import maskHorizontalRoundRight from '../../assets/images/mask-message-horizontal-round-right.svg';
+import maskVerticalLeft from '../../assets/images/mask-message-vertical-left.svg';
+import maskVerticalRight from '../../assets/images/mask-message-vertical-right.svg';
+import maskVerticalRoundLeft from '../../assets/images/mask-message-vertical-round-left.svg';
+import maskVerticalRoundRight from '../../assets/images/mask-message-vertical-round-right.svg';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import MessageTime from '../MessageTime/MessageTime';
 import ModalEditMessage from '../Modal/ModalEditMessage';
@@ -20,6 +26,11 @@ const MessageChat: FC<IMessageChat> = ({
   className = '',
   style,
 }) => {
+  const [mask, setMask] = useState<{
+    position?: 'right' | 'left';
+    type?: 'vertical' | 'horizontal';
+    rounded?: boolean;
+  }>({});
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [width, setWidth] = useState<number | 'auto'>('auto');
   const messageRef = useRef<HTMLDivElement>(null);
@@ -138,25 +149,59 @@ const MessageChat: FC<IMessageChat> = ({
     setIsOpenModal(true);
   }, []);
 
+  const generateMaskImage = useMemo(() => {
+    if (mask?.type === 'horizontal' && mask?.position === 'right') {
+      if (mask?.rounded) {
+        return maskHorizontalRoundRight;
+      }
+
+      return maskHorizontalRight;
+    }
+
+    if (mask?.type === 'horizontal' && mask?.position === 'left') {
+      if (mask?.rounded) {
+        return maskHorizontalRoundLeft;
+      }
+
+      return maskHorizontalLeft;
+    }
+
+    if (mask?.type === 'vertical' && mask?.position === 'right') {
+      if (mask?.rounded) {
+        return maskVerticalRoundRight;
+      }
+
+      return maskVerticalRight;
+    }
+
+    if (mask?.type === 'vertical' && mask?.position === 'left') {
+      if (mask?.rounded) {
+        return maskVerticalRoundLeft;
+      }
+
+      return maskVerticalLeft;
+    }
+  }, [mask?.type, mask?.position, mask?.rounded]);
+
   const maskImage = useMemo(() => {
     const styleObj: React.CSSProperties = {};
 
     if (image && !isMessage && isPrevType) {
       if (type === 'owner') {
         styleObj.WebkitMaskPosition = 'right bottom';
-        styleObj.WebkitMaskImage = `url(${maskRight})`;
+        styleObj.WebkitMaskBoxImage = `url(${generateMaskImage}) 0 0 0 0 round round`;
         styleObj.borderBottomRightRadius = 0;
         styleObj.transform = 'translateX(3px)';
       } else {
         styleObj.WebkitMaskPosition = 'left bottom';
-        styleObj.WebkitMaskImage = `url(${maskLeft})`;
+        styleObj.WebkitMaskBoxImage = `url(${generateMaskImage}) 0 0 0 0 round round`;
         styleObj.borderBottomLeftRadius = 0;
         styleObj.transform = 'translateX(-3px)';
       }
     }
 
     return styleObj;
-  }, [image, isMessage, isPrevType, type]);
+  }, [image, isMessage, isPrevType, type, generateMaskImage]);
 
   const borderRadiusImageMask = useMemo(() => {
     const styleObj: React.CSSProperties = {
@@ -173,6 +218,62 @@ const MessageChat: FC<IMessageChat> = ({
 
     return styleObj;
   }, [image, isMessage, isPrevType, type]);
+
+  useEffect(() => {
+    if (!messageWrapperRef.current) return;
+
+    if (image && !isMessage && isPrevType) {
+      if (isNextType && nextType !== null) {
+        setMask((prev) => ({
+          ...prev,
+          rounded: true,
+        }));
+      } else {
+        setMask((prev) => ({
+          ...prev,
+          rounded: false,
+        }));
+      }
+
+      if (messageWrapperRef.current.clientHeight > 170) {
+        if (type === 'owner') {
+          setMask((prev) => ({
+            ...prev,
+            position: 'right',
+            type: 'vertical',
+          }));
+        } else {
+          setMask((prev) => ({
+            ...prev,
+            position: 'left',
+            type: 'vertical',
+          }));
+        }
+      } else {
+        if (type === 'owner') {
+          setMask((prev) => ({
+            ...prev,
+            position: 'right',
+            type: 'horizontal',
+          }));
+        } else {
+          setMask((prev) => ({
+            ...prev,
+            position: 'left',
+            type: 'horizontal',
+          }));
+        }
+      }
+    }
+  }, [
+    messageWrapperRef.current,
+    image,
+    isMessage,
+    isPrevType,
+    type,
+    nextType,
+    isNextType,
+  ]);
 
   return (
     <>
