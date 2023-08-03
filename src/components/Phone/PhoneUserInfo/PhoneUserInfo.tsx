@@ -16,9 +16,13 @@ const PhoneUserInfo: FC = () => {
   const avatarFile = useAppSelector((state) => state.config.avatarFile);
   const mute = useAppSelector((state) => state.config.mute);
   const theme = useAppSelector((state) => state.theme.theme);
+  const network = useAppSelector((state) => state.config.network);
 
   const isStatusOnline = useMemo(() => {
-    if (status.id === options[1].label || status.id === options[0].label) {
+    if (
+      (status.id === options[1].label || status.id === options[0].label) &&
+      network !== 'avia'
+    ) {
       if (theme === 'dark') {
         return 'text-white';
       } else {
@@ -95,7 +99,9 @@ const PhoneUserInfo: FC = () => {
           )}
         </div>
         <div className={`text-[10px] font-normal -mt-[1px] -ml-[1px] ${isStatusOnline}`}>
-          {status.id === options[0].label ? (
+          {network === 'avia' ? (
+            <FormattedMessage id='interlocutor_status_avia' />
+          ) : status.id === options[0].label ? (
             <div className='flex items-center gap-1'>
               <div className='-translate-y-[1px]'>
                 <WriteIcon />
