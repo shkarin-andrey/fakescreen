@@ -17,6 +17,7 @@ const PhoneHeader: FC = () => {
   const geo = useAppSelector((state) => state.config.geo);
   const isCharge = useAppSelector((state) => state.config.isCharge);
   const isEconom = useAppSelector((state) => state.config.isEconom);
+  const ethernet = useAppSelector((state) => state.config.ethernet);
 
   return (
     <div className='absolute top-0 left-0 w-full z-[11] bg-[#FFFFFF]/75 dark:bg-[#000000]/75 backdrop-blur-[100px] border-b-[0.2px] border-0 border-solid border-[#E8E8E8]/75 dark:border-[#2E2E30]/75'>
@@ -36,7 +37,7 @@ const PhoneHeader: FC = () => {
         )}
 
         <div className='mt-[1px] pr-[1px] flex items-center gap-[3px]'>
-          <NetworkHeader />
+          <NetworkHeader className={ethernet === 'x' ? '-translate-x-[1px]' : ''} />
           <EthernetHeader />
           <BattaryIcon isCharge={isCharge} isEconom={isEconom} size={volumeBattary} />
         </div>
