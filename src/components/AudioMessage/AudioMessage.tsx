@@ -22,6 +22,7 @@ const AudioMessage: FC<IAudioMessage> = ({
 }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const bgImage = useAppSelector((state) => state.config.bgImage);
+  const theme = useAppSelector((state) => state.theme.theme);
 
   const hours = Math.floor(seconds / 60 / 60);
   const min = Math.floor(seconds / 60) - hours * 60;
@@ -97,6 +98,14 @@ const AudioMessage: FC<IAudioMessage> = ({
     setIsOpenModal(true);
   }, []);
 
+  const classNameTimeIsListened = useMemo(() => {
+    if (type === 'owner' && theme === 'light') {
+      return 'text-white';
+    }
+
+    return 'text-[#ADADAD]';
+  }, [type, theme]);
+
   return (
     <>
       <div
@@ -112,11 +121,7 @@ const AudioMessage: FC<IAudioMessage> = ({
               type={type}
               isListened={isListened}
             />
-            <div
-              className={`flex items-center gap-1 ${
-                type === 'owner' ? 'text-white' : 'text-[#ADADAD]'
-              }`}
-            >
+            <div className={`flex items-center gap-1 ${classNameTimeIsListened}`}>
               <span>{formatted}</span>
               {!isListened && (
                 <div className='translate-x-[1px]'>
