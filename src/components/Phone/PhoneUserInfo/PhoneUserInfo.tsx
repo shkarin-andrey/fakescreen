@@ -30,6 +30,10 @@ const PhoneUserInfo: FC = () => {
       }
     }
 
+    if (theme === 'dark') {
+      return 'text-[#918F8F]';
+    }
+
     return 'text-[#787878]';
   }, [status.id, theme, network]);
 
