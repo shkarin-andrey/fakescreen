@@ -14,10 +14,6 @@ export const items = [
     label: '3G',
   },
   {
-    value: '4g',
-    label: '4G',
-  },
-  {
     value: 'lte',
     label: 'LTE',
   },
