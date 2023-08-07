@@ -6,7 +6,7 @@ import PhoneFooter from '../components/Phone/PhoneFooter/PhoneFooter';
 import PhoneHeader from '../components/Phone/PhoneHeader/PhoneHeader';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { useAppSelector } from '../hooks/useAppSelector';
-import { useGetStateIdQuery } from '../redux/api/state';
+import { useDownloadFileQuery } from '../redux/api/state';
 import { setGlobalChat } from '../redux/state/chatSlice';
 import { setGlobalConfig } from '../redux/state/configSlice';
 import { setLanguage } from '../redux/state/languageSlice';
@@ -14,13 +14,14 @@ import { setTheme } from '../redux/state/themeState';
 
 const ScreenPage: FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { data: dataState } = useGetStateIdQuery(id || '');
+  const { data: dataState } = useDownloadFileQuery(`${id}.json` || '');
 
   const dispatch = useAppDispatch();
   const bgImage = useAppSelector((state) => state.config.bgImage);
 
   useEffect(() => {
     if (!dataState) return;
+
     dispatch(setGlobalConfig(dataState.data.config));
     dispatch(setLanguage(dataState.data.language.language));
     dispatch(setGlobalChat(dataState.data.chat));

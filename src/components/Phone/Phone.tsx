@@ -5,7 +5,7 @@ import { FC, useCallback, useMemo, useRef } from 'react';
 import phoneImg from '../../assets/images/phone.svg';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import { useSaveStateMutation } from '../../redux/api/state';
+import { useUploadFileMutation } from '../../redux/api/state';
 import { resetChat } from '../../redux/state/chatSlice';
 import PhoneChat from './PhoneChat';
 import PhoneFooter from './PhoneFooter';
@@ -16,7 +16,7 @@ const { confirm } = Modal;
 const { VITE_APP_BASE_URL } = import.meta.env;
 
 const Phone: FC = () => {
-  const [saveState] = useSaveStateMutation();
+  const [uploadFile] = useUploadFileMutation();
 
   const ref = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
@@ -45,20 +45,30 @@ const Phone: FC = () => {
     window.open(url, '_blank', 'noreferrer');
   }, []);
 
-  const handleSaveScreenshot = useCallback(() => {
-    saveState({
+  const handleSaveScreenshot = useCallback(async () => {
+    const fileName = `data.json`;
+    const dictstring = {
       data: {
         chat: chatState,
         config: configState,
         language: languageState,
         theme: themeState,
       },
-    })
+    };
+
+    const blob = new Blob([JSON.stringify(dictstring, null, 2)], {
+      type: 'application/json',
+    });
+
+    const data = new FormData();
+    data.append('file', blob, fileName);
+
+    uploadFile(data)
       .unwrap()
-      .then((res: any) => {
-        handleGetScreenshot(res._id);
+      .then((res) => {
+        handleGetScreenshot(res.id);
       })
-      .catch((error: any) => {
+      .catch((error) => {
         if (Array.isArray(error.message)) {
           return notification.error({ message: error.message.join('\b') });
         }

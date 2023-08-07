@@ -9,17 +9,17 @@ export const stateApi = createApi({
     credentials: 'omit',
   }),
   endpoints: (build) => ({
-    saveState: build.mutation({
+    uploadFile: build.mutation<{ filename: string; id: string }, any>({
       query: (body) => ({
-        url: 'state',
+        url: 'file/upload',
         method: 'POST',
         body,
       }),
     }),
-    getStateId: build.query<any, string>({
-      query: (id) => `state/${id}`,
+    downloadFile: build.query<any, string>({
+      query: (id) => `file/download/${id}`,
     }),
   }),
 });
 
-export const { useSaveStateMutation, useGetStateIdQuery } = stateApi;
+export const { useUploadFileMutation, useDownloadFileQuery } = stateApi;
