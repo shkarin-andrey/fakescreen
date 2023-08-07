@@ -281,7 +281,7 @@ const MessageChat: FC<IMessageChat> = ({
         ref={messageWrapperRef}
         aria-hidden={true}
         onClick={handleOpenModal}
-        className={`flex rounded-[13px] font-light text-[13.26px] max-w-[278px] w-fit relative leading-[134%] ${
+        className={`flex rounded-[13px] font-light text-[13.26px] max-w-[282px] w-fit relative leading-[134%] ${
           image ? 'flex-col' : classNameImagePadding
         } ${isOwner} ${classNameNextType} ${classNameRounded()} ${className}`}
         style={{ ...maskImage, ...style }}
