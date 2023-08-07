@@ -4,7 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { gallary } from '../../components/SettingsInterlocutor/SettingsInterlocutorIGallary/SettingsInterlocutorIGallary.config';
 import { listColorsBgAvatar, options } from '../../config';
 
-type Ethernet = 'wifi' | 'e' | '3g' | '4g' | 'lte' | 'x';
+type Ethernet = 'wifi' | 'e' | '3g' | 'lte' | 'x';
 type Geo = 'outline' | 'fill' | 'blue' | undefined;
 type Network = 'sim' | 'avia';
 
