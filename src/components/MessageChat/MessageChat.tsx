@@ -156,9 +156,11 @@ const MessageChat: FC<IMessageChat> = ({
   const generateMaskImage = useMemo(() => {
     const maskTypeSquare = mask?.type === 'square';
     const maskTypeHorizontal = mask?.type === 'horizontal';
-    const maskTypeVertical = mask?.type === 'horizontal';
+    const maskTypeVertical = mask?.type === 'vertical';
     const maskPositionRight = mask?.position === 'right';
     const maskPositionLeft = mask?.position === 'left';
+
+    console.log(mask);
 
     if (maskTypeSquare && maskPositionRight) {
       if (mask?.rounded) {
