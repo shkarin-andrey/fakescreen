@@ -235,7 +235,7 @@ const MessageChat: FC<IMessageChat> = ({
         }));
       }
 
-      if (messageWrapperRef.current.clientHeight > 170) {
+      if (messageWrapperRef.current.clientHeight > 180) {
         if (type === 'owner') {
           setMask((prev) => ({
             ...prev,
@@ -275,13 +275,21 @@ const MessageChat: FC<IMessageChat> = ({
     isNextType,
   ]);
 
+  const maxWidthImage = useMemo(() => {
+    if (image && !isMessage && isPrevType) {
+      return 'max-w-[285px]';
+    }
+
+    return 'max-w-[282px]';
+  }, [image, isMessage, isPrevType]);
+
   return (
     <>
       <div
         ref={messageWrapperRef}
         aria-hidden={true}
         onClick={handleOpenModal}
-        className={`flex rounded-[13px] font-light text-[13.26px] max-w-[282px] w-fit relative leading-[134%] ${
+        className={`flex rounded-[13px] font-light text-[13.26px] w-fit relative leading-[134%] ${maxWidthImage} ${
           image ? 'flex-col' : classNameImagePadding
         } ${isOwner} ${classNameNextType} ${classNameRounded()} ${className}`}
         style={{ ...maskImage, ...style }}
@@ -292,7 +300,7 @@ const MessageChat: FC<IMessageChat> = ({
             style={borderRadiusImageMask}
           >
             <img
-              className={`w-full max-w-[257px] max-h-[316px] min-w-[100px] min-h-[100px] object-contain backdrop-blur-md ${classNameRoundedImage()}`}
+              className={`w-full max-w-[257px] max-h-[280px] min-w-[100px] min-h-[100px] object-contain backdrop-blur-md ${classNameRoundedImage()}`}
               src={image}
               alt='img'
             />
