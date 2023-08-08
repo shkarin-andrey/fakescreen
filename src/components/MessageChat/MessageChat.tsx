@@ -5,6 +5,10 @@ import maskHorizontalLeft from '../../assets/images/mask-message-horizontal-left
 import maskHorizontalRight from '../../assets/images/mask-message-horizontal-right.svg';
 import maskHorizontalRoundLeft from '../../assets/images/mask-message-horizontal-round-left.svg';
 import maskHorizontalRoundRight from '../../assets/images/mask-message-horizontal-round-right.svg';
+import maskSquareLeft from '../../assets/images/mask-message-square-left.svg';
+import maskSquareRight from '../../assets/images/mask-message-square-right.svg';
+import maskSquareRoundLeft from '../../assets/images/mask-message-square-round-left.svg';
+import maskSquareRoundRight from '../../assets/images/mask-message-square-round-right.svg';
 import maskVerticalLeft from '../../assets/images/mask-message-vertical-left.svg';
 import maskVerticalRight from '../../assets/images/mask-message-vertical-right.svg';
 import maskVerticalRoundLeft from '../../assets/images/mask-message-vertical-round-left.svg';
@@ -28,7 +32,7 @@ const MessageChat: FC<IMessageChat> = ({
 }) => {
   const [mask, setMask] = useState<{
     position?: 'right' | 'left';
-    type?: 'vertical' | 'horizontal';
+    type?: 'vertical' | 'horizontal' | 'square';
     rounded?: boolean;
   }>({});
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -150,7 +154,29 @@ const MessageChat: FC<IMessageChat> = ({
   }, []);
 
   const generateMaskImage = useMemo(() => {
-    if (mask?.type === 'horizontal' && mask?.position === 'right') {
+    const maskTypeSquare = mask?.type === 'square';
+    const maskTypeHorizontal = mask?.type === 'horizontal';
+    const maskTypeVertical = mask?.type === 'horizontal';
+    const maskPositionRight = mask?.position === 'right';
+    const maskPositionLeft = mask?.position === 'left';
+
+    if (maskTypeSquare && maskPositionRight) {
+      if (mask?.rounded) {
+        return maskSquareRoundRight;
+      }
+
+      return maskSquareRight;
+    }
+
+    if (maskTypeSquare && maskPositionLeft) {
+      if (mask?.rounded) {
+        return maskSquareRoundLeft;
+      }
+
+      return maskSquareLeft;
+    }
+
+    if (maskTypeHorizontal && maskPositionRight) {
       if (mask?.rounded) {
         return maskHorizontalRoundRight;
       }
@@ -158,7 +184,7 @@ const MessageChat: FC<IMessageChat> = ({
       return maskHorizontalRight;
     }
 
-    if (mask?.type === 'horizontal' && mask?.position === 'left') {
+    if (maskTypeHorizontal && maskPositionLeft) {
       if (mask?.rounded) {
         return maskHorizontalRoundLeft;
       }
@@ -166,7 +192,7 @@ const MessageChat: FC<IMessageChat> = ({
       return maskHorizontalLeft;
     }
 
-    if (mask?.type === 'vertical' && mask?.position === 'right') {
+    if (maskTypeVertical && maskPositionRight) {
       if (mask?.rounded) {
         return maskVerticalRoundRight;
       }
@@ -174,7 +200,7 @@ const MessageChat: FC<IMessageChat> = ({
       return maskVerticalRight;
     }
 
-    if (mask?.type === 'vertical' && mask?.position === 'left') {
+    if (maskTypeVertical && maskPositionLeft) {
       if (mask?.rounded) {
         return maskVerticalRoundLeft;
       }
@@ -235,7 +261,30 @@ const MessageChat: FC<IMessageChat> = ({
         }));
       }
 
-      if (messageWrapperRef.current.clientHeight > 200) {
+      if (
+        (messageWrapperRef.current.clientHeight <=
+          messageWrapperRef.current.clientWidth + 10 &&
+          messageWrapperRef.current.clientHeight >=
+            messageWrapperRef.current.clientWidth - 10) ||
+        (messageWrapperRef.current.clientWidth <=
+          messageWrapperRef.current.clientHeight + 10 &&
+          messageWrapperRef.current.clientWidth >=
+            messageWrapperRef.current.clientHeight - 10)
+      ) {
+        if (type === 'owner') {
+          setMask((prev) => ({
+            ...prev,
+            position: 'right',
+            type: 'square',
+          }));
+        } else {
+          setMask((prev) => ({
+            ...prev,
+            position: 'left',
+            type: 'square',
+          }));
+        }
+      } else if (messageWrapperRef.current.clientHeight > 200) {
         if (type === 'owner') {
           setMask((prev) => ({
             ...prev,
