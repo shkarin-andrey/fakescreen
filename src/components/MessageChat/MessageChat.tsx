@@ -160,8 +160,6 @@ const MessageChat: FC<IMessageChat> = ({
     const maskPositionRight = mask?.position === 'right';
     const maskPositionLeft = mask?.position === 'left';
 
-    console.log(mask);
-
     if (maskTypeSquare && maskPositionRight) {
       if (mask?.rounded) {
         return maskSquareRoundRight;
@@ -334,6 +332,14 @@ const MessageChat: FC<IMessageChat> = ({
     return 'max-w-[282px]';
   }, [image, isMessage, isPrevType]);
 
+  const timePosition = useMemo(() => {
+    if (image && !isMessage && isPrevType && type === 'owner') {
+      return 'right-2';
+    }
+
+    return 'right-1';
+  }, [image, isMessage, isPrevType, type]);
+
   return (
     <>
       <div
@@ -382,7 +388,7 @@ const MessageChat: FC<IMessageChat> = ({
             )}
           </>
         ) : (
-          <div className='absolute bottom-[6px] right-1'>
+          <div className={`absolute bottom-[6px] ${timePosition}`}>
             <MessageTime
               className='mt-[8px] pb-0'
               type={type}
