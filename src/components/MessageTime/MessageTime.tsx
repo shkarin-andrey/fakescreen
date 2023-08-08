@@ -42,9 +42,9 @@ const MessageTime: FC<IMessageTime> = ({
 
   return (
     <div
-      className={`flex items-end gap-[1px] float-right text-right text-[8.56px] font-light pl-[5.46px] pr-[3.9px] pt-[2.5px] pb-[2.5px] leading-none rounded-3xl ${classNameBg} ${classNameTextColor} ${className}`}
+      className={`flex items-end  float-right text-right text-[8.56px] font-light pl-[5.46px] pr-[5.46px] pt-[2.5px] pb-[2.5px] leading-none rounded-3xl ${classNameBg} ${classNameTextColor} ${className}`}
     >
-      <div className='leading-none mr-[0.5px]'>{time}</div>
+      <div className='leading-none'>{time}</div>
       {isViewed && type === 'owner' && <ViewedMessageIcon />}
       {!isViewed && type === 'owner' && <NoViewedMessageIcon />}
     </div>
