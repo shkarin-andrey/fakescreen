@@ -66,3 +66,7 @@
 .avatar {
   font-family: 'M PLUS Rounded 1c', sans-serif !important;
 }
+
+.swiper-pagination {
+  transform: translateY(10px) !important;
+}

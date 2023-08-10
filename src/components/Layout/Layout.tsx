@@ -8,7 +8,7 @@ const Layout: FC<ILayout> = ({ children }) => {
   return (
     <div className='bg-gray-100 min-h-screen py-5'>
       <div className='container mx-auto'>
-        <div className='grid grid-cols-[315px_1fr_376px] gap-11'>
+        <div className='grid grid-cols-[315px_500px_376px] gap-11'>
           <Navigate />
           {children}
           <Phone />

@@ -41,7 +41,7 @@ const SettingsChatMessage: FC = () => {
         className='flex flex-col item-center'
       >
         <div className='flex items-center gap-4'>
-          <div className='text-base font-medium'>Сообщение</div>
+          <div className='text-base font-medium'>Стикеры</div>
           <Button htmlType='submit' size='small' type='primary'>
             Отправить
           </Button>
@@ -54,7 +54,7 @@ const SettingsChatMessage: FC = () => {
           rules={[
             {
               pattern: new RegExp(regexTime, 'gim'),
-              message: 'Пример: 01:29!',
+              message: 'Пример: 01:29',
             },
             {
               required: true,
@@ -71,7 +71,7 @@ const SettingsChatMessage: FC = () => {
         <Form.Item name='sticker'>
           <SettingsChatMessageSticker select={select} onSelect={onSelect} />
         </Form.Item>
-        <Divider className='my-3' />
+        <Divider className='mb-3 mt-0' />
         <Form.Item name='type' className='m-0' valuePropName='checked'>
           <div className='flex items-center gap-2'>
             <Checkbox />
