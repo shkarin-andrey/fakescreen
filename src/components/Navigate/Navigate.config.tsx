@@ -4,7 +4,7 @@ import SettingsPhone from '../SettingsPhone';
 
 export const menuList = [
   {
-    title: '📱 Настройки Iphone ',
+    title: '📱 Настройки iPhone ',
     description: 'Сеть, батарея, время',
     content: <SettingsPhone />,
   },

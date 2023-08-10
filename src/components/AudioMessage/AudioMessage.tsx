@@ -24,9 +24,9 @@ const AudioMessage: FC<IAudioMessage> = ({
   const bgImage = useAppSelector((state) => state.config.bgImage);
   const theme = useAppSelector((state) => state.theme.theme);
 
-  const hours = Math.floor(seconds / 60 / 60);
-  const min = Math.floor(seconds / 60) - hours * 60;
-  const sec = seconds % 60;
+  const hours = Math.floor(+seconds / 60 / 60);
+  const min = Math.floor(+seconds / 60) - hours * 60;
+  const sec = +seconds % 60;
 
   const formatted = useMemo(
     () => [min.toString().padStart(1, '0'), sec.toString().padStart(2, '0')].join(':'),
@@ -117,7 +117,7 @@ const AudioMessage: FC<IAudioMessage> = ({
           <PlayIcon type={type} />
           <div className='flex flex-col gap-1'>
             <AudioLine
-              count={formatedCount(seconds)}
+              count={formatedCount(+seconds)}
               type={type}
               isListened={isListened}
             />
@@ -151,7 +151,7 @@ const AudioMessage: FC<IAudioMessage> = ({
         isListened={isListened}
         isOpneModal={isOpenModal}
         setIsOpneModal={setIsOpenModal}
-        seconds={seconds}
+        seconds={+seconds}
       />
     </>
   );
