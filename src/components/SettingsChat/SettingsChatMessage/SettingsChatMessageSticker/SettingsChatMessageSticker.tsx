@@ -3,7 +3,7 @@ import 'swiper/css/pagination';
 
 import { FC, memo } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { Pagination } from 'swiper/modules';
+import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import stickers from './SettingsChatMessageSticker.config';
@@ -17,8 +17,6 @@ const SettingsChatMessageSticker: FC<ISettingsChatMessageSticker> = ({
     <Swiper
       spaceBetween={20}
       slidesPerView={5}
-      onSlideChange={() => console.log('slide change')}
-      onSwiper={(swiper) => console.log(swiper)}
       pagination={{
         clickable: true,
       }}
