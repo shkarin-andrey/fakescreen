@@ -1,5 +1,6 @@
 import { Button, notification } from 'antd';
 import { FC, useCallback } from 'react';
+import ReactGa from 'react-ga';
 
 import eyes from '../../assets/images/eyes.png';
 import { useAppSelector } from '../../hooks/useAppSelector';
@@ -20,7 +21,13 @@ const PreviewScreenshot: FC = () => {
     window.open(url, '_blank', 'noreferrer');
   }, []);
 
-  const handleSaveScreenshot = useCallback(async () => {
+  const handleSaveScreenshot = useCallback(() => {
+    ReactGa.event({
+      category: 'Кнопка превью',
+      action: 'clickBtnPreview',
+      label: 'Preview scrennshot',
+    });
+
     const fileName = `data.json`;
     const dictstring = {
       data: {

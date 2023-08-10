@@ -25,3 +25,5 @@ export const optionsTypeMessage = [
 ];
 
 export const regexTime = '^([0-1][0-9]|2[0-3]):[0-5][0-9]$';
+
+export const TRACKING_ID = 'G-FTEXLQHT57';
