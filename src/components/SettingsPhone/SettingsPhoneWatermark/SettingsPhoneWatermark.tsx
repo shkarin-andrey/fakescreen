@@ -5,7 +5,6 @@ import { FC, useCallback } from 'react';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { setWatermark } from '../../../redux/state/configSlice';
-import Wrapper from '../../Wrapper';
 
 const SettingsPhoneWatermark: FC = () => {
   const dispatch = useAppDispatch();
@@ -16,9 +15,10 @@ const SettingsPhoneWatermark: FC = () => {
   }, []);
 
   return (
-    <Wrapper title='Watermark телеграм:'>
+    <div className='px-6 py-4 rounded-lg bg-white flex items-center gap-4'>
+      <div className='text-base font-medium'>Watermark телеграм</div>
       <Checkbox onChange={handleChangeTime} checked={watermark} />
-    </Wrapper>
+    </div>
   );
 };
 

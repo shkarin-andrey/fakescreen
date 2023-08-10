@@ -4,7 +4,6 @@ import { FC, useCallback } from 'react';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { setWifi } from '../../../redux/state/configSlice';
-import Wrapper from '../../Wrapper';
 import { itemsWifi } from './SettingsPhoneWifi.config';
 
 const SettingsPhoneWifi: FC = () => {
@@ -16,7 +15,8 @@ const SettingsPhoneWifi: FC = () => {
   }, []);
 
   return (
-    <Wrapper title='Wi-Fi:'>
+    <>
+      <div className='text-sm mb-2'>Состояние Wi-Fi</div>
       <Radio.Group onChange={handleChangeWifi} value={wifi}>
         {itemsWifi.map((item) => (
           <Radio.Button key={item.value} value={item.value}>
@@ -24,7 +24,7 @@ const SettingsPhoneWifi: FC = () => {
           </Radio.Button>
         ))}
       </Radio.Group>
-    </Wrapper>
+    </>
   );
 };
 

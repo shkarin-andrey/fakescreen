@@ -4,6 +4,7 @@ import { stateApi } from './api/state';
 import chatReducer from './state/chatSlice';
 import configReducer from './state/configSlice';
 import languageReducer from './state/languageSlice';
+import menuReducer from './state/menuSlice';
 import themeReducer from './state/themeState';
 
 export const store = configureStore({
@@ -13,6 +14,7 @@ export const store = configureStore({
     chat: chatReducer,
     language: languageReducer,
     theme: themeReducer,
+    menu: menuReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(stateApi.middleware),
