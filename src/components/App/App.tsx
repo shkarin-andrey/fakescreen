@@ -19,6 +19,12 @@ const App: FC = () => {
     }
   }, [theme]);
 
+  useEffect(() => {
+    window.onbeforeunload = function () {
+      return true;
+    };
+  }, []);
+
   return (
     <IntlProvider
       messages={messages[language]}
