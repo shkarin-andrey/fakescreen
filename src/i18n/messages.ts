@@ -1,7 +1,7 @@
 import { LOCALES } from './locales';
 
 export const messages = {
-  [LOCALES.ENGLISH]: {
+  [LOCALES.ENGLISH.value]: {
     footer_phone_message: 'Message',
 
     interlocutor_status_online: 'online',
@@ -23,7 +23,7 @@ export const messages = {
     minute_age: 'minute age',
     hour_age: 'hour age',
   },
-  [LOCALES.RUSSIAN]: {
+  [LOCALES.RUSSIAN.value]: {
     footer_phone_message: 'Сообщение',
 
     interlocutor_status_online: 'в сети',

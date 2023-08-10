@@ -1,33 +1,49 @@
-import { TimePicker } from 'antd';
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { FC, memo, useCallback } from 'react';
+import { Button, Form, Input } from 'antd';
+import { Store } from 'antd/es/form/interface';
+import { FC, memo } from 'react';
 
+import { regexTime } from '../../../config';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { setTime } from '../../../redux/state/configSlice';
-import Wrapper from '../../Wrapper';
 
 const SettingsPhoneTime: FC = () => {
-  const format = 'HH:mm';
-  dayjs.extend(customParseFormat);
+  const [form] = Form.useForm();
 
   const dispatch = useAppDispatch();
   const time = useAppSelector((state) => state.config.time);
 
-  const handleChangeTime = useCallback((_: dayjs.Dayjs | null, value: string) => {
-    dispatch(setTime(value));
-  }, []);
+  const onFinish = (values: Store) => {
+    dispatch(setTime(values.time));
+  };
 
   return (
-    <Wrapper title='Время на устройстве:'>
-      <TimePicker
-        defaultValue={dayjs(time, format)}
-        onChange={handleChangeTime}
-        format={format}
-        clearIcon={null}
-      />
-    </Wrapper>
+    <div className='px-6 py-4 rounded-lg bg-white'>
+      <Form form={form} onFinish={onFinish} className='flex items-center gap-4'>
+        <div className='text-base font-medium'>Время на устройстве</div>
+        <Form.Item
+          name='time'
+          hasFeedback
+          initialValue={time}
+          className='w-20 m-0'
+          rules={[
+            {
+              pattern: new RegExp(regexTime, 'gim'),
+              message: 'Пример: 01:29!',
+            },
+            {
+              required: true,
+              message: 'Введите время!',
+            },
+          ]}
+        >
+          <Input size='small' />
+        </Form.Item>
+        <Button htmlType='submit' type='primary' size='small'>
+          Добавить
+        </Button>
+      </Form>
+    </div>
   );
 };
 

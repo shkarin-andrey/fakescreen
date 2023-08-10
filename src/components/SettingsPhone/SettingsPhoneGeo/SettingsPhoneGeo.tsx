@@ -7,7 +7,6 @@ import GeoFillIcon from '../../../assets/icons/GeoFillIcon';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { setGeo } from '../../../redux/state/configSlice';
-import Wrapper from '../../Wrapper';
 
 const SettingsPhoneGeo: FC = () => {
   const dispatch = useAppDispatch();
@@ -18,7 +17,8 @@ const SettingsPhoneGeo: FC = () => {
   }, []);
 
   return (
-    <Wrapper title='Геолокация:'>
+    <div className='px-6 py-4 rounded-lg bg-white flex items-center gap-4'>
+      <div className='text-base font-medium'>Геолокация</div>
       <Radio.Group onChange={handleChangeGeo} value={geo} className='flex'>
         <Radio.Button value='fill' className='flex justify-center items-center'>
           <GeoFillIcon isSettings />
@@ -30,7 +30,7 @@ const SettingsPhoneGeo: FC = () => {
           <CloseOutlined style={{ color: 'red' }} />
         </Radio.Button>
       </Radio.Group>
-    </Wrapper>
+    </div>
   );
 };
 

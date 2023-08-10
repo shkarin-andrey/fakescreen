@@ -1,4 +1,4 @@
-import { Button, Select, TimePicker } from 'antd';
+import { Button, Divider, Select, TimePicker } from 'antd';
 import dayjs from 'dayjs';
 import { FC, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -6,7 +6,6 @@ import { FormattedMessage } from 'react-intl';
 import { options } from '../../../config';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { setStatus } from '../../../redux/state/configSlice';
-import Wrapper from '../../Wrapper';
 
 const SettingsInterlocutorStatus: FC = () => {
   const dispatch = useAppDispatch();
@@ -79,36 +78,47 @@ const SettingsInterlocutorStatus: FC = () => {
   };
 
   return (
-    <Wrapper title='Статус в сети:'>
-      <Select defaultValue='online' className='w-44' onChange={handleChangeStatus}>
-        {options.map((item) => (
-          <Select.Option key={item.value} value={item.value} label={item.label}>
-            {item.value === 'minutesAgo' ? (
-              <span>
-                <FormattedMessage id={item.label} />{' '}
-                <FormattedMessage id={'minute_age'} />
-              </span>
-            ) : item.value === 'hourseAgo' ? (
-              <span>
-                <FormattedMessage id={item.label} /> <FormattedMessage id={'hour_age'} />
-              </span>
-            ) : (
-              <FormattedMessage id={item.label} />
-            )}
-          </Select.Option>
-        ))}
-      </Select>
-      {(selectStatus.value === 'minutesAgo' ||
-        selectStatus.value === 'hourseAgo' ||
-        selectStatus.value === 'today' ||
-        selectStatus.value === 'yesterday') && (
-        <TimePicker onChange={handleChangeTime} format={format} />
-      )}
-
-      <Button onClick={handleSubmit} type='primary'>
-        Изменить
-      </Button>
-    </Wrapper>
+    <div className='px-6 py-4 rounded-lg bg-white'>
+      <div className='flex items-center gap-4'>
+        <div className='text-base font-medium'>Статус в сети</div>
+        <Button onClick={handleSubmit} type='primary' size='small'>
+          Изменить
+        </Button>
+      </div>
+      <Divider className='my-3' />
+      <div className='flex items-center gap-4'>
+        <Select
+          defaultValue='online'
+          className='w-80'
+          onChange={handleChangeStatus}
+          size='small'
+        >
+          {options.map((item) => (
+            <Select.Option key={item.value} value={item.value} label={item.label}>
+              {item.value === 'minutesAgo' ? (
+                <span>
+                  <FormattedMessage id={item.label} />{' '}
+                  <FormattedMessage id={'minute_age'} />
+                </span>
+              ) : item.value === 'hourseAgo' ? (
+                <span>
+                  <FormattedMessage id={item.label} />{' '}
+                  <FormattedMessage id={'hour_age'} />
+                </span>
+              ) : (
+                <FormattedMessage id={item.label} />
+              )}
+            </Select.Option>
+          ))}
+        </Select>
+        {(selectStatus.value === 'minutesAgo' ||
+          selectStatus.value === 'hourseAgo' ||
+          selectStatus.value === 'today' ||
+          selectStatus.value === 'yesterday') && (
+          <TimePicker onChange={handleChangeTime} format={format} size='small' />
+        )}
+      </div>
+    </div>
   );
 };
 

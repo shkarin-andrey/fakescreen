@@ -1,20 +1,16 @@
-import { DeleteOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import { Upload, UploadProps } from 'antd';
-import { RcFile } from 'antd/es/upload';
+/* eslint-disable simple-import-sort/imports */
+import { UploadOutlined } from '@ant-design/icons';
+import { Button, Upload, UploadProps } from 'antd';
 import ImgCrop from 'antd-img-crop';
-import { FC, useState } from 'react';
+import { RcFile } from 'antd/es/upload';
+import { FC } from 'react';
 
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
-import { useAppSelector } from '../../../hooks/useAppSelector';
 import { setAvatarFile } from '../../../redux/state/configSlice';
 import { beforeUploadPNGAndJPEG } from '../../../utils/beforeUploadPNGAndJPEG';
 import { getBase64 } from '../../../utils/getBase64';
-import Wrapper from '../../Wrapper';
 
 const SettingsInterlocutorDownloadAvatar: FC = () => {
-  const [loading, setLoading] = useState(false);
-
-  const avatarFile = useAppSelector((state) => state.config.avatarFile);
   const dispatch = useAppDispatch();
 
   const handleCustomRequest: UploadProps['customRequest'] = async ({
@@ -26,57 +22,31 @@ const SettingsInterlocutorDownloadAvatar: FC = () => {
   };
 
   const handleChange: UploadProps['onChange'] = (info) => {
-    if (info.file.status === 'uploading') {
-      setLoading(true);
-      return;
-    }
+    if (info.file.status === 'uploading') return;
 
     if (info.file.status === 'done') {
       getBase64(info.file.originFileObj as RcFile, (url) => {
-        setLoading(false);
         dispatch(setAvatarFile(url));
       });
     }
   };
 
-  const handleDeleteAvatar = () => {
+  const handleRemove: UploadProps['onRemove'] = () => {
     dispatch(setAvatarFile(null));
   };
 
-  const uploadButton = (
-    <div>
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div className='mt-2'>Загрузить</div>
-    </div>
-  );
-
   return (
-    <Wrapper title='Загрузить аватарку:'>
-      <ImgCrop rotationSlider modalTitle='Редактирование аватарки'>
-        <Upload
-          listType='picture-circle'
-          showUploadList={false}
-          onChange={handleChange}
-          customRequest={handleCustomRequest}
-          beforeUpload={beforeUploadPNGAndJPEG}
-        >
-          {avatarFile ? (
-            <div className='group w-full h-full overflow-hidden rounded-full relative'>
-              <img src={avatarFile} alt='avatar' className='w-full h-full object-cover' />
-              <div
-                aria-hidden
-                onClick={handleDeleteAvatar}
-                className='absolute w-full h-full top-0 left-0 flex justify-center items-center bg-gray-700/80 text-white opacity-0 group-hover:opacity-100 transition-all'
-              >
-                <DeleteOutlined className='text-red-600 text-3xl' />
-              </div>
-            </div>
-          ) : (
-            uploadButton
-          )}
-        </Upload>
-      </ImgCrop>
-    </Wrapper>
+    <ImgCrop rotationSlider modalTitle='Редактирование аватарки'>
+      <Upload
+        onChange={handleChange}
+        customRequest={handleCustomRequest}
+        beforeUpload={beforeUploadPNGAndJPEG}
+        onRemove={handleRemove}
+        maxCount={1}
+      >
+        <Button icon={<UploadOutlined />}>Загрузить</Button>
+      </Upload>
+    </ImgCrop>
   );
 };
 

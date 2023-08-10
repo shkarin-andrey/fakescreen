@@ -1,47 +1,37 @@
-import { Button, Checkbox, Divider, Form, Input } from 'antd';
-import { FC, memo, useCallback, useState } from 'react';
+import { Button, Checkbox, Divider, Form, Input, InputNumber } from 'antd';
+import { FC } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { regexTime } from '../../../config';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { setMessage } from '../../../redux/state/chatSlice';
-import { initialValue } from './SettingsChatMessage.config';
-import SettingsChatMessageSticker from './SettingsChatMessageSticker';
 
-const SettingsChatMessage: FC = () => {
-  const [select, setSelect] = useState<string | null>(null);
-
+const SettingsChatAudioMessage: FC = () => {
+  const dispatch = useAppDispatch();
   const [form] = Form.useForm();
 
-  const dispatch = useAppDispatch();
+  const initialValues = {
+    time: '00:00',
+    audioMessage: 10,
+    type: false,
+    isViewed: true,
+  };
 
-  const onFinishMessage = (values: any) => {
+  const onFinish = (values: any) => {
     const data = {
       ...values,
       id: uuidv4(),
-      message: '',
-      sticker: select,
+      type: values.type ? 'interlocutor' : 'owner',
     };
 
     dispatch(setMessage(data));
-    setSelect(null);
   };
-
-  const onSelect = useCallback((sticker: string) => {
-    setSelect(sticker);
-  }, []);
 
   return (
     <div className='px-6 py-4 rounded-lg bg-white'>
-      <Form
-        form={form}
-        initialValues={initialValue}
-        onFinish={onFinishMessage}
-        autoComplete='off'
-        className='flex flex-col item-center'
-      >
+      <Form form={form} onFinish={onFinish}>
         <div className='flex items-center gap-4'>
-          <div className='text-base font-medium'>Сообщение</div>
+          <div className='text-base font-medium'>Аудиосообщение</div>
           <Button htmlType='submit' size='small' type='primary'>
             Отправить
           </Button>
@@ -50,6 +40,7 @@ const SettingsChatMessage: FC = () => {
         <Form.Item
           name='time'
           hasFeedback
+          initialValue={initialValues.time}
           className='m-0'
           rules={[
             {
@@ -68,17 +59,41 @@ const SettingsChatMessage: FC = () => {
           </div>
         </Form.Item>
         <Divider className='my-3' />
-        <Form.Item name='sticker'>
-          <SettingsChatMessageSticker select={select} onSelect={onSelect} />
+        <Form.Item
+          name='audioMessage'
+          hasFeedback
+          initialValue={initialValues.audioMessage}
+          className='m-0'
+          rules={[
+            {
+              required: true,
+              message: 'Введите длительность!',
+            },
+          ]}
+        >
+          <div className='flex items-center gap-4'>
+            <div className='text-sm'>Длительность</div>
+            <InputNumber min={1} max={99} className='w-40' size='small' />
+          </div>
         </Form.Item>
         <Divider className='my-3' />
-        <Form.Item name='type' className='m-0' valuePropName='checked'>
+        <Form.Item
+          name='type'
+          className='m-0'
+          valuePropName='checked'
+          initialValue={initialValues.type}
+        >
           <div className='flex items-center gap-2'>
             <Checkbox />
             <div className='text-sm'>От собеседника</div>
           </div>
         </Form.Item>
-        <Form.Item name='isViewed' className='m-0' valuePropName='checked'>
+        <Form.Item
+          name='isViewed'
+          className='m-0'
+          valuePropName='checked'
+          initialValue={initialValues.isViewed}
+        >
           <div className='flex items-center gap-2'>
             <Checkbox />
             <div className='text-sm'>Прочитано</div>
@@ -89,4 +104,4 @@ const SettingsChatMessage: FC = () => {
   );
 };
 
-export default memo(SettingsChatMessage);
+export default SettingsChatAudioMessage;
