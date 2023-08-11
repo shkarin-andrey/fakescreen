@@ -7,6 +7,7 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import { formatedCount } from '../../utils/formatedCount';
 import MessageTime from '../MessageTime';
 import ModalEditMessage from '../Modal/ModalEditMessage';
+import { gallary } from '../SettingsInterlocutor/SettingsInterlocutorIGallary/SettingsInterlocutorIGallary.config';
 import AudioLine from './AudioLine';
 import { IAudioMessage } from './AudioMessage.interface';
 
@@ -79,12 +80,12 @@ const AudioMessage: FC<IAudioMessage> = ({
   }, [isPrevType, type]);
 
   const bgMessage = useMemo(() => {
-    if (bgImage === '/src/assets/images/bg-chat/pattern-12.jpg') {
+    if (bgImage === gallary.at(-2)?.preview) {
       return 'bg-[#F1F1F4]';
     }
 
     return 'bg-white';
-  }, [bgImage]);
+  }, [bgImage, gallary]);
 
   const isOwner = useMemo(() => {
     if (type === 'owner') {

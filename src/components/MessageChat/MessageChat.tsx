@@ -16,6 +16,7 @@ import maskVerticalRoundRight from '../../assets/images/mask-message-vertical-ro
 import { useAppSelector } from '../../hooks/useAppSelector';
 import MessageTime from '../MessageTime/MessageTime';
 import ModalEditMessage from '../Modal/ModalEditMessage';
+import { gallary } from '../SettingsInterlocutor/SettingsInterlocutorIGallary/SettingsInterlocutorIGallary.config';
 import { IMessageChat } from './MessageChat.interface';
 
 const MessageChat: FC<IMessageChat> = ({
@@ -57,12 +58,12 @@ const MessageChat: FC<IMessageChat> = ({
   }, [message, messageRef.current, messageWrapperRef.current]);
 
   const bgMessage = useMemo(() => {
-    if (bgImage === '/src/assets/images/bg-chat/pattern-12.jpg') {
+    if (bgImage === gallary.at(-2)?.preview) {
       return 'bg-[#F1F1F4]';
     }
 
     return 'bg-white';
-  }, [bgImage]);
+  }, [bgImage, gallary]);
 
   const isOwner = useMemo(() => {
     if (type === 'owner') {

@@ -5,17 +5,18 @@ import AttachIcon from '../../../assets/icons/AttachIcon';
 import RecordAudioImage from '../../../assets/icons/RecordAudioImage';
 import StickersIcon from '../../../assets/icons/StickersIcon';
 import { useAppSelector } from '../../../hooks/useAppSelector';
+import { gallary } from '../../SettingsInterlocutor/SettingsInterlocutorIGallary/SettingsInterlocutorIGallary.config';
 
 const PhoneFooter: FC = () => {
   const bgImage = useAppSelector((state) => state.config.bgImage);
 
   const isBorder = useMemo(() => {
-    if (bgImage === '/src/assets/images/bg-chat/pattern-12.jpg') {
+    if (bgImage === gallary.at(-2)?.preview) {
       return;
     }
 
     return 'border-t-[0.1px] border-0 border-solid border-[#E8E8E8]/75 dark:border-[#2E2E30]/75';
-  }, [bgImage]);
+  }, [bgImage, gallary]);
 
   return (
     <div

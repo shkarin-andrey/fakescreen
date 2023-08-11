@@ -1,5 +1,6 @@
 import { FC, useMemo } from 'react';
 
+import { gallary } from '../../components/SettingsInterlocutor/SettingsInterlocutorIGallary/SettingsInterlocutorIGallary.config';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { Message } from '../../redux/state/chatSlice';
 
@@ -12,11 +13,7 @@ const TailIcon: FC<ITailIcon> = ({ type }) => {
   const bgImage = useAppSelector((state) => state.config.bgImage);
 
   const color = useMemo(() => {
-    if (
-      bgImage === '/src/assets/images/bg-chat/pattern-12.jpg' &&
-      type !== 'owner' &&
-      theme !== 'dark'
-    ) {
+    if (bgImage === gallary.at(-2)?.preview && type !== 'owner' && theme !== 'dark') {
       return '#F1F1F4';
     }
 
@@ -33,7 +30,7 @@ const TailIcon: FC<ITailIcon> = ({ type }) => {
     }
 
     return 'white';
-  }, [theme, type, bgImage]);
+  }, [theme, type, bgImage, gallary]);
 
   return (
     <svg width='11' height='17' viewBox='0 0 11 17' fill='none'>
