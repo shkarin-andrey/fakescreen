@@ -1,5 +1,7 @@
+/* eslint-disable simple-import-sort/imports */
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Divider, Form, Input, Upload, UploadProps } from 'antd';
+import { Button, Checkbox, Divider, Form, Upload, UploadProps } from 'antd';
+import { MaskedInput } from 'antd-mask-input';
 import { RcFile } from 'antd/es/upload';
 import { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
 import { FC, useCallback, useRef } from 'react';
@@ -92,7 +94,7 @@ const SettingsChatImageMessage: FC = () => {
             },
           ]}
         >
-          <Input className='w-40' size='small' />
+          <MaskedInput size='small' className='w-40' mask={'00:00'} />
         </Form.Item>
         <Divider className='my-3' />
         <Form.Item name='image' hasFeedback className='m-0' valuePropName='fileList'>

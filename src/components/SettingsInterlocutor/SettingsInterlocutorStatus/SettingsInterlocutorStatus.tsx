@@ -1,5 +1,5 @@
-import { Button, Divider, Select, TimePicker } from 'antd';
-import dayjs from 'dayjs';
+import { Button, Divider, InputNumber, Select } from 'antd';
+import { MaskedInput } from 'antd-mask-input';
 import { FC, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 
@@ -11,35 +11,10 @@ const SettingsInterlocutorStatus: FC = () => {
   const dispatch = useAppDispatch();
 
   const [time, setTime] = useState<string | number>('');
-  const [format, setFormat] = useState('h:mm');
   const [selectStatus, setSelectStatus] = useState(options[1]);
 
-  const handleChangeStatus = (value: string, item: any) => {
+  const handleChangeStatus = (_: string, item: any) => {
     setSelectStatus(item);
-
-    if (value === 'minutesAgo') {
-      setFormat('m');
-    }
-
-    if (value === 'hourseAgo') {
-      setFormat('h');
-    }
-
-    if (value === 'today' || value === 'yesterday') {
-      setFormat('h:mm');
-    }
-  };
-
-  const handleChangeTime = (_: dayjs.Dayjs | null, value: string) => {
-    if (selectStatus.value === 'minutesAgo') {
-      return setTime(dayjs(_).toDate().getMinutes());
-    }
-
-    if (selectStatus.value === 'hourseAgo') {
-      return setTime(dayjs(_).toDate().getHours());
-    }
-
-    return setTime(value);
   };
 
   const handleSubmit = () => {
@@ -77,6 +52,16 @@ const SettingsInterlocutorStatus: FC = () => {
     }
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement> | number | null) => {
+    if (!e) return;
+
+    if (typeof e !== 'number') {
+      setTime(e?.target.value);
+    } else {
+      setTime(e);
+    }
+  };
+
   return (
     <div className='px-6 py-4 rounded-lg bg-white'>
       <div className='flex items-center gap-4'>
@@ -111,11 +96,32 @@ const SettingsInterlocutorStatus: FC = () => {
             </Select.Option>
           ))}
         </Select>
-        {(selectStatus.value === 'minutesAgo' ||
-          selectStatus.value === 'hourseAgo' ||
-          selectStatus.value === 'today' ||
-          selectStatus.value === 'yesterday') && (
-          <TimePicker onChange={handleChangeTime} format={format} size='small' />
+        {(selectStatus.value === 'today' || selectStatus.value === 'yesterday') && (
+          <MaskedInput
+            className='w-[88px]'
+            size='small'
+            onChange={handleChange}
+            defaultValue='14:20'
+            mask={'0[0]:00'}
+          />
+        )}
+        {selectStatus.value === 'hourseAgo' && (
+          <InputNumber
+            min={1}
+            max={23}
+            onChange={handleChange}
+            size='small'
+            defaultValue={1}
+          />
+        )}
+        {selectStatus.value === 'minutesAgo' && (
+          <InputNumber
+            min={1}
+            max={59}
+            onChange={handleChange}
+            size='small'
+            defaultValue={1}
+          />
         )}
       </div>
     </div>

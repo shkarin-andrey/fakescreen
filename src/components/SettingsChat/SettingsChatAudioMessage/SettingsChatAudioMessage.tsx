@@ -1,4 +1,5 @@
-import { Button, Checkbox, Divider, Form, Input, InputNumber } from 'antd';
+import { Button, Checkbox, Divider, Form, InputNumber } from 'antd';
+import { MaskedInput } from 'antd-mask-input';
 import { FC } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -47,7 +48,7 @@ const SettingsChatAudioMessage: FC = () => {
             },
           ]}
         >
-          <Input className='w-40' size='small' />
+          <MaskedInput size='small' className='w-40' mask={'00:00'} />
         </Form.Item>
         <Divider className='my-3' />
         <Form.Item
