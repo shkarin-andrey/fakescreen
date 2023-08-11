@@ -107,7 +107,7 @@ const SettingsChatImageMessage: FC = () => {
         <Divider className='my-3' />
         <Form.Item name='image' hasFeedback className='m-0' valuePropName='fileList'>
           <div className='flex items-center gap-4'>
-            <div className='text-sm'>Выбрать файл</div>
+            <div className='text-sm'>Выбрать изображение</div>
             <Upload
               onChange={handleChange}
               customRequest={handleCustomRequest}

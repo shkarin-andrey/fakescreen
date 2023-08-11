@@ -21,9 +21,14 @@ const Navigate: FC = () => {
   return (
     <div>
       <Title />
-      <div className='text-center text-gray-500 font-medium text-sm underline mb-3'>
+      <a
+        href='https://docs.google.com/document/d/1e4hVJTdQn_UUWkgXpgffpGZGJxo5xEQ6_T-c4yIovOw/edit#heading=h.oeynp7xxt5na'
+        className='block text-center text-gray-500 font-medium text-sm underline mb-3'
+        target='_blank'
+        rel='noreferrer'
+      >
         Как пользоваться?
-      </div>
+      </a>
       <div className='bg-white'>
         <div className='px-4 text-lg font-medium py-2'>Меню</div>
         <Divider className='my-1' />
