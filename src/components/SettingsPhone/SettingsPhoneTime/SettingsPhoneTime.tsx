@@ -19,12 +19,16 @@ const SettingsPhoneTime: FC = () => {
 
   return (
     <div className='px-6 py-4 rounded-lg bg-white'>
-      <Form form={form} onFinish={onFinish} className='flex items-center gap-4'>
+      <Form
+        form={form}
+        onFinish={onFinish}
+        className='flex items-center gap-4'
+        initialValues={{ time }}
+      >
         <div className='text-base font-medium'>Время на устройстве</div>
         <Form.Item
           name='time'
           hasFeedback
-          initialValue={time}
           className='w-20 m-0'
           rules={[
             {

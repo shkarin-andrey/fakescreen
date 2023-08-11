@@ -21,6 +21,7 @@ const SettingsChatMessage: FC = () => {
       id: uuidv4(),
       message: '',
       sticker: select,
+      type: values.type ? 'interlocutor' : 'owner',
     };
 
     dispatch(setMessage(data));
@@ -51,6 +52,7 @@ const SettingsChatMessage: FC = () => {
           name='time'
           hasFeedback
           className='m-0'
+          label='Время сообщения'
           rules={[
             {
               pattern: new RegExp(regexTime, 'gim'),
@@ -62,28 +64,25 @@ const SettingsChatMessage: FC = () => {
             },
           ]}
         >
-          <div className='flex items-center gap-4'>
-            <div className='text-sm'>Время сообщения</div>
-            <Input className='w-40' size='small' />
-          </div>
+          <Input className='w-40' size='small' />
         </Form.Item>
         <Divider className='my-3' />
         <Form.Item name='sticker'>
           <SettingsChatMessageSticker select={select} onSelect={onSelect} />
         </Form.Item>
         <Divider className='mb-3 mt-0' />
-        <Form.Item name='type' className='m-0' valuePropName='checked'>
-          <div className='flex items-center gap-2'>
+        <div className='flex items-center gap-2'>
+          <Form.Item name='type' className='m-0' valuePropName='checked'>
             <Checkbox />
-            <div className='text-sm'>От собеседника</div>
-          </div>
-        </Form.Item>
-        <Form.Item name='isViewed' className='m-0' valuePropName='checked'>
-          <div className='flex items-center gap-2'>
+          </Form.Item>
+          <div className='text-sm'>От собеседника</div>
+        </div>
+        <div className='flex items-center gap-2'>
+          <Form.Item name='isViewed' className='m-0' valuePropName='checked'>
             <Checkbox />
-            <div className='text-sm'>Прочитано</div>
-          </div>
-        </Form.Item>
+          </Form.Item>
+          <div className='text-sm'>Прочитано</div>
+        </div>
       </Form>
     </div>
   );
