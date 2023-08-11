@@ -11,19 +11,12 @@ import { setMessage } from '../../../redux/state/chatSlice';
 import { beforeUploadPNGAndJPEG } from '../../../utils/beforeUploadPNGAndJPEG';
 import { getBase64 } from '../../../utils/getBase64';
 import DropdownEmoji from '../../DropdownEmoji';
+import { initialValues } from './SettingsChatImageMessage.config';
 
 const SettingsChatImageMessage: FC = () => {
   const dispatch = useAppDispatch();
   const [form] = Form.useForm();
   const ref = useRef<HTMLDivElement>(null);
-
-  const initialValues = {
-    time: '00:00',
-    type: false,
-    isViewed: true,
-    image: null,
-    message: '',
-  };
 
   const onFinish = (values: any) => {
     const data = {
@@ -75,7 +68,7 @@ const SettingsChatImageMessage: FC = () => {
 
   return (
     <div className='px-6 py-4 rounded-lg bg-white'>
-      <Form form={form} onFinish={onFinish}>
+      <Form form={form} onFinish={onFinish} initialValues={initialValues}>
         <div className='flex items-center gap-4'>
           <div className='text-base font-medium'>Сообщение</div>
           <Button htmlType='submit' size='small' type='primary'>
@@ -86,8 +79,8 @@ const SettingsChatImageMessage: FC = () => {
         <Form.Item
           name='time'
           hasFeedback
-          initialValue={initialValues.time}
           className='m-0'
+          label='Время сообщения'
           rules={[
             {
               pattern: new RegExp(regexTime, 'gim'),
@@ -99,10 +92,7 @@ const SettingsChatImageMessage: FC = () => {
             },
           ]}
         >
-          <div className='flex items-center gap-4'>
-            <div className='text-sm'>Время сообщения</div>
-            <Input className='w-40' size='small' />
-          </div>
+          <Input className='w-40' size='small' />
         </Form.Item>
         <Divider className='my-3' />
         <Form.Item name='image' hasFeedback className='m-0' valuePropName='fileList'>
@@ -120,12 +110,7 @@ const SettingsChatImageMessage: FC = () => {
           </div>
         </Form.Item>
         <Divider className='my-3' />
-        <Form.Item
-          name='message'
-          hasFeedback
-          initialValue={initialValues.message}
-          className='m-0'
-        >
+        <Form.Item name='message' hasFeedback className='m-0'>
           <div className='flex items-center gap-4'>
             <div className='text-sm'>Сообщение</div>
             <div
@@ -139,28 +124,18 @@ const SettingsChatImageMessage: FC = () => {
           </div>
         </Form.Item>
         <Divider className='my-3' />
-        <Form.Item
-          name='type'
-          className='m-0'
-          valuePropName='checked'
-          initialValue={initialValues.type}
-        >
-          <div className='flex items-center gap-2'>
+        <div className='flex items-center gap-2'>
+          <Form.Item name='type' className='m-0' valuePropName='checked'>
             <Checkbox />
-            <div className='text-sm'>От собеседника</div>
-          </div>
-        </Form.Item>
-        <Form.Item
-          name='isViewed'
-          className='m-0'
-          valuePropName='checked'
-          initialValue={initialValues.isViewed}
-        >
-          <div className='flex items-center gap-2'>
+          </Form.Item>
+          <div className='text-sm'>От собеседника</div>
+        </div>
+        <div className='flex items-center gap-2'>
+          <Form.Item name='isViewed' className='m-0' valuePropName='checked'>
             <Checkbox />
-            <div className='text-sm'>Прочитано</div>
-          </div>
-        </Form.Item>
+          </Form.Item>
+          <div className='text-sm'>Прочитано</div>
+        </div>
       </Form>
     </div>
   );

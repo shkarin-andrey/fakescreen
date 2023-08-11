@@ -5,17 +5,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { regexTime } from '../../../config';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { setMessage } from '../../../redux/state/chatSlice';
+import { initialValues } from './SettingsChatAudioMessage.config';
 
 const SettingsChatAudioMessage: FC = () => {
   const dispatch = useAppDispatch();
   const [form] = Form.useForm();
-
-  const initialValues = {
-    time: '00:00',
-    audioMessage: 10,
-    type: false,
-    isViewed: true,
-  };
 
   const onFinish = (values: any) => {
     const data = {
@@ -29,7 +23,7 @@ const SettingsChatAudioMessage: FC = () => {
 
   return (
     <div className='px-6 py-4 rounded-lg bg-white'>
-      <Form form={form} onFinish={onFinish}>
+      <Form form={form} onFinish={onFinish} initialValues={initialValues}>
         <div className='flex items-center gap-4'>
           <div className='text-base font-medium'>Аудиосообщение</div>
           <Button htmlType='submit' size='small' type='primary'>
@@ -40,8 +34,8 @@ const SettingsChatAudioMessage: FC = () => {
         <Form.Item
           name='time'
           hasFeedback
-          initialValue={initialValues.time}
           className='m-0'
+          label='Время сообщения'
           rules={[
             {
               pattern: new RegExp(regexTime, 'gim'),
@@ -53,17 +47,14 @@ const SettingsChatAudioMessage: FC = () => {
             },
           ]}
         >
-          <div className='flex items-center gap-4'>
-            <div className='text-sm'>Время сообщения</div>
-            <Input className='w-40' size='small' />
-          </div>
+          <Input className='w-40' size='small' />
         </Form.Item>
         <Divider className='my-3' />
         <Form.Item
           name='audioMessage'
           hasFeedback
-          initialValue={initialValues.audioMessage}
           className='m-0'
+          label='Длительность'
           rules={[
             {
               required: true,
@@ -71,34 +62,21 @@ const SettingsChatAudioMessage: FC = () => {
             },
           ]}
         >
-          <div className='flex items-center gap-4'>
-            <div className='text-sm'>Длительность</div>
-            <InputNumber min={1} max={99} className='w-40' size='small' />
-          </div>
+          <InputNumber min={1} max={99} className='w-40' size='small' />
         </Form.Item>
         <Divider className='my-3' />
-        <Form.Item
-          name='type'
-          className='m-0'
-          valuePropName='checked'
-          initialValue={initialValues.type}
-        >
-          <div className='flex items-center gap-2'>
+        <div className='flex items-center gap-2'>
+          <Form.Item name='type' className='m-0' valuePropName='checked'>
             <Checkbox />
-            <div className='text-sm'>От собеседника</div>
-          </div>
-        </Form.Item>
-        <Form.Item
-          name='isViewed'
-          className='m-0'
-          valuePropName='checked'
-          initialValue={initialValues.isViewed}
-        >
-          <div className='flex items-center gap-2'>
+          </Form.Item>
+          <div className='text-sm'>От собеседника</div>
+        </div>
+        <div className='flex items-center gap-2'>
+          <Form.Item name='isViewed' className='m-0' valuePropName='checked'>
             <Checkbox />
-            <div className='text-sm'>Прочитано</div>
-          </div>
-        </Form.Item>
+          </Form.Item>
+          <div className='text-sm'>Прочитано</div>
+        </div>
       </Form>
     </div>
   );
