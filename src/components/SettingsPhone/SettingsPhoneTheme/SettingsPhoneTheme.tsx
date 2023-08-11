@@ -11,7 +11,6 @@ const SettingsPhoneTheme: FC = () => {
 
   const handleChangeTheme = useCallback((e: RadioChangeEvent) => {
     dispatch(setTheme(e.target.value));
-    console.log(e.target.value);
   }, []);
 
   return (
