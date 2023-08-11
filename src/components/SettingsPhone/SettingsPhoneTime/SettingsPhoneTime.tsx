@@ -1,4 +1,6 @@
-import { Button, Form, Input } from 'antd';
+/* eslint-disable simple-import-sort/imports */
+import { Button, Form } from 'antd';
+import { MaskedInput } from 'antd-mask-input';
 import { Store } from 'antd/es/form/interface';
 import { FC, memo } from 'react';
 
@@ -41,7 +43,7 @@ const SettingsPhoneTime: FC = () => {
             },
           ]}
         >
-          <Input size='small' />
+          <MaskedInput size='small' mask={'00:00'} />
         </Form.Item>
         <Button htmlType='submit' type='primary' size='small'>
           Добавить
