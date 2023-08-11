@@ -16,13 +16,13 @@ const DropdownEmoji: FC<IDropdownEmoji> = ({ onEmojiClick }) => {
   }, []);
 
   return (
-    <div className='relative'>
+    <div>
       <Button className='flex items-center gap-1' onClick={handleOpenEmoji}>
         <EmojiIcon />
         <DownOutlined />
       </Button>
       {emojiVisible && (
-        <div className={`absolute z-10 block`}>
+        <div className={`absolute z-10 block right-0`}>
           <MemoEmojiPicker
             emojiStyle={EmojiStyle.APPLE}
             onEmojiClick={onEmojiClick}

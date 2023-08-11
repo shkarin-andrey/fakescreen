@@ -357,7 +357,7 @@ const MessageChat: FC<IMessageChat> = ({
             style={borderRadiusImageMask}
           >
             <img
-              className={`w-full max-w-[257px] max-h-[280px] min-w-[100px] min-h-[100px] object-contain backdrop-blur-md ${classNameRoundedImage()}`}
+              className={`w-full max-w-[282px] max-h-[280px] min-w-[100px] min-h-[100px] object-contain backdrop-blur-md ${classNameRoundedImage()}`}
               src={image}
               alt='img'
             />
