@@ -285,7 +285,7 @@ const MessageChat: FC<IMessageChat> = ({
             type: 'square',
           }));
         }
-      } else if (messageWrapperRef.current.clientHeight > 220) {
+      } else if (messageWrapperRef.current.clientHeight > 200) {
         if (type === 'owner') {
           setMask((prev) => ({
             ...prev,
@@ -327,7 +327,11 @@ const MessageChat: FC<IMessageChat> = ({
 
   const maxWidthImage = useMemo(() => {
     if (image && !isMessage && isPrevType) {
-      return 'max-w-[285px]';
+      return 'max-w-[238px]';
+    }
+
+    if (image && !isMessage) {
+      return 'max-w-[235px]';
     }
 
     return 'max-w-[282px]';
