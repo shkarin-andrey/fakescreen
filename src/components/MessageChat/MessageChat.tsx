@@ -284,7 +284,7 @@ const MessageChat: FC<IMessageChat> = ({
             type: 'square',
           }));
         }
-      } else if (messageWrapperRef.current.clientHeight > 200) {
+      } else if (messageWrapperRef.current.clientHeight > 220) {
         if (type === 'owner') {
           setMask((prev) => ({
             ...prev,
