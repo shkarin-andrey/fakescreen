@@ -65,24 +65,15 @@ const SettingsChatAudioMessage: FC = () => {
           <InputNumber min={1} max={99} className='w-40' size='small' />
         </Form.Item>
         <Divider className='my-3' />
-        <div className='flex items-center gap-2'>
-          <Form.Item name='type' className='m-0' valuePropName='checked'>
-            <Checkbox />
-          </Form.Item>
-          <div className='text-sm'>От собеседника</div>
-        </div>
-        <div className='flex items-center gap-2'>
-          <Form.Item name='isViewed' className='m-0' valuePropName='checked'>
-            <Checkbox />
-          </Form.Item>
-          <div className='text-sm'>Прочитано</div>
-        </div>
-        <div className='flex items-center gap-2'>
-          <Form.Item name='isListened' className='m-0' valuePropName='checked'>
-            <Checkbox />
-          </Form.Item>
-          <div className='text-sm'>Прослушано</div>
-        </div>
+        <Form.Item name='type' className='m-0' valuePropName='checked'>
+          <Checkbox>От собеседника</Checkbox>
+        </Form.Item>
+        <Form.Item name='isViewed' className='m-0' valuePropName='checked'>
+          <Checkbox>Прочитано</Checkbox>
+        </Form.Item>
+        <Form.Item name='isListened' className='m-0' valuePropName='checked'>
+          <Checkbox>Прослушано</Checkbox>
+        </Form.Item>
       </Form>
     </div>
   );
