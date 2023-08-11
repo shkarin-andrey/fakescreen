@@ -3,4 +3,5 @@ export const initialValues = {
   audioMessage: 10,
   type: false,
   isViewed: true,
+  isListened: false,
 };
