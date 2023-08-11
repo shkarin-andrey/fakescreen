@@ -17,8 +17,9 @@ const SettingsInterlocutorSpum: FC = () => {
 
   return (
     <div className='flex items-center gap-2'>
-      <Checkbox checked={spum} onChange={handleChangeSpum} />
-      <div className='text-sm'>Спам</div>
+      <Checkbox checked={spum} onChange={handleChangeSpum}>
+        Спам
+      </Checkbox>
     </div>
   );
 };

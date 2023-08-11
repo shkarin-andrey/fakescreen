@@ -16,8 +16,9 @@ const SettingsInterlocutorMute: FC = () => {
 
   return (
     <div className='flex items-center gap-2'>
-      <Checkbox checked={mute} onChange={handleChangeMute} />
-      <div className='text-sm'>Без звука</div>
+      <Checkbox checked={mute} onChange={handleChangeMute}>
+        Без звука
+      </Checkbox>
     </div>
   );
 };

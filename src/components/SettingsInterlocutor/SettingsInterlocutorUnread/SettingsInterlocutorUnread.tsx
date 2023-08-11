@@ -21,8 +21,9 @@ const SettingsInterlocutorUnread: FC = () => {
 
   return (
     <div className='flex items-center gap-2'>
-      <Checkbox onChange={handleChangeIsUnread} checked={isUnread} />
-      <div className='text-sm'>Непрочитанные собщения</div>
+      <Checkbox onChange={handleChangeIsUnread} checked={isUnread}>
+        Непрочитанные собщения
+      </Checkbox>
       <InputNumber
         onChange={handleChangeUnread}
         value={unread}
