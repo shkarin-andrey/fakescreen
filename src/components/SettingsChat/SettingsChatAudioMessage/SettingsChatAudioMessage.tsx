@@ -77,6 +77,12 @@ const SettingsChatAudioMessage: FC = () => {
           </Form.Item>
           <div className='text-sm'>Прочитано</div>
         </div>
+        <div className='flex items-center gap-2'>
+          <Form.Item name='isListened' className='m-0' valuePropName='checked'>
+            <Checkbox />
+          </Form.Item>
+          <div className='text-sm'>Прослушано</div>
+        </div>
       </Form>
     </div>
   );
