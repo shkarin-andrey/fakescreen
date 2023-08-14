@@ -30,9 +30,10 @@ const PreviewScreenshot: FC<IPreviewScreenshot> = ({ title, type, img, exportFil
     });
 
     const currentTime = new Date().toLocaleTimeString();
+    const currentDate = new Date().toLocaleDateString();
     const { username, time } = configState;
 
-    const fileName = `${[username, time, currentTime].join('-')}.json`;
+    const fileName = `${[username, time, currentDate, currentTime].join('-')}.json`;
 
     const dictstring = {
       data: {
