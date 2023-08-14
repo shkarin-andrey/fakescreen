@@ -29,9 +29,11 @@ const PreviewScreenshot: FC<IPreviewScreenshot> = ({ title, type, img, exportFil
       label: 'Preview scrennshot',
     });
 
-    const time = new Date();
+    const currentTime = new Date().toLocaleTimeString();
+    const { username, time } = configState;
 
-    const fileName = `fakescreen-config-${time.toLocaleTimeString()}.json`;
+    const fileName = `${[username, time, currentTime].join('-')}.json`;
+
     const dictstring = {
       data: {
         chat: chatState,
