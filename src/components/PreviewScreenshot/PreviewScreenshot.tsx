@@ -84,7 +84,8 @@ const PreviewScreenshot: FC<IPreviewScreenshot> = ({ title, type, img, exportFil
       type={type}
       className='flex items-center gap-2'
     >
-      {img && <img src={img} alt={title} />}
+      {img && typeof img === 'string' && <img src={img} alt={title} />}
+      {img && typeof img !== 'string' && img}
       <span>{title}</span>
     </Button>
   );

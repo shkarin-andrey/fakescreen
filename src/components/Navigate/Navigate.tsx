@@ -1,3 +1,4 @@
+import { DownloadOutlined } from '@ant-design/icons';
 import { Button, Divider, Steps, Upload, UploadProps } from 'antd';
 import { RcFile } from 'antd/es/upload';
 import { FC, useCallback } from 'react';
@@ -69,15 +70,22 @@ const Navigate: FC = () => {
           direction='vertical'
         />
       </div>
-      <div className='flex gap-3 items-center justify-center mt-5'>
-        <PreviewScreenshot title='Export' exportFile />
-        <Upload
-          onChange={handleChange}
-          customRequest={handleCustomRequest}
-          showUploadList={false}
-        >
-          <Button>Import</Button>
-        </Upload>
+      <div className='mt-5 bg-white'>
+        <div className='text-lg font-medium py-2 px-4'>Управление настройками</div>
+        <Divider className='my-1' />
+        <div className='flex gap-3 items-center justify-center pb-2 pt-1'>
+          <PreviewScreenshot title='Скачать' exportFile img={<DownloadOutlined />} />
+          <Upload
+            onChange={handleChange}
+            customRequest={handleCustomRequest}
+            showUploadList={false}
+          >
+            <Button>
+              <DownloadOutlined className='rotate-180' />
+              Загрузить
+            </Button>
+          </Upload>
+        </div>
       </div>
       <div className='flex flex-col items-center gap-2 mt-5'>
         <ClearChat />
