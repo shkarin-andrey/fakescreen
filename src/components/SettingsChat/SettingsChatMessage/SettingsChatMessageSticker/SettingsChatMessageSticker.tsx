@@ -1,9 +1,6 @@
-import 'swiper/css';
-import 'swiper/css/pagination';
-
 import { FC, memo } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { Pagination } from 'swiper';
+import { Mousewheel, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import stickers from './SettingsChatMessageSticker.config';
@@ -20,7 +17,8 @@ const SettingsChatMessageSticker: FC<ISettingsChatMessageSticker> = ({
       pagination={{
         clickable: true,
       }}
-      modules={[Pagination]}
+      mousewheel={true}
+      modules={[Pagination, Mousewheel]}
       className='!p-2 !pb-4'
     >
       {stickers.map((sticker: string) => (
