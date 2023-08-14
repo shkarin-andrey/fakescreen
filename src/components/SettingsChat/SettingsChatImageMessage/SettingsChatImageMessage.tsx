@@ -12,6 +12,7 @@ import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { setMessage } from '../../../redux/state/chatSlice';
 import { beforeUploadPNGAndJPEG } from '../../../utils/beforeUploadPNGAndJPEG';
 import { getBase64 } from '../../../utils/getBase64';
+import { handleCustomRequest } from '../../../utils/handleCustomRequest';
 import DropdownEmoji from '../../DropdownEmoji';
 import { initialValues } from './SettingsChatImageMessage.config';
 
@@ -29,14 +30,6 @@ const SettingsChatImageMessage: FC = () => {
     };
 
     dispatch(setMessage(data));
-  };
-
-  const handleCustomRequest: UploadProps['customRequest'] = async ({
-    onSuccess,
-  }: any) => {
-    setTimeout(() => {
-      onSuccess('ok');
-    }, 0);
   };
 
   const handleChange: UploadProps['onChange'] = (info) => {

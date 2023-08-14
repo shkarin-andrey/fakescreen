@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { setBgImage } from '../../../redux/state/configSlice';
 import { beforeUploadPNGAndJPEG } from '../../../utils/beforeUploadPNGAndJPEG';
+import { handleCustomRequest } from '../../../utils/handleCustomRequest';
 import { useAppDispatch } from './../../../hooks/useAppDispatch';
 import { gallary } from './SettingsInterlocutorIGallary.config';
 
@@ -26,14 +27,6 @@ const SettingsInterlocutorIGallary: FC = () => {
 
   const handleChange: UploadProps['onChange'] = (info) => {
     setFileList(info.fileList);
-  };
-
-  const handleCustomRequest: UploadProps['customRequest'] = async ({
-    onSuccess,
-  }: any) => {
-    setTimeout(() => {
-      onSuccess('ok');
-    }, 0);
   };
 
   const handlePreview = async (file: UploadFile) => {

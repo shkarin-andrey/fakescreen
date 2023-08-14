@@ -1,13 +1,23 @@
-import { Divider, Steps } from 'antd';
+import { Button, Divider, Steps, Upload, UploadProps } from 'antd';
+import { RcFile } from 'antd/es/upload';
 import { FC, useCallback } from 'react';
 
+import eyes from '../../assets/images/eyes.png';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
+import { setGlobalChat } from '../../redux/state/chatSlice';
+import { setGlobalConfig } from '../../redux/state/configSlice';
+import { setLanguage } from '../../redux/state/languageSlice';
 import { setStep } from '../../redux/state/menuSlice';
+import { setTheme } from '../../redux/state/themeState';
+import { getBase64 } from '../../utils/getBase64';
+import { handleCustomRequest } from '../../utils/handleCustomRequest';
 import ClearChat from '../ClearChat';
 import PreviewScreenshot from '../PreviewScreenshot';
 import Title from '../Title';
 import { menuList } from './Navigate.config';
+
+const { VITE_APP_LINK_INFO_USE } = import.meta.env;
 
 const Navigate: FC = () => {
   const dispatch = useAppDispatch();
@@ -18,11 +28,30 @@ const Navigate: FC = () => {
     dispatch(setStep(value));
   }, []);
 
+  const handleChange: UploadProps['onChange'] = (info) => {
+    if (info.file.status === 'uploading') return;
+
+    if (info.file.status === 'done') {
+      getBase64(
+        info.file.originFileObj as RcFile,
+        (data) => {
+          const dataState = JSON.parse(data);
+
+          dispatch(setGlobalConfig(dataState.data.config));
+          dispatch(setLanguage(dataState.data.language.language));
+          dispatch(setGlobalChat(dataState.data.chat));
+          dispatch(setTheme(dataState.data.theme.theme));
+        },
+        'text',
+      );
+    }
+  };
+
   return (
     <div>
       <Title />
       <a
-        href='https://docs.google.com/document/d/1e4hVJTdQn_UUWkgXpgffpGZGJxo5xEQ6_T-c4yIovOw/edit#heading=h.oeynp7xxt5na'
+        href={VITE_APP_LINK_INFO_USE}
         className='block text-center text-gray-500 font-medium text-sm underline mb-3'
         target='_blank'
         rel='noreferrer'
@@ -40,9 +69,19 @@ const Navigate: FC = () => {
           direction='vertical'
         />
       </div>
+      <div className='flex gap-3 items-center justify-center mt-5'>
+        <PreviewScreenshot title='Export' exportFile />
+        <Upload
+          onChange={handleChange}
+          customRequest={handleCustomRequest}
+          showUploadList={false}
+        >
+          <Button>Import</Button>
+        </Upload>
+      </div>
       <div className='flex flex-col items-center gap-2 mt-5'>
         <ClearChat />
-        <PreviewScreenshot />
+        <PreviewScreenshot title='Посмотреть превью' type='primary' img={eyes} />
       </div>
     </div>
   );

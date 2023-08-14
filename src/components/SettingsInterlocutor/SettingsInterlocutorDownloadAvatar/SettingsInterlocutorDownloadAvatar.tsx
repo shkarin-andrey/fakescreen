@@ -9,17 +9,10 @@ import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { setAvatarFile } from '../../../redux/state/configSlice';
 import { beforeUploadPNGAndJPEG } from '../../../utils/beforeUploadPNGAndJPEG';
 import { getBase64 } from '../../../utils/getBase64';
+import { handleCustomRequest } from '../../../utils/handleCustomRequest';
 
 const SettingsInterlocutorDownloadAvatar: FC = () => {
   const dispatch = useAppDispatch();
-
-  const handleCustomRequest: UploadProps['customRequest'] = async ({
-    onSuccess,
-  }: any) => {
-    setTimeout(() => {
-      onSuccess('ok');
-    }, 0);
-  };
 
   const handleChange: UploadProps['onChange'] = (info) => {
     if (info.file.status === 'uploading') return;
