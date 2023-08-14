@@ -79,7 +79,7 @@ const PhoneUserInfo: FC = () => {
         <ShapeIcon />
         {isUnread ? (
           <div className='flex justify-center items-center text-white dark:text-black px-[4px] h-fit py-[1.5px] leading-none bg-[#007AFF] dark:bg-white rounded-full text-[10px] font-normal'>
-            <div className='mb-[1px] pb-[0.5px]'>{unread}</div>
+            <div className=''>{unread}</div>
           </div>
         ) : (
           <span className='dark:text-white ml-[2px] mt-[1px] text-[13px] font-light -tracking-[0.1px]'>

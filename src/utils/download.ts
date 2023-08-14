@@ -1,6 +1,6 @@
-export const downloadJPG = (dataUrl: string) => {
+export const download = (name: string, dataUrl: string) => {
   const link = document.createElement('a');
-  link.download = 'screenshot.jpg';
+  link.download = name;
   link.href = dataUrl;
   link.click();
 };

@@ -5,19 +5,12 @@ import { FC, useState } from 'react';
 
 import { beforeUploadPNGAndJPEG } from '../../../../utils/beforeUploadPNGAndJPEG';
 import { getBase64 } from '../../../../utils/getBase64';
+import { handleCustomRequest } from '../../../../utils/handleCustomRequest';
 import Wrapper from '../../../Wrapper';
 import { ISettingsChatImage } from './SettingsChatImage.interface';
 
 const SettingsChatImage: FC<ISettingsChatImage> = ({ image, setImage }) => {
   const [loading, setLoading] = useState(false);
-
-  const handleCustomRequest: UploadProps['customRequest'] = async ({
-    onSuccess,
-  }: any) => {
-    setTimeout(() => {
-      onSuccess('ok');
-    }, 0);
-  };
 
   const handleChange: UploadProps['onChange'] = (info) => {
     if (info.file.status === 'uploading') {
