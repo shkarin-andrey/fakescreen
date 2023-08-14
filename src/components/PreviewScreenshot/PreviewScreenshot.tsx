@@ -29,9 +29,12 @@ const PreviewScreenshot: FC<IPreviewScreenshot> = ({ title, type, img, exportFil
       label: 'Preview scrennshot',
     });
 
-    const time = new Date();
+    const currentTime = new Date().toLocaleTimeString();
+    const currentDate = new Date().toLocaleDateString();
+    const { username, time } = configState;
 
-    const fileName = `fakescreen-config-${time.toLocaleTimeString()}.json`;
+    const fileName = `${[username, time, currentDate, currentTime].join('-')}.json`;
+
     const dictstring = {
       data: {
         chat: chatState,
@@ -81,7 +84,8 @@ const PreviewScreenshot: FC<IPreviewScreenshot> = ({ title, type, img, exportFil
       type={type}
       className='flex items-center gap-2'
     >
-      {img && <img src={img} alt={title} />}
+      {img && typeof img === 'string' && <img src={img} alt={title} />}
+      {img && typeof img !== 'string' && img}
       <span>{title}</span>
     </Button>
   );
