@@ -6,14 +6,14 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { TRACKING_ID } from '../../config';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { messages } from '../../i18n/messages';
-import GenerateScreenPage from '../../pages/GenerateScreenPage';
-import ScreenPage from '../../pages/ScreenPage';
+import { defaultRout, isAuthRout } from '../../routs';
 
 ReactGa.initialize(TRACKING_ID);
 
 const App: FC = () => {
   const language = useAppSelector((state) => state.language.language);
   const theme = useAppSelector((state) => state.theme.theme);
+  const isAuth = useAppSelector((state) => state.auth.isAuth);
 
   useEffect(() => {
     if (theme === 'dark') {
@@ -37,8 +37,13 @@ const App: FC = () => {
     >
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<GenerateScreenPage />} />
-          <Route path='/:id' element={<ScreenPage />} />
+          {isAuth
+            ? isAuthRout.map((item) => (
+                <Route key={item.path} path={item.path} element={item.element} />
+              ))
+            : defaultRout.map((item) => (
+                <Route key={item.path} path={item.path} element={item.element} />
+              ))}
         </Routes>
       </BrowserRouter>
     </IntlProvider>

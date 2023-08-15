@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import { stateApi } from './api/state';
+import authReducer from './state/authSlice';
 import chatReducer from './state/chatSlice';
 import configReducer from './state/configSlice';
 import languageReducer from './state/languageSlice';
@@ -15,6 +16,7 @@ export const store = configureStore({
     language: languageReducer,
     theme: themeReducer,
     menu: menuReducer,
+    auth: authReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(stateApi.middleware),
