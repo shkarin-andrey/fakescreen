@@ -37,6 +37,14 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
+envs:
+  - name: BASE_URL
+    value: "https://fakescreen.pro/"
+  - name: BASE_URL_API
+    value: "https://api.fakescreen.pro/api/v1"
+  - name: LINK_INFO_USE
+    value: "https://docs.google.com/document/d/1e4hVJTdQn_UUWkgXpgffpGZGJxo5xEQ6_T-c4yIovOw/edit#heading=h.oeynp7xxt5na"
+
 service:
   type: ClusterIP
   port: 3000
