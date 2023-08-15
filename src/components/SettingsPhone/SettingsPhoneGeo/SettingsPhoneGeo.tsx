@@ -4,11 +4,9 @@ import { FC, memo, useCallback } from 'react';
 
 import GeoBlueIcon from '../../../assets/icons/GeoBlueIcon';
 import GeoFillIcon from '../../../assets/icons/GeoFillIcon';
-import GeoOutlineIcon from '../../../assets/icons/GeoOutlineIcon';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { setGeo } from '../../../redux/state/configSlice';
-import Wrapper from '../../Wrapper';
 
 const SettingsPhoneGeo: FC = () => {
   const dispatch = useAppDispatch();
@@ -19,13 +17,11 @@ const SettingsPhoneGeo: FC = () => {
   }, []);
 
   return (
-    <Wrapper title='Геолокация:'>
+    <div className='px-6 py-4 rounded-lg bg-white flex items-center gap-4'>
+      <div className='text-base font-medium'>Геолокация</div>
       <Radio.Group onChange={handleChangeGeo} value={geo} className='flex'>
-        <Radio.Button value='outline' className='flex justify-center items-center'>
-          <GeoOutlineIcon />
-        </Radio.Button>
         <Radio.Button value='fill' className='flex justify-center items-center'>
-          <GeoFillIcon />
+          <GeoFillIcon isSettings />
         </Radio.Button>
         <Radio.Button value='blue' className='flex justify-center items-center'>
           <GeoBlueIcon />
@@ -34,7 +30,7 @@ const SettingsPhoneGeo: FC = () => {
           <CloseOutlined style={{ color: 'red' }} />
         </Radio.Button>
       </Radio.Group>
-    </Wrapper>
+    </div>
   );
 };
 

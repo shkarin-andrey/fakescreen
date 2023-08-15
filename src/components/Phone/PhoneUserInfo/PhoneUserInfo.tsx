@@ -1,5 +1,5 @@
 import { FC, memo, useMemo } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, FormattedRelativeTime } from 'react-intl';
 
 import MuteIcon from '../../../assets/icons/MuteIcon';
 import ShapeIcon from '../../../assets/icons/ShapeIcon';
@@ -15,51 +15,112 @@ const PhoneUserInfo: FC = () => {
   const unread = useAppSelector((state) => state.config.unread);
   const avatarFile = useAppSelector((state) => state.config.avatarFile);
   const mute = useAppSelector((state) => state.config.mute);
+  const theme = useAppSelector((state) => state.theme.theme);
+  const network = useAppSelector((state) => state.config.network);
 
   const isStatusOnline = useMemo(() => {
-    return status.props.id === options[1].label || status.props.id === options[0].label
-      ? 'text-[#32A8E6]'
-      : 'text-[#787878]';
-  }, [status.props.id]);
+    if (
+      (status.id === options[1].label || status.id === options[0].label) &&
+      network !== 'avia'
+    ) {
+      if (theme === 'dark') {
+        return 'text-white';
+      } else {
+        return 'text-[#2F7BF4]';
+      }
+    }
+
+    if (theme === 'dark') {
+      return 'text-[#918F8F]';
+    }
+
+    return 'text-[#787878]';
+  }, [status.id, theme, network]);
+
+  const getStatus = () => {
+    if (status.id === 'interlocutor_status_minutesAgo') {
+      return (
+        <FormattedMessage
+          id={status.id}
+          values={{
+            time: <FormattedRelativeTime value={status?.time} unit={status?.unit} />,
+          }}
+        />
+      );
+    } else if (status.id === 'interlocutor_status_hourseAgo') {
+      return (
+        <FormattedMessage
+          id={status.id}
+          values={{
+            time: <FormattedRelativeTime value={status?.time} unit={status?.unit} />,
+          }}
+        />
+      );
+    } else if (
+      status.id === 'interlocutor_status_today' ||
+      status.id === 'interlocutor_status_yesterday'
+    ) {
+      return (
+        <FormattedMessage
+          id={status.id}
+          values={{
+            time: status?.time,
+          }}
+        />
+      );
+    } else {
+      return <FormattedMessage id={status.id} />;
+    }
+  };
 
   return (
-    <div className='w-full bg-[#F6F6F6] h-[38px] pl-[6px] pr-[5px] grid grid-cols-9 items-center text-xs font-semibold text-[#171717] border-b border-0 border-solid border-[#E8E8E8]'>
-      <div className='text-[#037EE5] col-span-2 flex items-center gap-[6px] text-sm mt-[2px]'>
+    <div className='z-[13] w-full h-[37px] pl-[6px] pr-[5px] grid grid-cols-[56px_199px_56px] items-center text-xs font-semibold text-[#171717]'>
+      <div className='text-[#037EE5] flex items-center gap-[3px] text-sm mt-[3px]'>
         <ShapeIcon />
         {isUnread ? (
-          <div className='flex justify-center items-center text-white px-[5px] h-fit py-[1px] leading-none bg-[#007AFF] rounded-full text-[10px] font-normal'>
-            <div className='mb-[1px]'>{unread}</div>
+          <div className='flex justify-center items-center text-white dark:text-black px-[4px] h-fit py-[1.5px] leading-none bg-[#007AFF] dark:bg-white rounded-full text-[10px] font-normal'>
+            <div className=''>{unread}</div>
           </div>
         ) : (
-          <span className='font-normal'>
+          <span className='dark:text-white ml-[2px] mt-[1px] text-[13px] font-light -tracking-[0.1px]'>
             <FormattedMessage id='header_phone_back' />
           </span>
         )}
       </div>
-      <div className='text-sm col-span-5 flex flex-col items-center leading-none pb-[2px]'>
-        <div className='w-full flex items-end justify-center gap-[4px]'>
-          <span className='font-semibold truncate pb-[1px]'>{username}</span>
+      <div className='text-sm flex flex-col items-center leading-none pb-[2px]'>
+        <div
+          className={`w-full flex items-end justify-center ${
+            mute ? 'translate-x-[4px]' : ''
+          }`}
+        >
+          <div className='font-semibold truncate -tracking-[0.4px] text-[13px] pt-[5px] pb-[2px] dark:text-white mr-[3px]'>
+            {username}
+          </div>
           {mute && (
-            <div>
+            <div className='-translate-y-[2px]'>
               <MuteIcon />
             </div>
           )}
         </div>
-        <div className={`text-[11px] font-normal ${isStatusOnline}`}>
-          {status.props.id === options[0].label ? (
+        <div className={`text-[10px] font-normal -mt-[1px] -ml-[1px] ${isStatusOnline}`}>
+          {network === 'avia' ? (
+            <FormattedMessage id='interlocutor_status_avia' />
+          ) : status.id === options[0].label ? (
             <div className='flex items-center gap-1'>
-              <div>
+              <div className='-translate-y-[1px]'>
                 <WriteIcon />
               </div>
-              <span>{status}</span>
+              <span>
+                <FormattedMessage id={status.id} />
+              </span>
             </div>
           ) : (
-            status
+            getStatus()
           )}
         </div>
       </div>
       <div
-        className='avatar col-span-2 ml-auto w-[29px] h-[29px] rounded-full overflow-hidden flex justify-center items-center text-white uppercase'
+        className='avatar mt-[4px] ml-auto -pr-[0.5px] w-[29px] h-[29px] rounded-full overflow-hidden flex justify-center items-center text-white uppercase'
         style={{
           background: !avatarFile ? bgAvatarColor : undefined,
         }}

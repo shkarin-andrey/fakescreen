@@ -19,12 +19,16 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
   type,
   time,
   isViewed,
+  isListened,
   chatTime = null,
   message,
+  seconds,
 }) => {
   const [checkedViewed, setCheckedViewed] = useState(isViewed);
+  const [checkedListened, setCheckedListened] = useState(isListened);
   const [selectType, setSelectType] = useState(type);
   const [selectTime, setSelectTime] = useState(time);
+  const [selectSeconds, setSelectSeconds] = useState(seconds?.toString());
   const [changeChatTime, setChangeChatTime] = useState(chatTime);
 
   const ref = useRef<HTMLDivElement>(null);
@@ -55,11 +59,16 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
         type: selectType,
         isViewed: checkedViewed,
         time: selectTime,
+        isListened: checkedListened,
       },
     };
 
     if (changeChatTime) {
       body.data.chatTime = changeChatTime;
+    }
+
+    if (selectSeconds) {
+      body.data.audioMessage = parseInt(selectSeconds, 10);
     }
 
     if (message) {
@@ -73,14 +82,23 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
     id,
     selectType,
     checkedViewed,
+    checkedListened,
     selectTime,
-    changeChatTime,
+    selectSeconds,
     changeChatTime,
     ref.current,
   ]);
 
   const handleChangeViewed = useCallback((e: CheckboxChangeEvent) => {
     setCheckedViewed(e.target.checked);
+
+    if (!e.target.checked) {
+      setCheckedListened(false);
+    }
+  }, []);
+
+  const handleChangeListened = useCallback((e: CheckboxChangeEvent) => {
+    setCheckedListened(e.target.checked);
   }, []);
 
   const handleSelectType = useCallback((e: RadioChangeEvent) => {
@@ -89,6 +107,10 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
 
   const handleChangeTime = useCallback((_: dayjs.Dayjs | null, value: string) => {
     setSelectTime(value);
+  }, []);
+
+  const handleChangeSeconds = useCallback((_: dayjs.Dayjs | null, value: string) => {
+    setSelectSeconds(value);
   }, []);
 
   const handleChangeChatTime = useCallback(
@@ -163,6 +185,22 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
             />
             <DropdownEmoji onEmojiClick={onEmojiClick} />
           </div>
+        )}
+        {seconds && (
+          <TimePicker
+            value={dayjs(selectSeconds, 'ss')}
+            onChange={handleChangeSeconds}
+            format={'ss'}
+          />
+        )}
+        {isListened !== undefined && (
+          <Checkbox
+            checked={checkedListened}
+            disabled={!checkedViewed}
+            onChange={handleChangeListened}
+          >
+            Прослушано
+          </Checkbox>
         )}
       </div>
     </Modal>

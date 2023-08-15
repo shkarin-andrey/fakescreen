@@ -1,24 +1,23 @@
 import { FC, memo } from 'react';
 
-import { useAppSelector } from '../../hooks/useAppSelector';
 import SettingsPhoneBattary from './SettingsPhoneBattary';
 import SettingsPhoneEthernet from './SettingsPhoneEthernet';
 import SettingsPhoneGeo from './SettingsPhoneGeo';
+import SettingsPhoneLocal from './SettingsPhoneLocal';
 import SettingsPhoneNetwork from './SettingsPhoneNetwork';
+import SettingsPhoneTheme from './SettingsPhoneTheme';
 import SettingsPhoneTime from './SettingsPhoneTime';
 import SettingsPhoneWatermark from './SettingsPhoneWatermark';
-import SettingsPhoneWifi from './SettingsPhoneWifi';
 
 const SettingsPhone: FC = () => {
-  const ethernet = useAppSelector((state) => state.config.ethernet);
-
   return (
-    <div className='flex flex-col gap-10'>
-      <SettingsPhoneBattary />
+    <div className='flex flex-col gap-3'>
       <SettingsPhoneTime />
+      <SettingsPhoneBattary />
       <SettingsPhoneGeo />
+      <SettingsPhoneTheme />
+      <SettingsPhoneLocal />
       <SettingsPhoneEthernet />
-      {ethernet === 'wifi' && <SettingsPhoneWifi />}
       <SettingsPhoneNetwork />
       <SettingsPhoneWatermark />
     </div>

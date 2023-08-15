@@ -2,16 +2,16 @@ import { FC, Fragment, memo, useCallback, useRef, useState } from 'react';
 
 import GoDownButtonIcon from '../../../assets/icons/GoDownButtonIcon';
 import { useAppSelector } from '../../../hooks/useAppSelector';
-import type { Message } from '../../../redux/state/chatSlice';
+import { type Message } from '../../../redux/state/chatSlice';
+import AudioMessage from '../../AudioMessage';
 import MessageChat from '../../MessageChat';
 import MessageSticker from '../../MessageSticker';
 import TimeChat from '../../TimeChat';
 
 const PhoneChat: FC = () => {
-  const bgImage = useAppSelector((state) => state.config.bgImage);
   const data = useAppSelector((state) => state.chat.data);
-  const ref = useRef<HTMLDivElement>(null);
   const [scroll, setScroll] = useState(false);
+  const chatRef = useRef<HTMLDivElement>(null);
 
   const prevType = useCallback(
     (index: number): Message['type'] | null => {
@@ -48,19 +48,11 @@ const PhoneChat: FC = () => {
   }, []);
 
   return (
-    <div
-      className='relative flex-1 overflow-hidden z-10 h-full w-full'
-      style={{
-        backgroundImage: `url('${bgImage}')`,
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
-      }}
-    >
+    <>
       <div
-        ref={ref}
+        ref={chatRef}
         onScroll={handleScroll}
-        className='chat w-full h-full pl-[9px] pr-[5px] py-[7px] overflow-y-scroll flex flex-col-reverse scrollbar scrollbar-thumb-transparent scrollbar-track-transparent scrollbar-small'
+        className={`chat w-full h-full pl-[9px] pr-[5px] pb-[7px] pt-[79px] flex flex-col-reverse scrollbar scrollbar-thumb-transparent scrollbar-track-transparent scrollbar-small overflow-y-scroll z-10`}
       >
         {data.map((item, index) => (
           <Fragment key={item.id}>
@@ -75,6 +67,18 @@ const PhoneChat: FC = () => {
                     time={item.time}
                     image={item.image}
                     isViewed={item.isViewed}
+                    prevType={prevType(index)}
+                    nextType={nextType(index)}
+                  />
+                )}
+                {item.audioMessage && (
+                  <AudioMessage
+                    id={item.id}
+                    seconds={item.audioMessage}
+                    time={item.time}
+                    type={item.type}
+                    isViewed={item.isViewed}
+                    isListened={item.isListened}
                     prevType={prevType(index)}
                     nextType={nextType(index)}
                   />
@@ -94,11 +98,11 @@ const PhoneChat: FC = () => {
         ))}
       </div>
       {scroll && (
-        <div className='absolute -bottom-[2px] right-[2px]'>
+        <div className='z-[11] absolute bottom-[61px] right-[3px]'>
           <GoDownButtonIcon />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

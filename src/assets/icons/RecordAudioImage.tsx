@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 const RecordAudioImage: FC = () => {
   return (
-    <svg className='mt-[1px]' width='17' height='20' viewBox='0 0 17 23' fill='none'>
+    <svg width='17' height='20' viewBox='0 0 17 23' fill='none'>
       <path
         fillRule='evenodd'
         clipRule='evenodd'

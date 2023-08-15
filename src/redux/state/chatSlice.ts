@@ -11,7 +11,9 @@ export type Message = {
   type: string;
   message: string;
   isViewed: boolean;
+  isListened: boolean;
   time: string;
+  audioMessage?: number;
   sticker?: string;
   image?: string;
 };
@@ -44,10 +46,19 @@ export const chatSlice = createSlice({
     resetChat: (state) => {
       state.data = [];
     },
+    setGlobalChat: (state, action: PayloadAction<ChatState>) => {
+      state.data = action.payload.data;
+    },
   },
 });
 
-export const { setChatTime, setMessage, deleteMessage, updateMessage, resetChat } =
-  chatSlice.actions;
+export const {
+  setChatTime,
+  setMessage,
+  deleteMessage,
+  updateMessage,
+  resetChat,
+  setGlobalChat,
+} = chatSlice.actions;
 
 export default chatSlice.reducer;

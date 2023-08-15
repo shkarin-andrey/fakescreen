@@ -1,7 +1,7 @@
 import { LOCALES } from './locales';
 
 export const messages = {
-  [LOCALES.ENGLISH]: {
+  [LOCALES.ENGLISH.value]: {
     footer_phone_message: 'Message',
 
     interlocutor_status_online: 'online',
@@ -13,6 +13,7 @@ export const messages = {
     interlocutor_status_today: 'was today in {time}',
     interlocutor_status_yesterday: 'was yesterday in {time}',
     interlocutor_status_write: 'typing',
+    interlocutor_status_avia: 'waiting for network...',
 
     interlocutor_spum_block: 'Block User',
     interlocutor_spum_add: 'Add to Contacts',
@@ -22,7 +23,7 @@ export const messages = {
     minute_age: 'minute age',
     hour_age: 'hour age',
   },
-  [LOCALES.RUSSIAN]: {
+  [LOCALES.RUSSIAN.value]: {
     footer_phone_message: 'Сообщение',
 
     interlocutor_status_online: 'в сети',
@@ -34,6 +35,7 @@ export const messages = {
     interlocutor_status_today: 'был(а) сегодня в {time}',
     interlocutor_status_yesterday: 'был(а) вчера в {time}',
     interlocutor_status_write: 'печатает',
+    interlocutor_status_avia: 'ожидание сети...',
 
     interlocutor_spum_block: 'Заблокировать',
     interlocutor_spum_add: 'Добавить',

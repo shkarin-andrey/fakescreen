@@ -1,26 +1,42 @@
-import { FC, memo } from 'react';
+import { FC, memo, useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import AttachIcon from '../../../assets/icons/AttachIcon';
 import RecordAudioImage from '../../../assets/icons/RecordAudioImage';
 import StickersIcon from '../../../assets/icons/StickersIcon';
+import { useAppSelector } from '../../../hooks/useAppSelector';
+import { gallary } from '../../SettingsInterlocutor/SettingsInterlocutorIGallary/SettingsInterlocutorIGallary.config';
 
 const PhoneFooter: FC = () => {
+  const bgImage = useAppSelector((state) => state.config.bgImage);
+
+  const isBorder = useMemo(() => {
+    if (bgImage === gallary.at(-2)?.preview) {
+      return;
+    }
+
+    return 'border-t-[0.1px] border-0 border-solid border-[#E8E8E8]/75 dark:border-[#2E2E30]/75';
+  }, [bgImage, gallary]);
+
   return (
-    <div className='w-full pl-[6px] pb-[7px] pr-[10px] bg-[#F6F6F6] border-t border-0 border-solid border-[#E8E8E8]'>
-      <div className='flex items-center gap-1 pt-[4px] pb-[3px]'>
+    <div
+      className={`w-full pl-[4px] pb-[7px] pr-[8px] bg-[#FFFFFF]/75 dark:bg-black/75 backdrop-blur-[69px] ${isBorder}`}
+    >
+      <div className='flex items-center gap-[2px] pt-[4px] pb-[3px]'>
         <AttachIcon />
-        <div className='flex items-center justify-between h-[26px] pl-[11px] pr-[7px] border-[0.2px] border-[#E8E8E8] border-solid rounded-[14px] bg-white w-full'>
-          <span className='text-[#BFBFBF] text-sm mb-[3px]'>
+        <div className='relative flex items-center h-[26px] pl-[10px] pt-[2px] pr-[7px] border-[0.2px] border-[#E8E8E8] dark:border-[#1D1D1D] border-solid rounded-[14px] bg-white dark:bg-[#060606] w-full'>
+          <span className='text-[#BFBFBF] dark:text-[#7B7B7B] -tracking-[0.4px] text-[13px]'>
             <FormattedMessage id='footer_phone_message' />
           </span>
-          <StickersIcon />
+          <div className='absolute right-[6px] top-[5px]'>
+            <StickersIcon />
+          </div>
         </div>
-        <div className='ml-1'>
+        <div className='ml-[5px] mt-[3px] translate-y-[1px]'>
           <RecordAudioImage />
         </div>
       </div>
-      <div className='bg-[#060606] w-[115px] h-1 rounded-3xl mx-auto mt-[17px]'></div>
+      <div className='bg-[#060606] dark:bg-white w-[115px] h-1 rounded-3xl mx-auto mt-[17px]'></div>
     </div>
   );
 };

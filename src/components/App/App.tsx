@@ -1,44 +1,33 @@
-import { FC, useCallback, useMemo, useState } from 'react';
+import { FC, useEffect } from 'react';
+import ReactGa from 'react-ga';
 import { IntlProvider } from 'react-intl';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import { TRACKING_ID } from '../../config';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { messages } from '../../i18n/messages';
-import Layout from '../Layout';
-import Phone from '../Phone';
-import SettingsChat from '../SettingsChat/SettingsChat';
-import SettingsInterlocutor from '../SettingsInterlocutor';
-import SettingsPhone from '../SettingsPhone';
-import StepsScreen from '../StepsScreen';
-import Title from '../Title';
+import { defaultRout, isAuthRout } from '../../routs';
+
+ReactGa.initialize(TRACKING_ID);
 
 const App: FC = () => {
-  const [current, setCurrent] = useState(0);
   const language = useAppSelector((state) => state.language.language);
+  const theme = useAppSelector((state) => state.theme.theme);
+  const isAuth = useAppSelector((state) => state.auth.isAuth);
 
-  const onChange = useCallback((value: number) => {
-    setCurrent(value);
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
+
+  useEffect(() => {
+    window.onbeforeunload = function () {
+      return true;
+    };
   }, []);
-
-  const items = useMemo(
-    () => [
-      {
-        title: 'Настройки iPhone',
-        description: 'Настройте параметры телефона',
-        content: <SettingsPhone />,
-      },
-      {
-        title: 'Настройки Собеседника',
-        description: 'Настройте параметры собеседника',
-        content: <SettingsInterlocutor />,
-      },
-      {
-        title: 'Настройки Переписки',
-        description: 'Настройте сообщения ',
-        content: <SettingsChat />,
-      },
-    ],
-    [],
-  );
 
   return (
     <IntlProvider
@@ -46,16 +35,17 @@ const App: FC = () => {
       locale={language}
       defaultLocale={language}
     >
-      <Layout>
-        <div className='flex justify-center'>
-          <Title />
-        </div>
-        <StepsScreen current={current} onChange={onChange} items={items} />
-        <div className='flex justify-between gap-10 mt-20'>
-          <div>{items[current].content}</div>
-          <Phone />
-        </div>
-      </Layout>
+      <BrowserRouter>
+        <Routes>
+          {isAuth
+            ? isAuthRout.map((item) => (
+                <Route key={item.path} path={item.path} element={item.element} />
+              ))
+            : defaultRout.map((item) => (
+                <Route key={item.path} path={item.path} element={item.element} />
+              ))}
+        </Routes>
+      </BrowserRouter>
     </IntlProvider>
   );
 };
