@@ -71,7 +71,7 @@ const Navigate: FC = () => {
         />
       </div>
       <div className='mt-5 bg-white'>
-        <div className='text-lg font-medium py-2 px-4'>Управление настройками</div>
+        <div className='text-lg font-medium py-2 px-4'>Настройки переписки</div>
         <Divider className='my-1' />
         <div className='flex gap-3 items-center justify-center pb-2 pt-1'>
           <PreviewScreenshot title='Скачать' exportFile img={<DownloadOutlined />} />
