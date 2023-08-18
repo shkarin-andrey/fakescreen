@@ -75,6 +75,7 @@ const PhoneChat: FC = () => {
                   <AudioMessage
                     id={item.id}
                     seconds={item.audioMessage}
+                    audioList={item.audioList}
                     time={item.time}
                     type={item.type}
                     isViewed={item.isViewed}

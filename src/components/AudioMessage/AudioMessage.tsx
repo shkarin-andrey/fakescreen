@@ -3,8 +3,8 @@ import { FC, useCallback, useMemo, useState } from 'react';
 import DotIcon from '../../assets/icons/DotIcon';
 import PlayIcon from '../../assets/icons/PlayIcon';
 import TailIcon from '../../assets/icons/TailIcon';
+import { MIN_AUDIO_LINE } from '../../config';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import { formatedCount } from '../../utils/formatedCount';
 import MessageTime from '../MessageTime';
 import ModalEditMessage from '../Modal/ModalEditMessage';
 import { gallary } from '../SettingsInterlocutor/SettingsInterlocutorIGallary/SettingsInterlocutorIGallary.config';
@@ -20,18 +20,28 @@ const AudioMessage: FC<IAudioMessage> = ({
   prevType,
   isViewed,
   isListened,
+  audioList,
 }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const bgImage = useAppSelector((state) => state.config.bgImage);
   const theme = useAppSelector((state) => state.theme.theme);
 
   const hours = Math.floor(+seconds / 60 / 60);
-  const min = Math.floor(+seconds / 60) - hours * 60;
+  const minutes = Math.floor(+seconds / 60) - hours * 60;
   const sec = +seconds % 60;
 
+  const widthLineBlock = useMemo(
+    () =>
+      audioList && audioList.length > 0
+        ? 1 + audioList.length * 3.1 + MIN_AUDIO_LINE
+        : 47,
+    [audioList, MIN_AUDIO_LINE],
+  );
+
   const formatted = useMemo(
-    () => [min.toString().padStart(1, '0'), sec.toString().padStart(2, '0')].join(':'),
-    [sec, min],
+    () =>
+      [minutes.toString().padStart(1, '0'), sec.toString().padStart(2, '0')].join(':'),
+    [sec, minutes],
   );
 
   const typeClassName = useMemo(() => {
@@ -118,9 +128,10 @@ const AudioMessage: FC<IAudioMessage> = ({
           <PlayIcon type={type} />
           <div className='flex flex-col gap-1'>
             <AudioLine
-              count={formatedCount(+seconds)}
               type={type}
               isListened={isListened}
+              dataList={audioList}
+              width={widthLineBlock}
             />
             <div className={`flex items-center gap-1 ${classNameTimeIsListened}`}>
               <span>{formatted}</span>
