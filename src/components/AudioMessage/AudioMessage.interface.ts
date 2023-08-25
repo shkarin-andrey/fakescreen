@@ -9,4 +9,5 @@ export interface IAudioMessage {
   isListened: Message['isListened'];
   prevType: Message['type'] | null;
   nextType: Message['type'] | null;
+  audioList: Message['audioList'];
 }

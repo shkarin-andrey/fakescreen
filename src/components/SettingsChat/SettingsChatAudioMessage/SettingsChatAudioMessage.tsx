@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { regexTime } from '../../../config';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { setMessage } from '../../../redux/state/chatSlice';
+import { generateAudioList } from '../../../utils/generateAudioList';
 import { initialValues } from './SettingsChatAudioMessage.config';
 
 const SettingsChatAudioMessage: FC = () => {
@@ -17,6 +18,7 @@ const SettingsChatAudioMessage: FC = () => {
       ...values,
       id: uuidv4(),
       type: values.type ? 'interlocutor' : 'owner',
+      audioList: generateAudioList(values.audioMessage),
     };
 
     dispatch(setMessage(data));

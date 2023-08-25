@@ -11,6 +11,7 @@ export interface IModalEditMessage {
   chatTime?: ChatTime['chatTime'] | null;
   message?: Message['message'];
   seconds?: number;
+  audioList?: number[];
 }
 
 export interface IModalEditMessageSave {
@@ -23,5 +24,6 @@ export interface IModalEditMessageSave {
     chatTime?: ChatTime['chatTime'];
     message?: Message['message'];
     audioMessage?: Message['audioMessage'];
+    audioList?: number[];
   };
 }

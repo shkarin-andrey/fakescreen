@@ -1,13 +1,16 @@
-import { Checkbox, Input, Modal, Radio, RadioChangeEvent, TimePicker } from 'antd';
+/* eslint-disable simple-import-sort/imports */
+import { Checkbox, Input, InputNumber, Modal, Radio, RadioChangeEvent } from 'antd';
+import { MaskedInput } from 'antd-mask-input';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
-import dayjs from 'dayjs';
 import { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
-import { FC, memo, useCallback, useEffect, useRef, useState } from 'react';
+import React, { FC, memo, useCallback, useEffect, useRef, useState } from 'react';
 
+import { MaskedInputProps } from 'antd-mask-input/build/main/lib/MaskedInput';
 import { optionsTypeMessage } from '../../../config';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { deleteMessage, updateMessage } from '../../../redux/state/chatSlice';
+import { generateAudioList } from '../../../utils/generateAudioList';
 import DropdownEmoji from '../../DropdownEmoji';
 import { IModalEditMessage, IModalEditMessageSave } from './ModalEditMessage.interface';
 import ModalEditMessageFooter from './ModalEditMessageFooter';
@@ -28,7 +31,7 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
   const [checkedListened, setCheckedListened] = useState(isListened);
   const [selectType, setSelectType] = useState(type);
   const [selectTime, setSelectTime] = useState(time);
-  const [selectSeconds, setSelectSeconds] = useState(seconds?.toString());
+  const [selectSeconds, setSelectSeconds] = useState(seconds);
   const [changeChatTime, setChangeChatTime] = useState(chatTime);
 
   const ref = useRef<HTMLDivElement>(null);
@@ -68,7 +71,8 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
     }
 
     if (selectSeconds) {
-      body.data.audioMessage = parseInt(selectSeconds, 10);
+      body.data.audioMessage = selectSeconds;
+      body.data.audioList = generateAudioList(selectSeconds);
     }
 
     if (message) {
@@ -105,11 +109,12 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
     setSelectType(e.target.value);
   }, []);
 
-  const handleChangeTime = useCallback((_: dayjs.Dayjs | null, value: string) => {
-    setSelectTime(value);
-  }, []);
+  const handleChangeTime: MaskedInputProps['onChange'] = (e) => {
+    setSelectTime(e.target.value);
+  };
 
-  const handleChangeSeconds = useCallback((_: dayjs.Dayjs | null, value: string) => {
+  const handleChangeSeconds = useCallback((value: number | null) => {
+    if (!value) return;
     setSelectSeconds(value);
   }, []);
 
@@ -163,10 +168,12 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
           />
         )}
         {time !== undefined && (
-          <TimePicker
-            value={dayjs(selectTime, 'HH:mm')}
+          <MaskedInput
+            size='small'
+            className='w-40'
+            value={selectTime}
+            mask={'00:00'}
             onChange={handleChangeTime}
-            format={'HH:mm'}
           />
         )}
         {isViewed !== undefined && (
@@ -187,10 +194,13 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
           </div>
         )}
         {seconds && (
-          <TimePicker
-            value={dayjs(selectSeconds, 'ss')}
+          <InputNumber
+            min={1}
+            max={99}
+            className='w-40'
+            size='small'
+            value={selectSeconds}
             onChange={handleChangeSeconds}
-            format={'ss'}
           />
         )}
         {isListened !== undefined && (

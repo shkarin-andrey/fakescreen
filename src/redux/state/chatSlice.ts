@@ -13,9 +13,10 @@ export type Message = {
   isViewed: boolean;
   isListened: boolean;
   time: string;
-  audioMessage?: number;
   sticker?: string;
   image?: string;
+  audioList?: number[];
+  audioMessage?: number;
 };
 
 interface ChatState {

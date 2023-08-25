@@ -80,6 +80,7 @@ const PreviewScreenshot: FC<IPreviewScreenshot> = ({ title, type, img, exportFil
 
   return (
     <Button
+      id='btnPreview'
       onClick={handleSaveScreenshot}
       type={type}
       className='flex items-center gap-2'
