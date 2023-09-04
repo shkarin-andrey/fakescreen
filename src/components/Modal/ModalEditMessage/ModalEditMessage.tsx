@@ -11,6 +11,7 @@ import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { deleteMessage, updateMessage } from '../../../redux/state/chatSlice';
 import { generateAudioList } from '../../../utils/generateAudioList';
+import { htmlEmoji } from '../../../utils/htmlEmoji';
 import DropdownEmoji from '../../DropdownEmoji';
 import { IModalEditMessage, IModalEditMessageSave } from './ModalEditMessage.interface';
 import ModalEditMessageFooter from './ModalEditMessageFooter';
@@ -136,10 +137,9 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
 
   const onEmojiClick = useCallback((event: EmojiClickData) => {
     const emoji = event.getImageUrl(EmojiStyle.APPLE);
-    const elEmoji = `<img class='w-[20px] h-[20px]' src='${emoji}' alt='${event.emoji}' />`;
 
     if (ref.current) {
-      ref.current.innerHTML += elEmoji;
+      ref.current.innerHTML += htmlEmoji(emoji, event.emoji);
     }
   }, []);
 

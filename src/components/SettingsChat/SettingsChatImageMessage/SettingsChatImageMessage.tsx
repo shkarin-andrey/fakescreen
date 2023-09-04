@@ -13,6 +13,7 @@ import { setMessage } from '../../../redux/state/chatSlice';
 import { beforeUploadPNGAndJPEG } from '../../../utils/beforeUploadPNGAndJPEG';
 import { getBase64 } from '../../../utils/getBase64';
 import { handleCustomRequest } from '../../../utils/handleCustomRequest';
+import { htmlEmoji } from '../../../utils/htmlEmoji';
 import DropdownEmoji from '../../DropdownEmoji';
 import { initialValues } from './SettingsChatImageMessage.config';
 
@@ -48,10 +49,9 @@ const SettingsChatImageMessage: FC = () => {
 
   const onEmojiClick = useCallback((event: EmojiClickData) => {
     const emoji = event.getImageUrl(EmojiStyle.APPLE);
-    const elEmoji = `<img class='w-[16px] h-[16px]' src='${emoji}' alt='${event.emoji}' />`;
 
     if (ref.current) {
-      ref.current.innerHTML += elEmoji;
+      ref.current.innerHTML += htmlEmoji(emoji, event.emoji);
     }
   }, []);
 
