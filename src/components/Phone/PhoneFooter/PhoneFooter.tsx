@@ -11,7 +11,7 @@ const PhoneFooter: FC = () => {
   const bgImage = useAppSelector((state) => state.config.bgImage);
 
   const isBorder = useMemo(() => {
-    if (bgImage === gallary.at(-2)?.preview) {
+    if (bgImage === gallary.at(-2)?.preview || bgImage === gallary.at(-3)?.preview) {
       return;
     }
 
