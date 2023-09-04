@@ -214,14 +214,15 @@ const MessageChat: FC<IMessageChat> = ({
     const styleObj: React.CSSProperties = {};
 
     if (image && !isMessage && isPrevType) {
+      styleObj.WebkitMaskBoxImage = `url(${generateMaskImage}) 0 0 0 0 round round`;
+      styleObj.WebkitMaskRepeat = 'no-repeat';
+
       if (type === 'owner') {
         styleObj.WebkitMaskPosition = 'right bottom';
-        styleObj.WebkitMaskBoxImage = `url(${generateMaskImage}) 0 0 0 0 round round`;
         styleObj.borderBottomRightRadius = 0;
         styleObj.transform = 'translateX(3px)';
       } else {
         styleObj.WebkitMaskPosition = 'left bottom';
-        styleObj.WebkitMaskBoxImage = `url(${generateMaskImage}) 0 0 0 0 round round`;
         styleObj.borderBottomLeftRadius = 0;
         styleObj.transform = 'translateX(-3px)';
       }
