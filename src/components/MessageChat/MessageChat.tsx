@@ -396,7 +396,7 @@ const MessageChat: FC<IMessageChat> = ({
         ) : (
           <div className={`absolute bottom-[6px] ${timePosition}`}>
             <MessageTime
-              className='mt-[8px] pb-0'
+              className={`mt-[8px] pb-0 ${image ? 'backdrop-blur-none' : ''}`}
               type={type}
               time={time}
               isViewed={isViewed}
