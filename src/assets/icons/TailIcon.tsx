@@ -13,7 +13,7 @@ const TailIcon: FC<ITailIcon> = ({ type }) => {
   const bgImage = useAppSelector((state) => state.config.bgImage);
 
   const color = useMemo(() => {
-    if (bgImage === gallary.at(-2)?.preview && type !== 'owner' && theme !== 'dark') {
+    if (bgImage === gallary[1]?.preview && type !== 'owner' && theme !== 'dark') {
       return '#F1F1F4';
     }
 

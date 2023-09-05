@@ -90,7 +90,7 @@ const AudioMessage: FC<IAudioMessage> = ({
   }, [isPrevType, type]);
 
   const bgMessage = useMemo(() => {
-    if (bgImage === gallary.at(-2)?.preview) {
+    if (bgImage === gallary[1]?.preview) {
       return 'bg-[#F1F1F4]';
     }
 

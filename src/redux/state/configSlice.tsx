@@ -38,7 +38,7 @@ const initialState: ConfigState = {
   time: '09:41',
   spum: false,
   mute: false,
-  bgImage: gallary[25].preview,
+  bgImage: gallary[0].preview,
   geo: undefined,
   status: {
     id: options[1].label,

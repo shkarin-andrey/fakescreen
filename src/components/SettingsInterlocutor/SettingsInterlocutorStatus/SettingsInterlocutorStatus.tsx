@@ -5,13 +5,16 @@ import { FormattedMessage } from 'react-intl';
 
 import { options } from '../../../config';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
+import { useAppSelector } from '../../../hooks/useAppSelector';
 import { setStatus } from '../../../redux/state/configSlice';
 
 const SettingsInterlocutorStatus: FC = () => {
   const dispatch = useAppDispatch();
-
+  const status = useAppSelector((state) => state.config.status);
   const [time, setTime] = useState<string | number>('');
   const [selectStatus, setSelectStatus] = useState(options[1]);
+
+  const defaultValue = options.find((item) => item.label === status.id)?.value;
 
   const handleChangeStatus = (_: string, item: any) => {
     setSelectStatus(item);
@@ -73,7 +76,7 @@ const SettingsInterlocutorStatus: FC = () => {
       <Divider className='my-3' />
       <div className='flex items-center gap-4'>
         <Select
-          defaultValue='online'
+          defaultValue={defaultValue}
           className='w-80'
           onChange={handleChangeStatus}
           size='small'
