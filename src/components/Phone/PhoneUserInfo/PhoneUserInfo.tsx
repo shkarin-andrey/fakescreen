@@ -74,7 +74,7 @@ const PhoneUserInfo: FC = () => {
   };
 
   const getUsernameAvatar = useMemo(() => {
-    const arrUsername = username.split(' ');
+    const arrUsername = username.trim().split(' ');
 
     if (arrUsername && arrUsername.length > 1) {
       const twoUsername = arrUsername[1].length;
