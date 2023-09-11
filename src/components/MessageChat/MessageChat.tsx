@@ -58,7 +58,7 @@ const MessageChat: FC<IMessageChat> = ({
   }, [message, messageRef.current, messageWrapperRef.current]);
 
   const bgMessage = useMemo(() => {
-    if (bgImage === gallary.at(-2)?.preview) {
+    if (bgImage === gallary[1]?.preview) {
       return 'bg-[#F1F1F4]';
     }
 
@@ -214,14 +214,15 @@ const MessageChat: FC<IMessageChat> = ({
     const styleObj: React.CSSProperties = {};
 
     if (image && !isMessage && isPrevType) {
+      styleObj.WebkitMaskBoxImage = `url(${generateMaskImage}) 0 0 0 0 round round`;
+      styleObj.WebkitMaskRepeat = 'no-repeat';
+
       if (type === 'owner') {
         styleObj.WebkitMaskPosition = 'right bottom';
-        styleObj.WebkitMaskBoxImage = `url(${generateMaskImage}) 0 0 0 0 round round`;
         styleObj.borderBottomRightRadius = 0;
         styleObj.transform = 'translateX(3px)';
       } else {
         styleObj.WebkitMaskPosition = 'left bottom';
-        styleObj.WebkitMaskBoxImage = `url(${generateMaskImage}) 0 0 0 0 round round`;
         styleObj.borderBottomLeftRadius = 0;
         styleObj.transform = 'translateX(-3px)';
       }
@@ -378,8 +379,8 @@ const MessageChat: FC<IMessageChat> = ({
             >
               <span ref={messageRef} className='-tracking-[0.3px]' />
               <MessageTime
-                className={`mt-[5px] pb-0 ${
-                  type === 'owner' ? 'translate-x-[7px]' : 'translate-x-[1px]'
+                className={`mt-[5px] pb-0 !pl-0 translate-y-[1px] ${
+                  type === 'owner' ? 'translate-x-[5px]' : 'translate-x-[1px]'
                 }`}
                 type={type}
                 time={time}
@@ -395,7 +396,7 @@ const MessageChat: FC<IMessageChat> = ({
         ) : (
           <div className={`absolute bottom-[6px] ${timePosition}`}>
             <MessageTime
-              className='mt-[8px] pb-0'
+              className={`mt-[8px] pb-0 ${image ? 'backdrop-blur-none' : ''}`}
               type={type}
               time={time}
               isViewed={isViewed}

@@ -33,6 +33,20 @@ import img25 from '../../../assets/images/bg-chat/pattern-9.jpg';
 
 export const gallary: UploadFile[] = [
   {
+    uid: 'pattern-9.jpg',
+    name: 'pattern-9.jpg',
+    status: 'done',
+    thumbUrl: img26,
+    preview: img26,
+  },
+  {
+    uid: 'pattern-12.jpg',
+    name: 'pattern-12.jpg',
+    status: 'done',
+    thumbUrl: img29,
+    preview: img29,
+  },
+  {
     uid: 'BG_1-scaled.jpg',
     name: 'BG_1-scaled.jpg',
     status: 'done',
@@ -213,20 +227,6 @@ export const gallary: UploadFile[] = [
     status: 'done',
     thumbUrl: img28,
     preview: img28,
-  },
-  {
-    uid: 'pattern-9.jpg',
-    name: 'pattern-9.jpg',
-    status: 'done',
-    thumbUrl: img26,
-    preview: img26,
-  },
-  {
-    uid: 'pattern-12.jpg',
-    name: 'pattern-12.jpg',
-    status: 'done',
-    thumbUrl: img29,
-    preview: img29,
   },
   {
     uid: 'pattern-10.jpg',
