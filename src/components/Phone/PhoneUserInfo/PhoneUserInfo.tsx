@@ -73,6 +73,19 @@ const PhoneUserInfo: FC = () => {
     }
   };
 
+  const getUsernameAvatar = useMemo(() => {
+    const arrUsername = username.split(' ');
+
+    if (arrUsername && arrUsername.length > 1) {
+      const twoUsername = arrUsername[1].length;
+      const firstElTwoUsername = twoUsername > 0 ? arrUsername[1][0] : '';
+
+      return arrUsername[0][0] + firstElTwoUsername;
+    }
+
+    return username?.[0];
+  }, [username]);
+
   return (
     <div className='z-[13] w-full h-[37px] pl-[6px] pr-[5px] grid grid-cols-[56px_199px_56px] items-center text-xs font-semibold text-[#171717]'>
       <div className='text-[#037EE5] flex items-center gap-[3px] text-sm mt-[3px]'>
@@ -126,7 +139,7 @@ const PhoneUserInfo: FC = () => {
         }}
       >
         {!avatarFile ? (
-          <div className='text-[13px]'>{username?.[0]}</div>
+          <div className='text-[13px]'>{getUsernameAvatar}</div>
         ) : (
           <img src={avatarFile} alt='avatar' className='w-full h-full' />
         )}
