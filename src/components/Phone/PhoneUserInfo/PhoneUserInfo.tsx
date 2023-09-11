@@ -83,7 +83,7 @@ const PhoneUserInfo: FC = () => {
       return arrUsername[0][0] + firstElTwoUsername;
     }
 
-    return username?.[0];
+    return arrUsername[0][0];
   }, [username]);
 
   return (
