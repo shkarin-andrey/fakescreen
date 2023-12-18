@@ -1,4 +1,6 @@
 import { FC } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import phoneImg from '../../assets/images/phone.svg';
 import { useAppSelector } from '../../hooks/useAppSelector';
@@ -31,7 +33,9 @@ const Phone: FC = () => {
           }}
         >
           <PhoneHeader />
-          <PhoneChat />
+          <DndProvider backend={HTML5Backend}>
+            <PhoneChat />
+          </DndProvider>
           <PhoneFooter />
         </div>
       </div>
