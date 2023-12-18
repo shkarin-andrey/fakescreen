@@ -13,6 +13,7 @@ import { deleteMessage, updateMessage } from '../../../redux/state/chatSlice';
 import { generateAudioList } from '../../../utils/generateAudioList';
 import { htmlEmoji } from '../../../utils/htmlEmoji';
 import DropdownEmoji from '../../DropdownEmoji';
+import SettingsChatMessageSticker from '../../SettingsChat/SettingsChatMessage/SettingsChatMessageSticker';
 import { IModalEditMessage, IModalEditMessageSave } from './ModalEditMessage.interface';
 import ModalEditMessageFooter from './ModalEditMessageFooter';
 
@@ -27,6 +28,7 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
   chatTime = null,
   message,
   seconds,
+  stickerUrl,
 }) => {
   const [checkedViewed, setCheckedViewed] = useState(isViewed);
   const [checkedListened, setCheckedListened] = useState(isListened);
@@ -34,6 +36,7 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
   const [selectTime, setSelectTime] = useState(time);
   const [selectSeconds, setSelectSeconds] = useState(seconds);
   const [changeChatTime, setChangeChatTime] = useState(chatTime);
+  const [selectSticker, setSelectSticker] = useState<string | undefined>(stickerUrl);
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -64,6 +67,7 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
         isViewed: checkedViewed,
         time: selectTime,
         isListened: checkedListened,
+        sticker: selectSticker,
       },
     };
 
@@ -87,6 +91,7 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
     id,
     selectType,
     checkedViewed,
+    selectSticker,
     checkedListened,
     selectTime,
     selectSeconds,
@@ -135,6 +140,10 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
     [ref.current],
   );
 
+  const handleSelectSticker = useCallback((sticker: string) => {
+    setSelectSticker(sticker);
+  }, []);
+
   const onEmojiClick = useCallback((event: EmojiClickData) => {
     const emoji = event.getImageUrl(EmojiStyle.APPLE);
 
@@ -180,6 +189,12 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
           <Checkbox checked={checkedViewed} onChange={handleChangeViewed}>
             Прочитано
           </Checkbox>
+        )}
+        {selectSticker && (
+          <SettingsChatMessageSticker
+            select={selectSticker}
+            onSelect={handleSelectSticker}
+          />
         )}
         {message && (
           <div className='flex gap-3'>
