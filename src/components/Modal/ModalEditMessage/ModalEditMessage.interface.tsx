@@ -12,6 +12,7 @@ export interface IModalEditMessage {
   message?: Message['message'];
   seconds?: number;
   audioList?: number[];
+  stickerUrl?: string;
 }
 
 export interface IModalEditMessageSave {
@@ -25,5 +26,6 @@ export interface IModalEditMessageSave {
     message?: Message['message'];
     audioMessage?: Message['audioMessage'];
     audioList?: number[];
+    sticker?: string;
   };
 }
