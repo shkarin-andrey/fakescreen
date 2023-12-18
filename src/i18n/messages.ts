@@ -45,4 +45,26 @@ export const messages = {
     minute_age: 'минут назад',
     hour_age: 'часов назад',
   },
+  [LOCALES.SPANISH.value]: {
+    footer_phone_message: 'Mensaje',
+
+    interlocutor_status_online: 'en línea',
+    interlocutor_status_scarcely: 'últ. vez hace un momento',
+    interlocutor_status_recently: 'últ. vez recientemente',
+    interlocutor_status_long: 'últ. vez hace mucho tiempo',
+    interlocutor_status_minutesAgo: 'últ. vez {time}',
+    interlocutor_status_hourseAgo: 'últ. vez {time}',
+    interlocutor_status_today: 'últ. vez hoy a las {time}',
+    interlocutor_status_yesterday: 'últ. vez ayer a las {time}',
+    interlocutor_status_write: 'escribiendo',
+    interlocutor_status_avia: 'esperando red...',
+
+    interlocutor_spum_block: 'Bloquear',
+    interlocutor_spum_add: 'Añadir contactos',
+
+    header_phone_back: 'Atrás',
+
+    minute_age: 'minuto',
+    hour_age: 'hora',
+  },
 };
