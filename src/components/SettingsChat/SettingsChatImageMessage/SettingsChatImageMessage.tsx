@@ -31,6 +31,7 @@ const SettingsChatImageMessage: FC = () => {
     };
 
     dispatch(setMessage(data));
+    form.resetFields();
   };
 
   const handleChange: UploadProps['onChange'] = (info) => {

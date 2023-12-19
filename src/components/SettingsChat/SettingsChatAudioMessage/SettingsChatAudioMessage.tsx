@@ -23,6 +23,7 @@ const SettingsChatAudioMessage: FC = () => {
     };
 
     dispatch(setMessage(data));
+    form.resetFields();
   };
 
   return (
