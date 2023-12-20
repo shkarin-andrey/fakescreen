@@ -1,11 +1,8 @@
-/* eslint-disable simple-import-sort/imports */
-import { Checkbox, Input, InputNumber, Modal, Radio, RadioChangeEvent } from 'antd';
+import { Checkbox, Form, Input, InputNumber, Modal, Radio } from 'antd';
 import { MaskedInput } from 'antd-mask-input';
-import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
-import React, { FC, memo, useCallback, useEffect, useRef, useState } from 'react';
+import React, { FC, memo, useCallback, useEffect, useRef } from 'react';
 
-import { MaskedInputProps } from 'antd-mask-input/build/main/lib/MaskedInput';
 import { optionsTypeMessage } from '../../../config';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
@@ -14,7 +11,7 @@ import { generateAudioList } from '../../../utils/generateAudioList';
 import { htmlEmoji } from '../../../utils/htmlEmoji';
 import DropdownEmoji from '../../DropdownEmoji';
 import SettingsChatMessageSticker from '../../SettingsChat/SettingsChatMessage/SettingsChatMessageSticker';
-import { IModalEditMessage, IModalEditMessageSave } from './ModalEditMessage.interface';
+import { IModalEditMessage } from './ModalEditMessage.interface';
 import ModalEditMessageFooter from './ModalEditMessageFooter';
 
 const ModalEditMessage: FC<IModalEditMessage> = ({
@@ -26,17 +23,24 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
   isViewed,
   isListened,
   chatTime = null,
-  message,
+  message = '',
   seconds,
-  stickerUrl,
+  stickerUrl = '',
 }) => {
-  const [checkedViewed, setCheckedViewed] = useState(isViewed);
-  const [checkedListened, setCheckedListened] = useState(isListened);
-  const [selectType, setSelectType] = useState(type);
-  const [selectTime, setSelectTime] = useState(time);
-  const [selectSeconds, setSelectSeconds] = useState(seconds);
-  const [changeChatTime, setChangeChatTime] = useState(chatTime);
-  const [selectSticker, setSelectSticker] = useState<string | undefined>(stickerUrl);
+  const initialValue = {
+    type,
+    message,
+    time,
+    isViewed,
+    isListened,
+    chatTime,
+    sticker: stickerUrl,
+    audioMessage: seconds,
+    audioList: seconds ? generateAudioList(seconds) : null,
+  };
+
+  const [form] = Form.useForm<typeof initialValue>();
+  const stickerValue = Form.useWatch('sticker', form);
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -57,91 +61,16 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
     setIsOpneModal((prevOpen) => !prevOpen);
   }, []);
 
-  const handleSave = useCallback(() => {
-    const index = data.findIndex((el) => el.id === id);
+  const handleChatMessage = (e: React.ChangeEvent<HTMLDivElement>) => {
+    const value = e.target.innerHTML;
 
-    const body: IModalEditMessageSave = {
-      index,
-      data: {
-        type: selectType,
-        isViewed: checkedViewed,
-        time: selectTime,
-        isListened: checkedListened,
-        sticker: selectSticker,
-      },
-    };
-
-    if (changeChatTime) {
-      body.data.chatTime = changeChatTime;
+    if (ref.current) {
+      ref.current.innerHTML = value;
     }
-
-    if (selectSeconds) {
-      body.data.audioMessage = selectSeconds;
-      body.data.audioList = generateAudioList(selectSeconds);
-    }
-
-    if (message) {
-      body.data.message = ref.current?.innerHTML;
-    }
-
-    dispatch(updateMessage(body));
-    handleCancel();
-  }, [
-    data,
-    id,
-    selectType,
-    checkedViewed,
-    selectSticker,
-    checkedListened,
-    selectTime,
-    selectSeconds,
-    changeChatTime,
-    ref.current,
-  ]);
-
-  const handleChangeViewed = useCallback((e: CheckboxChangeEvent) => {
-    setCheckedViewed(e.target.checked);
-
-    if (!e.target.checked) {
-      setCheckedListened(false);
-    }
-  }, []);
-
-  const handleChangeListened = useCallback((e: CheckboxChangeEvent) => {
-    setCheckedListened(e.target.checked);
-  }, []);
-
-  const handleSelectType = useCallback((e: RadioChangeEvent) => {
-    setSelectType(e.target.value);
-  }, []);
-
-  const handleChangeTime: MaskedInputProps['onChange'] = (e) => {
-    setSelectTime(e.target.value);
   };
 
-  const handleChangeSeconds = useCallback((value: number | null) => {
-    if (!value) return;
-    setSelectSeconds(value);
-  }, []);
-
-  const handleChangeChatTime = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setChangeChatTime(event.target.value);
-    },
-    [],
-  );
-
-  const handleChatMessage = useCallback(
-    (e: React.ChangeEvent<HTMLDivElement>) => {
-      if (ref.current) {
-        ref.current.innerHTML = e.currentTarget.innerHTML;
-      }
-    },
-    [ref.current],
-  );
-
   const handleSelectSticker = useCallback((sticker: string) => {
-    setSelectSticker(sticker);
+    form.setFieldValue('sticker', sticker);
   }, []);
 
   const onEmojiClick = useCallback((event: EmojiClickData) => {
@@ -152,6 +81,24 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
     }
   }, []);
 
+  const onFinish = (values: typeof initialValue) => {
+    const index = data.findIndex((el) => el.id === id);
+
+    const body = {
+      index,
+      data: {
+        ...values,
+        message: ref.current?.innerHTML,
+        audioList: values?.audioMessage
+          ? generateAudioList(values.audioMessage)
+          : undefined,
+      },
+    };
+
+    dispatch(updateMessage(body));
+    handleCancel();
+  };
+
   return (
     <Modal
       title='Редактирование сообщения'
@@ -159,42 +106,33 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
       onCancel={handleCancel}
       footer={
         <ModalEditMessageFooter
-          handleSave={handleSave}
+          handleSave={form.submit}
           handleCancel={handleCancel}
           handleDelete={handleDelete}
         />
       }
     >
-      <div className='flex flex-col gap-3'>
+      <Form
+        form={form}
+        initialValues={initialValue}
+        onFinish={onFinish}
+        autoComplete='off'
+        className='flex flex-col gap-3'
+      >
         {chatTime && (
-          <Input value={changeChatTime || ''} onChange={handleChangeChatTime} />
+          <Form.Item className='m-0' name='chatTime'>
+            <Input />
+          </Form.Item>
         )}
         {type !== undefined && (
-          <Radio.Group
-            value={selectType}
-            options={optionsTypeMessage}
-            onChange={handleSelectType}
-          />
+          <Form.Item className='m-0' name='type'>
+            <Radio.Group options={optionsTypeMessage} />
+          </Form.Item>
         )}
         {time !== undefined && (
-          <MaskedInput
-            size='small'
-            className='w-40'
-            value={selectTime}
-            mask={'00:00'}
-            onChange={handleChangeTime}
-          />
-        )}
-        {isViewed !== undefined && (
-          <Checkbox checked={checkedViewed} onChange={handleChangeViewed}>
-            Прочитано
-          </Checkbox>
-        )}
-        {selectSticker && (
-          <SettingsChatMessageSticker
-            select={selectSticker}
-            onSelect={handleSelectSticker}
-          />
+          <Form.Item className='m-0' name='time'>
+            <MaskedInput size='small' className='w-40' mask={'00:00'} />
+          </Form.Item>
         )}
         {message && (
           <div className='flex gap-3'>
@@ -209,25 +147,29 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
           </div>
         )}
         {seconds && (
-          <InputNumber
-            min={1}
-            max={99}
-            className='w-40'
-            size='small'
-            value={selectSeconds}
-            onChange={handleChangeSeconds}
-          />
+          <Form.Item className='m-0' name='audioMessage'>
+            <InputNumber min={1} max={99} className='w-40' size='small' />
+          </Form.Item>
         )}
-        {isListened !== undefined && (
-          <Checkbox
-            checked={checkedListened}
-            disabled={!checkedViewed}
-            onChange={handleChangeListened}
-          >
-            Прослушано
-          </Checkbox>
+        {isViewed !== undefined && (
+          <Form.Item className='m-0' name='isViewed' valuePropName='checked'>
+            <Checkbox>Прочитано</Checkbox>
+          </Form.Item>
         )}
-      </div>
+        {isListened && (
+          <Form.Item className='m-0' name='isListened' valuePropName='checked'>
+            <Checkbox disabled={form.getFieldValue('isViewed')}>Прослушано</Checkbox>
+          </Form.Item>
+        )}
+        {stickerUrl && (
+          <Form.Item className='m-0' name='sticker'>
+            <SettingsChatMessageSticker
+              select={stickerValue}
+              onSelect={handleSelectSticker}
+            />
+          </Form.Item>
+        )}
+      </Form>
     </Modal>
   );
 };
