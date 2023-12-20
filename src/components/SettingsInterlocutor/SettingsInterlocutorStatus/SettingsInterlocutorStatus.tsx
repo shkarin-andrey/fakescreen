@@ -81,12 +81,12 @@ const SettingsInterlocutorStatus: FC = () => {
                 {item.value === 'minutesAgo' ? (
                   <span>
                     <FormattedMessage id={item.label} />{' '}
-                    <FormattedMessage id={'minute_age'} />
+                    <FormattedMessage id={'minute_ago'} />
                   </span>
                 ) : item.value === 'hourseAgo' ? (
                   <span>
                     <FormattedMessage id={item.label} />{' '}
-                    <FormattedMessage id={'hour_age'} />
+                    <FormattedMessage id={'hour_ago'} />
                   </span>
                 ) : (
                   <FormattedMessage id={item.label} />

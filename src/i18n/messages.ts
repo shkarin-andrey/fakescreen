@@ -20,8 +20,8 @@ export const messages = {
 
     header_phone_back: 'Back',
 
-    minute_age: 'minute age',
-    hour_age: 'hour age',
+    minute_ago: 'minute ago',
+    hour_ago: 'hour ago',
   },
   [LOCALES.RUSSIAN.value]: {
     footer_phone_message: 'Сообщение',
@@ -42,8 +42,8 @@ export const messages = {
 
     header_phone_back: 'Назад',
 
-    minute_age: 'минут назад',
-    hour_age: 'часов назад',
+    minute_ago: 'минут назад',
+    hour_ago: 'часов назад',
   },
   [LOCALES.SPANISH.value]: {
     footer_phone_message: 'Mensaje',
@@ -64,7 +64,7 @@ export const messages = {
 
     header_phone_back: 'Atrás',
 
-    minute_age: 'minuto',
-    hour_age: 'hora',
+    minute_ago: 'minuto',
+    hour_ago: 'hora',
   },
 };
