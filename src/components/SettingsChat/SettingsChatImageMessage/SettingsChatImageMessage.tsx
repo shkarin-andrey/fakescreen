@@ -7,7 +7,6 @@ import { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
 import { FC, useCallback, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { regexTime } from '../../../config';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { setMessage } from '../../../redux/state/chatSlice';
 import { beforeUploadPNGAndJPEG } from '../../../utils/beforeUploadPNGAndJPEG';
@@ -15,7 +14,8 @@ import { getBase64 } from '../../../utils/getBase64';
 import { handleCustomRequest } from '../../../utils/handleCustomRequest';
 import { htmlEmoji } from '../../../utils/htmlEmoji';
 import DropdownEmoji from '../../DropdownEmoji';
-import { initialValues } from './SettingsChatImageMessage.config';
+import SettingWrapper from '../../SettingWrapper';
+import { initialValues, timeRules } from './SettingsChatImageMessage.config';
 
 const SettingsChatImageMessage: FC = () => {
   const dispatch = useAppDispatch();
@@ -31,6 +31,7 @@ const SettingsChatImageMessage: FC = () => {
     };
 
     dispatch(setMessage(data));
+    form.resetFields();
   };
 
   const handleChange: UploadProps['onChange'] = (info) => {
@@ -64,67 +65,53 @@ const SettingsChatImageMessage: FC = () => {
   return (
     <div className='px-6 py-4 rounded-lg bg-white'>
       <Form form={form} onFinish={onFinish} initialValues={initialValues}>
-        <div className='flex items-center gap-4'>
-          <div className='text-base font-medium'>Сообщение</div>
-          <Button htmlType='submit' size='small' type='primary'>
-            Отправить
-          </Button>
-        </div>
-        <Divider className='my-3' />
-        <Form.Item
-          name='time'
-          hasFeedback
-          className='m-0'
-          label='Время сообщения'
-          rules={[
-            {
-              pattern: new RegExp(regexTime, 'gim'),
-              message: 'Пример: 01:29!',
-            },
-            {
-              required: true,
-              message: 'Введите время!',
-            },
-          ]}
-        >
-          <MaskedInput size='small' className='w-40' mask={'00:00'} />
-        </Form.Item>
-        <Divider className='my-3' />
-        <Form.Item name='image' hasFeedback className='m-0' valuePropName='fileList'>
-          <div className='flex items-center gap-4'>
-            <div className='text-sm'>Выбрать изображение</div>
-            <Upload
-              onChange={handleChange}
-              customRequest={handleCustomRequest}
-              beforeUpload={beforeUploadPNGAndJPEG}
-              onRemove={handleRemove}
-              maxCount={1}
-            >
-              <Button icon={<UploadOutlined />}>Загрузить</Button>
-            </Upload>
-          </div>
-        </Form.Item>
-        <Divider className='my-3' />
-        <Form.Item name='message' hasFeedback className='m-0'>
-          <div className='flex items-center gap-4'>
-            <div className='text-sm'>Сообщение</div>
-            <div
-              ref={ref}
-              className='w-80 border border-solid border-gray-300 bg-white rounded-md px-2 py-1 text-base shadow-blue-500 hover:border-blue-500 transition-colors outline-none focus-visible:border-blue-500 focus-visible:shadow-md '
-              onChange={handleChatMessage}
-              contentEditable
-              dangerouslySetInnerHTML={{ __html: ref.current?.innerHTML || '' }}
-            />
-            <DropdownEmoji onEmojiClick={onEmojiClick} />
-          </div>
-        </Form.Item>
-        <Divider className='my-3' />
-        <Form.Item name='type' className='m-0' valuePropName='checked'>
-          <Checkbox>От собеседника</Checkbox>
-        </Form.Item>
-        <Form.Item name='isViewed' className='m-0' valuePropName='checked'>
-          <Checkbox>Прочитано</Checkbox>
-        </Form.Item>
+        <SettingWrapper title='Сообщение'>
+          <Form.Item
+            name='time'
+            hasFeedback
+            className='m-0'
+            label='Время сообщения'
+            rules={timeRules}
+          >
+            <MaskedInput size='small' className='w-40' mask={'00:00'} />
+          </Form.Item>
+          <Divider className='my-3' />
+          <Form.Item name='image' hasFeedback className='m-0' valuePropName='fileList'>
+            <div className='flex items-center gap-4'>
+              <div className='text-sm'>Выбрать изображение</div>
+              <Upload
+                onChange={handleChange}
+                customRequest={handleCustomRequest}
+                beforeUpload={beforeUploadPNGAndJPEG}
+                onRemove={handleRemove}
+                maxCount={1}
+              >
+                <Button icon={<UploadOutlined />}>Загрузить</Button>
+              </Upload>
+            </div>
+          </Form.Item>
+          <Divider className='my-3' />
+          <Form.Item name='message' hasFeedback className='m-0'>
+            <div className='flex items-center gap-4'>
+              <div className='text-sm'>Сообщение</div>
+              <div
+                ref={ref}
+                className='w-80 border border-solid border-gray-300 bg-white rounded-md px-2 py-1 text-base shadow-blue-500 hover:border-blue-500 transition-colors outline-none focus-visible:border-blue-500 focus-visible:shadow-md '
+                onChange={handleChatMessage}
+                contentEditable
+                dangerouslySetInnerHTML={{ __html: ref.current?.innerHTML || '' }}
+              />
+              <DropdownEmoji onEmojiClick={onEmojiClick} />
+            </div>
+          </Form.Item>
+          <Divider className='my-3' />
+          <Form.Item name='type' className='m-0' valuePropName='checked'>
+            <Checkbox>От собеседника</Checkbox>
+          </Form.Item>
+          <Form.Item name='isViewed' className='m-0' valuePropName='checked'>
+            <Checkbox>Прочитано</Checkbox>
+          </Form.Item>
+        </SettingWrapper>
       </Form>
     </div>
   );

@@ -16,7 +16,7 @@ const ModalEditMessageFooter: FC<IModalEditMessageFooter> = ({
       <Button key='back' onClick={handleCancel}>
         Отмена
       </Button>
-      <Button key='save' type='primary' onClick={handleSave}>
+      <Button key='save' htmlType='submit' type='primary' onClick={handleSave}>
         Сохранить
       </Button>
     </>
