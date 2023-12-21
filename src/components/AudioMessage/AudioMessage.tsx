@@ -122,7 +122,7 @@ const AudioMessage: FC<IAudioMessage> = ({
       <div
         aria-hidden={true}
         onClick={handleOpenModal}
-        className={`relative rounded-[13px] pt-[7.58px] pl-[7.58px] pb-[2.5px] pr-[13px] max-w-[282px] w-fit text-[8.56px] ${isOwner} ${typeClassName} ${classNameNextType} ${classNameRounded()}`}
+        className={`relative rounded-[13px] pt-[7.58px] pl-[7.58px] pb-[14px] pr-[13px] max-w-[282px] w-fit text-[8.56px] ${isOwner} ${typeClassName} ${classNameNextType} ${classNameRounded()}`}
       >
         <div className='flex gap-[6.24px] items-center'>
           <PlayIcon type={type} />
