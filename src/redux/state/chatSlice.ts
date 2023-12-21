@@ -1,5 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
+import { UploadFile } from 'antd';
 
 export type ChatTime = {
   id: string;
@@ -17,6 +18,7 @@ export type Message = {
   image?: string;
   audioList?: number[];
   audioMessage?: number;
+  fileList?: UploadFile[];
 };
 
 interface ChatState {

@@ -2,9 +2,9 @@
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Divider, Form, Upload, UploadProps } from 'antd';
 import { MaskedInput } from 'antd-mask-input';
-import { RcFile } from 'antd/es/upload';
+import { RcFile, UploadFile } from 'antd/es/upload';
 import { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
-import { FC, useCallback, useRef } from 'react';
+import { FC, useCallback, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
@@ -22,19 +22,21 @@ const SettingsChatImageMessage: FC = () => {
   const [form] = Form.useForm();
   const ref = useRef<HTMLDivElement>(null);
 
-  const onFinish = (values: any) => {
-    const data = {
-      ...values,
-      id: uuidv4(),
-      type: values.type ? 'interlocutor' : 'owner',
-      message: ref.current?.innerHTML,
-    };
-
-    dispatch(setMessage(data));
-    form.resetFields();
-  };
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
 
   const handleChange: UploadProps['onChange'] = (info) => {
+    let newFileList = [...info.fileList];
+
+    newFileList = newFileList.slice(-2);
+
+    newFileList = newFileList.map((file) => {
+      if (file.response) {
+        file.url = file.response.url;
+      }
+      return file;
+    });
+
+    setFileList(newFileList);
     if (info.file.status === 'uploading') return;
 
     if (info.file.status === 'done') {
@@ -45,6 +47,7 @@ const SettingsChatImageMessage: FC = () => {
   };
 
   const handleRemove: UploadProps['onRemove'] = () => {
+    setFileList([]);
     form.setFieldValue('image', null);
   };
 
@@ -59,6 +62,25 @@ const SettingsChatImageMessage: FC = () => {
   const handleChatMessage = (e: React.ChangeEvent<HTMLDivElement>) => {
     if (ref.current) {
       ref.current.innerHTML = e.currentTarget.innerHTML;
+    }
+  };
+
+  const onFinish = (values: any) => {
+    const data = {
+      ...values,
+      id: uuidv4(),
+      type: values.type ? 'interlocutor' : 'owner',
+      message: ref.current?.innerHTML,
+      fileList,
+    };
+
+    dispatch(setMessage(data));
+    form.setFieldValue('message', '');
+    form.setFieldValue('image', null);
+    setFileList([]);
+
+    if (ref.current) {
+      ref.current.innerHTML = '';
     }
   };
 
@@ -85,6 +107,7 @@ const SettingsChatImageMessage: FC = () => {
                 beforeUpload={beforeUploadPNGAndJPEG}
                 onRemove={handleRemove}
                 maxCount={1}
+                fileList={fileList}
               >
                 <Button icon={<UploadOutlined />}>Загрузить</Button>
               </Upload>

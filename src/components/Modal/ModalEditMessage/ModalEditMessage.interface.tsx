@@ -13,6 +13,8 @@ export interface IModalEditMessage {
   seconds?: number;
   audioList?: number[];
   stickerUrl?: string;
+  image?: string;
+  defaultFileList?: Message['fileList'];
 }
 
 export interface IModalEditMessageSave {
