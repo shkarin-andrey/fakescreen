@@ -94,6 +94,7 @@ const PhoneChat: FC = () => {
                     isViewed={item.isViewed}
                     prevType={prevType(index)}
                     nextType={nextType(index)}
+                    fileList={item?.fileList}
                   />
                 )}
                 {item.audioMessage && (

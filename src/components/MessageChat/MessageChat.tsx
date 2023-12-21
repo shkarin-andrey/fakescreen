@@ -22,7 +22,7 @@ import { IMessageChat } from './MessageChat.interface';
 const MessageChat: FC<IMessageChat> = ({
   id,
   type,
-  message,
+  message = '',
   time,
   isViewed,
   prevType,
@@ -30,6 +30,7 @@ const MessageChat: FC<IMessageChat> = ({
   image,
   className = '',
   style,
+  fileList,
 }) => {
   const [mask, setMask] = useState<{
     position?: 'right' | 'left';
@@ -414,6 +415,8 @@ const MessageChat: FC<IMessageChat> = ({
         isOpneModal={isOpenModal}
         setIsOpneModal={setIsOpenModal}
         message={message}
+        defaultFileList={fileList}
+        image={image}
       />
     </>
   );

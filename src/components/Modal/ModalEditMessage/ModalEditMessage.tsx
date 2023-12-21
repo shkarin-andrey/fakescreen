@@ -1,13 +1,29 @@
-import { Checkbox, Form, Input, InputNumber, Modal, Radio } from 'antd';
+// eslint-disable-next-line simple-import-sort/imports
+import { UploadOutlined } from '@ant-design/icons';
+import {
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  InputNumber,
+  Modal,
+  Radio,
+  Upload,
+  UploadProps,
+} from 'antd';
 import { MaskedInput } from 'antd-mask-input';
+import { RcFile, UploadFile } from 'antd/es/upload';
 import { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
-import React, { FC, memo, useCallback, useEffect, useRef } from 'react';
+import React, { FC, memo, useCallback, useEffect, useRef, useState } from 'react';
 
 import { optionsTypeMessage } from '../../../config';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { deleteMessage, updateMessage } from '../../../redux/state/chatSlice';
+import { beforeUploadPNGAndJPEG } from '../../../utils/beforeUploadPNGAndJPEG';
 import { generateAudioList } from '../../../utils/generateAudioList';
+import { getBase64 } from '../../../utils/getBase64';
+import { handleCustomRequest } from '../../../utils/handleCustomRequest';
 import { htmlEmoji } from '../../../utils/htmlEmoji';
 import DropdownEmoji from '../../DropdownEmoji';
 import SettingsChatMessageSticker from '../../SettingsChat/SettingsChatMessage/SettingsChatMessageSticker';
@@ -26,6 +42,8 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
   message = '',
   seconds,
   stickerUrl = '',
+  image = '',
+  defaultFileList = [],
 }) => {
   const initialValue = {
     type,
@@ -34,6 +52,7 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
     isViewed,
     isListened,
     chatTime,
+    image,
     sticker: stickerUrl,
     audioMessage: seconds,
     audioList: seconds ? generateAudioList(seconds) : null,
@@ -43,6 +62,7 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
   const stickerValue = Form.useWatch('sticker', form);
 
   const ref = useRef<HTMLDivElement>(null);
+  const [fileList, setFileList] = useState<UploadFile[]>(defaultFileList);
 
   useEffect(() => {
     if (ref.current && message && isOpneModal) {
@@ -88,6 +108,7 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
       index,
       data: {
         ...values,
+        fileList,
         message: ref.current?.innerHTML,
         audioList: values?.audioMessage
           ? generateAudioList(values.audioMessage)
@@ -97,6 +118,32 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
 
     dispatch(updateMessage(body));
     handleCancel();
+  };
+
+  const handleUpload: UploadProps['onChange'] = (info) => {
+    let newFileList = [...info.fileList];
+
+    newFileList = newFileList.slice(-2);
+
+    newFileList = newFileList.map((file) => {
+      if (file.response) {
+        file.url = file.response.url;
+      }
+      return file;
+    });
+
+    setFileList(newFileList);
+    if (info.file.status === 'uploading') return;
+
+    if (info.file.status === 'done') {
+      getBase64(info.file.originFileObj as RcFile, (url) => {
+        form.setFieldValue('image', url);
+      });
+    }
+  };
+
+  const handleRemove: UploadProps['onRemove'] = () => {
+    form.setFieldValue('image', null);
   };
 
   return (
@@ -145,6 +192,20 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
             />
             <DropdownEmoji onEmojiClick={onEmojiClick} />
           </div>
+        )}
+        {image && (
+          <Form.Item name='image' hasFeedback className='m-0'>
+            <Upload
+              onChange={handleUpload}
+              customRequest={handleCustomRequest}
+              beforeUpload={beforeUploadPNGAndJPEG}
+              onRemove={handleRemove}
+              fileList={fileList}
+              maxCount={1}
+            >
+              <Button icon={<UploadOutlined />}>Загрузить</Button>
+            </Upload>
+          </Form.Item>
         )}
         {seconds && (
           <Form.Item className='m-0' name='audioMessage'>
