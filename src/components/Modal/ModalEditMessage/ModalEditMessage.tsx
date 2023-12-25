@@ -217,9 +217,9 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
             <Checkbox>Прочитано</Checkbox>
           </Form.Item>
         )}
-        {isListened && (
+        {isListened !== undefined && (
           <Form.Item className='m-0' name='isListened' valuePropName='checked'>
-            <Checkbox disabled={form.getFieldValue('isViewed')}>Прослушано</Checkbox>
+            <Checkbox>Прослушано</Checkbox>
           </Form.Item>
         )}
         {stickerUrl && (
