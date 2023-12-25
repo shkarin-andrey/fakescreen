@@ -1,4 +1,4 @@
-// eslint-disable-next-line simple-import-sort/imports
+/* eslint-disable simple-import-sort/imports */
 import { UploadOutlined } from '@ant-design/icons';
 import {
   Button,
@@ -14,7 +14,7 @@ import {
 import { MaskedInput } from 'antd-mask-input';
 import { RcFile, UploadFile } from 'antd/es/upload';
 import { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
-import React, { FC, memo, useCallback, useEffect, useRef, useState } from 'react';
+import { FC, KeyboardEvent, memo, useCallback, useEffect, useRef, useState } from 'react';
 
 import { optionsTypeMessage } from '../../../config';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
@@ -81,14 +81,6 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
     setIsOpneModal((prevOpen) => !prevOpen);
   }, []);
 
-  const handleChatMessage = (e: React.ChangeEvent<HTMLDivElement>) => {
-    const value = e.target.innerHTML;
-
-    if (ref.current) {
-      ref.current.innerHTML = value;
-    }
-  };
-
   const handleSelectSticker = useCallback((sticker: string) => {
     form.setFieldValue('sticker', sticker);
   }, []);
@@ -109,7 +101,7 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
       data: {
         ...values,
         fileList,
-        message: ref.current?.innerHTML,
+        message: ref.current?.innerHTML.replace(/(style=.*")+/gm, ''),
         audioList: values?.audioMessage
           ? generateAudioList(values.audioMessage)
           : undefined,
@@ -144,6 +136,13 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
 
   const handleRemove: UploadProps['onRemove'] = () => {
     form.setFieldValue('image', null);
+  };
+
+  const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    if (!ref.current) return;
+    if (e.keyCode == 13 && !e.shiftKey) {
+      return form.submit();
+    }
   };
 
   return (
@@ -185,8 +184,9 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
           <div className='flex gap-3'>
             <div
               ref={ref}
+              role='presentation'
               className='w-full border border-solid border-gray-300 bg-white rounded-md px-2 py-1 text-base shadow-blue-500 hover:border-blue-500 transition-colors outline-none focus-visible:border-blue-500 focus-visible:shadow-md '
-              onChange={handleChatMessage}
+              onKeyDown={onKeyDown}
               contentEditable
               dangerouslySetInnerHTML={{ __html: ref.current?.innerHTML || '' }}
             />
