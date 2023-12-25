@@ -4,7 +4,7 @@ import { Button, Checkbox, Divider, Form, Upload, UploadProps } from 'antd';
 import { MaskedInput } from 'antd-mask-input';
 import { RcFile, UploadFile } from 'antd/es/upload';
 import { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
-import { FC, useCallback, useRef, useState } from 'react';
+import { FC, KeyboardEvent, useCallback, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
@@ -59,9 +59,10 @@ const SettingsChatImageMessage: FC = () => {
     }
   }, []);
 
-  const handleChatMessage = (e: React.ChangeEvent<HTMLDivElement>) => {
-    if (ref.current) {
-      ref.current.innerHTML = e.currentTarget.innerHTML;
+  const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    if (!ref.current) return;
+    if (e.keyCode == 13 && !e.shiftKey) {
+      return form.submit();
     }
   };
 
@@ -70,12 +71,11 @@ const SettingsChatImageMessage: FC = () => {
       ...values,
       id: uuidv4(),
       type: values.type ? 'interlocutor' : 'owner',
-      message: ref.current?.innerHTML,
+      message: ref.current?.innerHTML.replace(/(style=.*")+/gm, ''),
       fileList,
     };
 
     dispatch(setMessage(data));
-    form.setFieldValue('message', '');
     form.setFieldValue('image', null);
     setFileList([]);
 
@@ -119,8 +119,9 @@ const SettingsChatImageMessage: FC = () => {
               <div className='text-sm'>Сообщение</div>
               <div
                 ref={ref}
+                role='presentation'
                 className='w-80 border border-solid border-gray-300 bg-white rounded-md px-2 py-1 text-base shadow-blue-500 hover:border-blue-500 transition-colors outline-none focus-visible:border-blue-500 focus-visible:shadow-md '
-                onChange={handleChatMessage}
+                onKeyDown={onKeyDown}
                 contentEditable
                 dangerouslySetInnerHTML={{ __html: ref.current?.innerHTML || '' }}
               />
