@@ -381,7 +381,7 @@ const MessageChat: FC<IMessageChat> = ({
               <span ref={messageRef} className='-tracking-[0.3px]' />
               <MessageTime
                 className={`mt-[5px] pb-0 !pl-0 translate-y-[1px] ${
-                  type === 'owner' ? 'translate-x-[5px]' : 'translate-x-[1px]'
+                  type === 'owner' ? 'translate-x-[5px]' : 'translate-x-[5px]'
                 }`}
                 type={type}
                 time={time}
