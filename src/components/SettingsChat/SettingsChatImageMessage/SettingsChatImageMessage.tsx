@@ -4,7 +4,7 @@ import { Button, Checkbox, Divider, Form, Upload, UploadProps } from 'antd';
 import { MaskedInput } from 'antd-mask-input';
 import { RcFile, UploadFile } from 'antd/es/upload';
 import { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
-import { FC, KeyboardEvent, useCallback, useRef, useState } from 'react';
+import { FC, useCallback, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
@@ -58,13 +58,6 @@ const SettingsChatImageMessage: FC = () => {
       ref.current.innerHTML += htmlEmoji(emoji, event.emoji);
     }
   }, []);
-
-  const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
-    if (e.keyCode == 13 && !e.shiftKey) {
-      return form.submit();
-    }
-  };
 
   const onFinish = (values: any) => {
     const data = {
@@ -121,7 +114,6 @@ const SettingsChatImageMessage: FC = () => {
                 ref={ref}
                 role='presentation'
                 className='w-80 border border-solid border-gray-300 bg-white rounded-md px-2 py-1 text-base shadow-blue-500 hover:border-blue-500 transition-colors outline-none focus-visible:border-blue-500 focus-visible:shadow-md '
-                onKeyDown={onKeyDown}
                 contentEditable
                 dangerouslySetInnerHTML={{ __html: ref.current?.innerHTML || '' }}
               />
