@@ -14,7 +14,7 @@ import {
 import { MaskedInput } from 'antd-mask-input';
 import { RcFile, UploadFile } from 'antd/es/upload';
 import { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
-import { FC, KeyboardEvent, memo, useCallback, useEffect, useRef, useState } from 'react';
+import { FC, memo, useCallback, useEffect, useRef, useState } from 'react';
 
 import { optionsTypeMessage } from '../../../config';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
@@ -138,13 +138,6 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
     form.setFieldValue('image', null);
   };
 
-  const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
-    if (e.keyCode == 13 && !e.shiftKey) {
-      return form.submit();
-    }
-  };
-
   return (
     <Modal
       title='Редактирование сообщения'
@@ -186,7 +179,6 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
               ref={ref}
               role='presentation'
               className='w-full border border-solid border-gray-300 bg-white rounded-md px-2 py-1 text-base shadow-blue-500 hover:border-blue-500 transition-colors outline-none focus-visible:border-blue-500 focus-visible:shadow-md '
-              onKeyDown={onKeyDown}
               contentEditable
               dangerouslySetInnerHTML={{ __html: ref.current?.innerHTML || '' }}
             />
