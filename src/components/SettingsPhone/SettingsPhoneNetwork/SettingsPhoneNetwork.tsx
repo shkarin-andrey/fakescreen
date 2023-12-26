@@ -1,10 +1,9 @@
-import { Radio, RadioChangeEvent } from 'antd';
+import { Divider, Radio, RadioChangeEvent } from 'antd';
 import { FC, memo, useCallback } from 'react';
 
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { setNetwork, setStateSim } from '../../../redux/state/configSlice';
-import Wrapper from '../../Wrapper';
 import { itemsNetwork, itemsStateSim } from './SettingsPhoneNetwork.config';
 
 // TODO: Вынести в отдельный компонент SIM
@@ -22,8 +21,9 @@ const SettingsPhoneNetwork: FC = () => {
   }, []);
 
   return (
-    <>
-      <Wrapper title='Сеть:'>
+    <div className='px-6 py-4 rounded-lg bg-white'>
+      <div className='flex items-center gap-4'>
+        <div className='text-base font-medium'>Сеть</div>
         <Radio.Group onChange={handleChangeNetwork} value={network}>
           {itemsNetwork.map((item) => (
             <Radio.Button key={item.value} value={item.value}>
@@ -31,9 +31,11 @@ const SettingsPhoneNetwork: FC = () => {
             </Radio.Button>
           ))}
         </Radio.Group>
-      </Wrapper>
+      </div>
       {network === 'sim' && (
-        <Wrapper title='Состояние сети:'>
+        <>
+          <Divider className='my-3' />
+          <div className='text-sm mb-2'>Состояние сети</div>
           <Radio.Group onChange={handleChangeStateNetwork} value={stateSim}>
             {itemsStateSim.map((item) => (
               <Radio.Button key={item.value} value={item.value}>
@@ -41,9 +43,9 @@ const SettingsPhoneNetwork: FC = () => {
               </Radio.Button>
             ))}
           </Radio.Group>
-        </Wrapper>
+        </>
       )}
-    </>
+    </div>
   );
 };
 

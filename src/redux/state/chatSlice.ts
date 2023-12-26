@@ -1,5 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
+import { UploadFile } from 'antd';
 
 export type ChatTime = {
   id: string;
@@ -11,19 +12,21 @@ export type Message = {
   type: string;
   message: string;
   isViewed: boolean;
+  isListened: boolean;
   time: string;
   sticker?: string;
   image?: string;
+  audioList?: number[];
+  audioMessage?: number;
+  fileList?: UploadFile[];
 };
 
 interface ChatState {
   data: (Message | ChatTime)[];
-  blurMessage: any[];
 }
 
 const initialState: ChatState = {
   data: [],
-  blurMessage: [],
 };
 
 export const chatSlice = createSlice({
@@ -43,15 +46,11 @@ export const chatSlice = createSlice({
       const data = { ...state.data[action.payload.index], ...action.payload.data };
       state.data.splice(action.payload.index, 1, data);
     },
-    setBlurMessage: (state, action: PayloadAction<ChatState['blurMessage']>) => {
-      state.blurMessage = action.payload;
-    },
     resetChat: (state) => {
       state.data = [];
     },
     setGlobalChat: (state, action: PayloadAction<ChatState>) => {
       state.data = action.payload.data;
-      state.blurMessage = action.payload.blurMessage;
     },
   },
 });
@@ -62,7 +61,6 @@ export const {
   deleteMessage,
   updateMessage,
   resetChat,
-  setBlurMessage,
   setGlobalChat,
 } = chatSlice.actions;
 

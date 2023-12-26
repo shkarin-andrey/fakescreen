@@ -5,7 +5,6 @@ import { FC } from 'react';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { setSpum } from '../../../redux/state/configSlice';
-import Wrapper from '../../Wrapper';
 
 const SettingsInterlocutorSpum: FC = () => {
   const dispatch = useAppDispatch();
@@ -17,9 +16,11 @@ const SettingsInterlocutorSpum: FC = () => {
   };
 
   return (
-    <Wrapper title='Спам:'>
-      <Checkbox checked={spum} onChange={handleChangeSpum} />
-    </Wrapper>
+    <div className='flex items-center gap-2'>
+      <Checkbox checked={spum} onChange={handleChangeSpum}>
+        Спам
+      </Checkbox>
+    </div>
   );
 };
 

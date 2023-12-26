@@ -1,7 +1,7 @@
 import { LOCALES } from './locales';
 
 export const messages = {
-  [LOCALES.ENGLISH]: {
+  [LOCALES.ENGLISH.value]: {
     footer_phone_message: 'Message',
 
     interlocutor_status_online: 'online',
@@ -13,16 +13,17 @@ export const messages = {
     interlocutor_status_today: 'was today in {time}',
     interlocutor_status_yesterday: 'was yesterday in {time}',
     interlocutor_status_write: 'typing',
+    interlocutor_status_avia: 'waiting for network...',
 
     interlocutor_spum_block: 'Block User',
     interlocutor_spum_add: 'Add to Contacts',
 
     header_phone_back: 'Back',
 
-    minute_age: 'minute age',
-    hour_age: 'hour age',
+    minute_ago: 'minute ago',
+    hour_ago: 'hour ago',
   },
-  [LOCALES.RUSSIAN]: {
+  [LOCALES.RUSSIAN.value]: {
     footer_phone_message: 'Сообщение',
 
     interlocutor_status_online: 'в сети',
@@ -34,13 +35,36 @@ export const messages = {
     interlocutor_status_today: 'был(а) сегодня в {time}',
     interlocutor_status_yesterday: 'был(а) вчера в {time}',
     interlocutor_status_write: 'печатает',
+    interlocutor_status_avia: 'ожидание сети...',
 
     interlocutor_spum_block: 'Заблокировать',
     interlocutor_spum_add: 'Добавить',
 
     header_phone_back: 'Назад',
 
-    minute_age: 'минут назад',
-    hour_age: 'часов назад',
+    minute_ago: 'минут назад',
+    hour_ago: 'часов назад',
+  },
+  [LOCALES.SPANISH.value]: {
+    footer_phone_message: 'Mensaje',
+
+    interlocutor_status_online: 'en línea',
+    interlocutor_status_scarcely: 'últ. vez hace un momento',
+    interlocutor_status_recently: 'últ. vez recientemente',
+    interlocutor_status_long: 'últ. vez hace mucho tiempo',
+    interlocutor_status_minutesAgo: 'últ. vez {time}',
+    interlocutor_status_hourseAgo: 'últ. vez {time}',
+    interlocutor_status_today: 'últ. vez hoy a las {time}',
+    interlocutor_status_yesterday: 'últ. vez ayer a las {time}',
+    interlocutor_status_write: 'escribiendo',
+    interlocutor_status_avia: 'esperando red...',
+
+    interlocutor_spum_block: 'Bloquear',
+    interlocutor_spum_add: 'Añadir contactos',
+
+    header_phone_back: 'Atrás',
+
+    minute_ago: 'minuto',
+    hour_ago: 'hora',
   },
 };

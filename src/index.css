@@ -1,6 +1,10 @@
 @import 'antd/dist/reset.css';
 @import 'react-lazy-load-image-component/src/effects/blur.css';
 
+@import 'swiper/css';
+@import 'swiper/css/pagination';
+@import 'swiper/css/grid';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -18,27 +22,35 @@
 }
 
 @font-face {
-  font-family: 'SF Pro Display';
+  font-family: 'SF Pro Text';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('./assets/fonts/SFProText-Light.ttf');
+}
+
+@font-face {
+  font-family: 'SF Pro Text';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('./assets/fonts/SF-Pro-Display-Regular.otf') format('opentype');
+  src: url('./assets/fonts/SFProText-Regular.ttf');
 }
 
 @font-face {
-  font-family: 'SF Pro Display';
+  font-family: 'SF Pro Text';
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url('./assets/fonts/SF-Pro-Display-Medium.otf') format('opentype');
+  src: url('./assets/fonts/SFProText-Medium.ttf');
 }
 
 @font-face {
-  font-family: 'SF Pro Display';
+  font-family: 'SF Pro Text';
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url('./assets/fonts/SF-Pro-Display-Semibold.otf') format('opentype');
+  src: url('./assets/fonts/SFProText-Semibold.ttf');
 }
 
 @font-face {
@@ -52,9 +64,13 @@
 }
 
 * {
-  font-family: 'SF Pro Display', sans-serif;
+  font-family: 'SF Pro Text', sans-serif;
 }
 
 .avatar {
   font-family: 'M PLUS Rounded 1c', sans-serif !important;
+}
+
+.swiper-pagination {
+  transform: translateY(10px) !important;
 }

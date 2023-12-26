@@ -23,3 +23,15 @@ export const optionsTypeMessage = [
   { label: 'Вы', value: 'owner' },
   { label: 'Собеседник', value: 'interlocutor' },
 ];
+
+export const regexTime = '^([0-1][0-9]|2[0-3]):[0-5][0-9]$';
+
+export const TRACKING_ID = 'G-FTEXLQHT57';
+
+export const MIN_AUDIO_LINE = 1.56;
+export const MAX_AUDIO_LINE = 12.09;
+
+export const AUTH_CONFIG = {
+  LOGIN: window.location.hostname,
+  PASSWORD: window.location.hostname,
+};

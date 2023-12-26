@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { setChatTime } from '../../../redux/state/chatSlice';
-import Wrapper from '../../Wrapper';
 import { initialValue } from './SettingsChatTime.config';
 
 const SettingsChatTime: FC = () => {
@@ -16,26 +15,26 @@ const SettingsChatTime: FC = () => {
   };
 
   return (
-    <Wrapper title='Дата переписки:'>
+    <div className='px-6 py-4 rounded-lg bg-white'>
       <Form
         initialValues={initialValue}
         onFinish={onFinish}
         autoComplete='off'
-        className='flex item-center gap-3'
+        className='flex items-center gap-3'
       >
+        <div className='text-base font-medium'>Дата пересписки</div>
         <Form.Item
           name='chatTime'
+          className='!m-0'
           rules={[{ required: true, message: 'Введите дату переписки' }]}
         >
-          <Input className='w-40' />
+          <Input className='w-40' size='small' />
         </Form.Item>
-        <Form.Item>
-          <Button type='primary' htmlType='submit'>
-            Добавить
-          </Button>
-        </Form.Item>
+        <Button type='primary' htmlType='submit' size='small'>
+          Добавить
+        </Button>
       </Form>
-    </Wrapper>
+    </div>
   );
 };
 

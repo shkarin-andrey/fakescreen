@@ -1,20 +1,21 @@
-import { FC, Fragment, memo, useCallback, useRef, useState } from 'react';
+// eslint-disable-next-line simple-import-sort/imports
+import update from 'immutability-helper';
+import { FC, memo, useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import GoDownButtonIcon from '../../../assets/icons/GoDownButtonIcon';
-import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
-import { type Message, setBlurMessage } from '../../../redux/state/chatSlice';
+import { setGlobalChat, type Message } from '../../../redux/state/chatSlice';
+import AudioMessage from '../../AudioMessage';
+import DnDWrapper from '../../DnDWrapper';
 import MessageChat from '../../MessageChat';
 import MessageSticker from '../../MessageSticker';
 import TimeChat from '../../TimeChat';
-import { IPhoneChat } from './PhoneChat.interface';
 
-const PhoneChat: FC<IPhoneChat> = ({ className }) => {
-  const dispatch = useAppDispatch();
-  const bgImage = useAppSelector((state) => state.config.bgImage);
+const PhoneChat: FC = () => {
   const data = useAppSelector((state) => state.chat.data);
   const [scroll, setScroll] = useState(false);
-  const chatRef = useRef<HTMLDivElement>(null);
+  const dispatch = useDispatch();
 
   const prevType = useCallback(
     (index: number): Message['type'] | null => {
@@ -43,22 +44,6 @@ const PhoneChat: FC<IPhoneChat> = ({ className }) => {
   );
 
   const handleScroll = useCallback((e: any) => {
-    dispatch(setBlurMessage([]));
-    const arr: any[] = [];
-    e.target.childNodes.forEach((el: any, index: number) => {
-      const coords = el.getBoundingClientRect();
-      console.log(coords);
-
-      if (coords.top < 150 && coords.top > 0) {
-        arr.push({
-          top: coords.top,
-          index,
-        });
-      }
-    });
-
-    dispatch(setBlurMessage(arr));
-
     if (e.target.scrollTop < -30) {
       setScroll(true);
     } else {
@@ -66,23 +51,36 @@ const PhoneChat: FC<IPhoneChat> = ({ className }) => {
     }
   }, []);
 
+  const moveCard = useCallback(
+    (draggedId: string, id: string) => {
+      if (draggedId !== id) {
+        const cardIndex = data.findIndex((item) => item.id === id);
+        const afterIndex = data.findIndex((item) => item.id === draggedId);
+
+        const updateData = update(data, {
+          $splice: [
+            [cardIndex, 1],
+            [afterIndex, 0, data[cardIndex]],
+          ],
+        });
+        dispatch(
+          setGlobalChat({
+            data: updateData,
+          }),
+        );
+      }
+    },
+    [data],
+  );
+
   return (
-    <div
-      className='relative flex-1 overflow-hidden z-10 h-full w-full'
-      style={{
-        backgroundImage: `url('${bgImage}')`,
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
-      }}
-    >
+    <>
       <div
-        ref={chatRef}
         onScroll={handleScroll}
-        className={`chat w-full h-full pl-[9px] pr-[5px] pb-[7px] pt-[79px] flex flex-col-reverse scrollbar scrollbar-thumb-transparent scrollbar-track-transparent scrollbar-small ${className}`}
+        className={`chat w-full h-full pl-[9px] pr-[5px] pb-[7px] pt-[79px] flex flex-col-reverse scrollbar scrollbar-thumb-transparent scrollbar-track-transparent scrollbar-small overflow-y-scroll z-10`}
       >
         {data.map((item, index) => (
-          <Fragment key={item.id}>
+          <DnDWrapper key={item.id} id={item.id} moveCard={moveCard} index={index}>
             {'chatTime' in item && <TimeChat id={item.id} chatTime={item.chatTime} />}
             {'type' in item && (
               <>
@@ -94,6 +92,20 @@ const PhoneChat: FC<IPhoneChat> = ({ className }) => {
                     time={item.time}
                     image={item.image}
                     isViewed={item.isViewed}
+                    prevType={prevType(index)}
+                    nextType={nextType(index)}
+                    fileList={item?.fileList}
+                  />
+                )}
+                {item.audioMessage && (
+                  <AudioMessage
+                    id={item.id}
+                    seconds={item.audioMessage}
+                    audioList={item.audioList}
+                    time={item.time}
+                    type={item.type}
+                    isViewed={item.isViewed}
+                    isListened={item.isListened}
                     prevType={prevType(index)}
                     nextType={nextType(index)}
                   />
@@ -109,15 +121,16 @@ const PhoneChat: FC<IPhoneChat> = ({ className }) => {
                 )}
               </>
             )}
-          </Fragment>
+          </DnDWrapper>
         ))}
       </div>
+
       {scroll && (
-        <div className='absolute -bottom-[2px] right-[2px]'>
+        <div className='z-[11] absolute bottom-[61px] right-[3px]'>
           <GoDownButtonIcon />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

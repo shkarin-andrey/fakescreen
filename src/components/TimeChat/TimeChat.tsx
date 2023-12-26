@@ -3,9 +3,7 @@ import { FC, useState } from 'react';
 import type { ChatTime } from '../../redux/state/chatSlice';
 import ModalEditMessage from '../Modal/ModalEditMessage/ModalEditMessage';
 
-type ITimeChat = ChatTime;
-
-const TimeChat: FC<ITimeChat> = ({ chatTime, id }) => {
+const TimeChat: FC<ChatTime> = ({ chatTime, id }) => {
   const [isOpneModal, setIsOpneModal] = useState(false);
 
   const handleOpenModal = () => {
@@ -17,7 +15,7 @@ const TimeChat: FC<ITimeChat> = ({ chatTime, id }) => {
       <div
         aria-hidden
         onClick={handleOpenModal}
-        className='bg-[#72839166] rounded-[27px] px-[6px] pt-[1px] pb-[3px] text-white text-xs w-fit mx-auto mt-[13px]'
+        className='bg-[#72839166] rounded-[27px] px-[5.46px] pt-[2px] pb-[2px] text-white text-[9.36px] w-fit mx-auto mt-[13px] backdrop-blur-[100px] tracking-[0.328px]'
       >
         {chatTime}
       </div>

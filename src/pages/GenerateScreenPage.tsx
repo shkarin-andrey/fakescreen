@@ -1,50 +1,17 @@
-import React, { FC, useCallback, useMemo, useState } from 'react';
+import { FC } from 'react';
 
 import Layout from '../components/Layout';
-import Phone from '../components/Phone';
-import SettingsChat from '../components/SettingsChat';
-import SettingsInterlocutor from '../components/SettingsInterlocutor';
-import SettingsPhone from '../components/SettingsPhone';
-import StepsScreen from '../components/StepsScreen';
-import Title from '../components/Title';
+import { menuList } from '../components/Navigate/Navigate.config';
+import { useAppSelector } from '../hooks/useAppSelector';
 
 const GenerateScreenPage: FC = () => {
-  const [current, setCurrent] = useState(0);
-
-  const onChange = useCallback((value: number) => {
-    setCurrent(value);
-  }, []);
-
-  const items = useMemo(
-    () => [
-      {
-        title: 'Настройки iPhone',
-        description: 'Настройте параметры телефона',
-        content: <SettingsPhone />,
-      },
-      {
-        title: 'Настройки Собеседника',
-        description: 'Настройте параметры собеседника',
-        content: <SettingsInterlocutor />,
-      },
-      {
-        title: 'Настройки Переписки',
-        description: 'Настройте сообщения ',
-        content: <SettingsChat />,
-      },
-    ],
-    [],
-  );
+  const step = useAppSelector((state) => state.menu.step);
 
   return (
     <Layout>
-      <div className='flex justify-center'>
-        <Title />
-      </div>
-      <StepsScreen current={current} onChange={onChange} items={items} />
-      <div className='flex justify-between gap-10 mt-20'>
-        <div>{items[current].content}</div>
-        <Phone />
+      <div className='flex flex-col gap-6 mt-5'>
+        <h2>{menuList[step].title}</h2>
+        <div>{menuList[step].content}</div>
       </div>
     </Layout>
   );

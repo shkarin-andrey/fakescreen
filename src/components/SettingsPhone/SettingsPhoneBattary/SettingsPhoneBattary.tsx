@@ -1,4 +1,4 @@
-import { Checkbox, InputNumber, Slider } from 'antd';
+import { Checkbox, Divider, InputNumber } from 'antd';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { FC, memo, useCallback } from 'react';
 
@@ -31,16 +31,9 @@ const SettingsPhoneBattary: FC = () => {
   }, []);
 
   return (
-    <div className='flex flex-col'>
-      <div className='font-medium text-base'>Заряд батареи:</div>
-      <div className='grid grid-cols-4 gap-4'>
-        <Slider
-          className='col-span-3'
-          min={1}
-          max={100}
-          onChange={handleChangeVolumeBattary}
-          value={typeof volumeBattary === 'number' ? volumeBattary : 0}
-        />
+    <div className='px-6 py-4 rounded-lg bg-white'>
+      <div className='flex items-center gap-4'>
+        <div className='text-base font-medium'>Процент зарядки</div>
         <InputNumber
           min={1}
           max={100}
@@ -48,12 +41,18 @@ const SettingsPhoneBattary: FC = () => {
           onChange={handleChangeVolumeBattary}
         />
       </div>
-      <div className='flex items-center gap-3'>
+      <Divider className='my-3' />
+      <div className='flex flex-col gap-3'>
         <Checkbox checked={isCharge} value={'charge'} onChange={handleChangeTypeBattary}>
           Зарядка
         </Checkbox>
-        <Checkbox checked={isEconom} value={'econom'} onChange={handleChangeTypeBattary}>
-          Режим сбережения
+        <Checkbox
+          className='!m-0'
+          checked={isEconom}
+          value={'econom'}
+          onChange={handleChangeTypeBattary}
+        >
+          Режим энергосбережения
         </Checkbox>
       </div>
     </div>

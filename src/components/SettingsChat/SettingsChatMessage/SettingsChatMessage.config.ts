@@ -1,6 +1,8 @@
 export const initialValue = {
-  type: 'owner',
+  type: false,
   message: '',
-  time: null,
+  time: '00:00',
   isViewed: true,
+  isListened: false,
+  audioMessage: null,
 };
