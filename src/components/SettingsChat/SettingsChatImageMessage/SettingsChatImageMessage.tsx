@@ -28,7 +28,6 @@ const SettingsChatImageMessage: FC = () => {
     let newFileList = [...info.fileList];
 
     newFileList = newFileList.slice(-2);
-
     newFileList = newFileList.map((file) => {
       if (file.response) {
         file.url = file.response.url;
