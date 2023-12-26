@@ -7,4 +7,8 @@ export const LOCALES = {
     value: 'ru-RU',
     label: '🇷🇺 Ru',
   },
+  SPANISH: {
+    value: 'es-ES',
+    label: '🇪🇸 ES',
+  },
 };

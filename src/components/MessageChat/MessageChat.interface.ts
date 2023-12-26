@@ -9,6 +9,7 @@ export interface IMessageChat {
   isViewed: Message['isViewed'];
   prevType: Message['type'] | null;
   nextType: Message['type'] | null;
+  fileList: Message['fileList'] | [];
   className?: string;
   style?: React.CSSProperties | undefined;
 }

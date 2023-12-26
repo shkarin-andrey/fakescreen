@@ -22,7 +22,7 @@ import { IMessageChat } from './MessageChat.interface';
 const MessageChat: FC<IMessageChat> = ({
   id,
   type,
-  message,
+  message = '',
   time,
   isViewed,
   prevType,
@@ -30,6 +30,7 @@ const MessageChat: FC<IMessageChat> = ({
   image,
   className = '',
   style,
+  fileList,
 }) => {
   const [mask, setMask] = useState<{
     position?: 'right' | 'left';
@@ -380,7 +381,7 @@ const MessageChat: FC<IMessageChat> = ({
               <span ref={messageRef} className='-tracking-[0.3px]' />
               <MessageTime
                 className={`mt-[5px] pb-0 !pl-0 translate-y-[1px] ${
-                  type === 'owner' ? 'translate-x-[5px]' : 'translate-x-[1px]'
+                  type === 'owner' ? 'translate-x-[5px]' : 'translate-x-[5px]'
                 }`}
                 type={type}
                 time={time}
@@ -414,6 +415,8 @@ const MessageChat: FC<IMessageChat> = ({
         isOpneModal={isOpenModal}
         setIsOpneModal={setIsOpenModal}
         message={message}
+        defaultFileList={fileList}
+        image={image}
       />
     </>
   );

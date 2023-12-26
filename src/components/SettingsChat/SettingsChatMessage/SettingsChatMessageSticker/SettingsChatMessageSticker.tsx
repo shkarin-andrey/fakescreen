@@ -19,7 +19,7 @@ const SettingsChatMessageSticker: FC<ISettingsChatMessageSticker> = ({
       }}
       mousewheel={true}
       modules={[Pagination, Mousewheel]}
-      className='!p-2 !pb-4'
+      className='!p-2 !pb-4 w-full'
     >
       {stickers.map((sticker: string) => (
         <SwiperSlide key={sticker}>

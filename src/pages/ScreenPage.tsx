@@ -1,4 +1,6 @@
 import { FC, useEffect } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useParams } from 'react-router-dom';
 
 import PhoneChat from '../components/Phone/PhoneChat/PhoneChat';
@@ -50,7 +52,9 @@ const ScreenPage: FC = () => {
         }}
       >
         <PhoneHeader />
-        <PhoneChat />
+        <DndProvider backend={HTML5Backend}>
+          <PhoneChat />
+        </DndProvider>
         <PhoneFooter />
       </div>
     </div>
