@@ -1,6 +1,9 @@
+variables:
+  PIPELINELIB_VERSION: &PL_REF v0.3.8
+
 include:
   - project: devops/pipelines
-    ref: wip
+    ref: *PL_REF
     file:
       - settings.yaml
       - lib/workflow.yaml
