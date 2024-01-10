@@ -63,7 +63,7 @@ const SettingsChatImageMessage: FC = () => {
       ...values,
       id: uuidv4(),
       type: values.type ? 'interlocutor' : 'owner',
-      message: ref.current?.innerHTML.replace(/(style=.*")+/gm, ''),
+      message: ref.current?.innerHTML.replace(/(style=.*"|&nbsp;)+/gm, ''),
       fileList,
     };
 
