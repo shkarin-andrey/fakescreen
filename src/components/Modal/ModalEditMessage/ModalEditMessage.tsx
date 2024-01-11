@@ -101,15 +101,21 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
       data: {
         ...values,
         fileList,
-        message: ref.current?.innerHTML.replace(/(style=.*")+/gm, ''),
+        message: ref.current?.innerHTML.replace(/(style=.*"|&nbsp;)+/gm, ''),
         audioList: values?.audioMessage
           ? generateAudioList(values.audioMessage)
           : undefined,
       },
     };
 
-    dispatch(updateMessage(body));
-    handleCancel();
+    setTimeout(() => {
+      dispatch(updateMessage(body));
+      handleCancel();
+
+      if (ref.current) {
+        ref.current.innerHTML = '';
+      }
+    }, 0);
   };
 
   const handleUpload: UploadProps['onChange'] = (info) => {
@@ -136,6 +142,12 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
 
   const handleRemove: UploadProps['onRemove'] = () => {
     form.setFieldValue('image', null);
+  };
+
+  const handleChangeMessage = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.keyCode == 13 && !e.shiftKey) {
+      form.submit();
+    }
   };
 
   return (
@@ -178,6 +190,7 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
             <div
               ref={ref}
               role='presentation'
+              onKeyDown={handleChangeMessage}
               className='w-full border border-solid border-gray-300 bg-white rounded-md px-2 py-1 text-base shadow-blue-500 hover:border-blue-500 transition-colors outline-none focus-visible:border-blue-500 focus-visible:shadow-md '
               contentEditable
               dangerouslySetInnerHTML={{ __html: ref.current?.innerHTML || '' }}

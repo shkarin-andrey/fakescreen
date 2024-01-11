@@ -45,7 +45,7 @@ const SettingsChatImageMessage: FC = () => {
     }
   };
 
-  const handleRemove: UploadProps['onRemove'] = () => {
+  const handleRemove = () => {
     setFileList([]);
     form.setFieldValue('image', null);
   };
@@ -58,7 +58,7 @@ const SettingsChatImageMessage: FC = () => {
     }
   }, []);
 
-  const onFinish = (values: any) => {
+  const onFinish = useCallback((values: any) => {
     const data = {
       ...values,
       id: uuidv4(),
@@ -67,12 +67,19 @@ const SettingsChatImageMessage: FC = () => {
       fileList,
     };
 
-    dispatch(setMessage(data));
-    form.setFieldValue('image', null);
-    setFileList([]);
+    setTimeout(() => {
+      dispatch(setMessage(data));
+      handleRemove();
 
-    if (ref.current) {
-      ref.current.innerHTML = '';
+      if (ref.current) {
+        ref.current.innerHTML = '';
+      }
+    }, 0);
+  }, []);
+
+  const handleChangeMessage = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.keyCode == 13 && !e.shiftKey) {
+      form.submit();
     }
   };
 
@@ -90,7 +97,7 @@ const SettingsChatImageMessage: FC = () => {
             <MaskedInput size='small' className='w-40' mask={'00:00'} />
           </Form.Item>
           <Divider className='my-3' />
-          <Form.Item name='image' hasFeedback className='m-0' valuePropName='fileList'>
+          <Form.Item name='image' hasFeedback className='m-0'>
             <div className='flex items-center gap-4'>
               <div className='text-sm'>Выбрать изображение</div>
               <Upload
@@ -106,19 +113,18 @@ const SettingsChatImageMessage: FC = () => {
             </div>
           </Form.Item>
           <Divider className='my-3' />
-          <Form.Item name='message' hasFeedback className='m-0'>
-            <div className='flex items-center gap-4'>
-              <div className='text-sm'>Сообщение</div>
-              <div
-                ref={ref}
-                role='presentation'
-                className='w-80 border border-solid border-gray-300 bg-white rounded-md px-2 py-1 text-base shadow-blue-500 hover:border-blue-500 transition-colors outline-none focus-visible:border-blue-500 focus-visible:shadow-md '
-                contentEditable
-                dangerouslySetInnerHTML={{ __html: ref.current?.innerHTML || '' }}
-              />
-              <DropdownEmoji onEmojiClick={onEmojiClick} />
-            </div>
-          </Form.Item>
+          <div className='flex items-center gap-4'>
+            <div className='text-sm'>Сообщение</div>
+            <div
+              ref={ref}
+              onKeyDown={handleChangeMessage}
+              role='presentation'
+              className='w-80 border border-solid border-gray-300 bg-white rounded-md px-2 py-1 text-base shadow-blue-500 hover:border-blue-500 transition-colors outline-none focus-visible:border-blue-500 focus-visible:shadow-md '
+              contentEditable
+              dangerouslySetInnerHTML={{ __html: ref.current?.innerHTML || '' }}
+            />
+            <DropdownEmoji onEmojiClick={onEmojiClick} />
+          </div>
           <Divider className='my-3' />
           <Form.Item name='type' className='m-0' valuePropName='checked'>
             <Checkbox>От собеседника</Checkbox>
