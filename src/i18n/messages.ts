@@ -67,4 +67,26 @@ export const messages = {
     minute_ago: 'minuto',
     hour_ago: 'hora',
   },
+  [LOCALES.GERMANY.value]: {
+    footer_phone_message: 'Nachricht',
+
+    interlocutor_status_online: 'online',
+    interlocutor_status_scarcely: 'zul. online gerade eben',
+    interlocutor_status_recently: 'kürzlich gesehen',
+    interlocutor_status_long: 'lange gesehen',
+    interlocutor_status_minutesAgo: 'zul. online {time}',
+    interlocutor_status_hourseAgo: 'zul. online {time}',
+    interlocutor_status_today: 'war heute um {time}',
+    interlocutor_status_yesterday: 'war gestern um {time}',
+    interlocutor_status_write: 'tippt',
+    interlocutor_status_avia: 'warte auf Netzwerk...',
+
+    interlocutor_spum_block: 'Block',
+    interlocutor_spum_add: 'Hinzufügen',
+
+    header_phone_back: 'Zurück',
+
+    minute_ago: 'Minute',
+    hour_ago: 'Stunde',
+  },
 };
