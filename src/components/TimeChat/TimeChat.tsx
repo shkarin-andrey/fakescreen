@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, memo, useState } from 'react';
 
 import type { ChatTime } from '../../redux/state/chatSlice';
 import ModalEditMessage from '../Modal/ModalEditMessage/ModalEditMessage';
@@ -29,4 +29,4 @@ const TimeChat: FC<ChatTime> = ({ chatTime, id }) => {
   );
 };
 
-export default TimeChat;
+export default memo(TimeChat);

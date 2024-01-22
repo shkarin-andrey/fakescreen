@@ -1,3 +1,4 @@
+import emojiRegex from 'emoji-regex';
 import { FC, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import TailIcon from '../../assets/icons/TailIcon';
@@ -58,6 +59,34 @@ const MessageChat: FC<IMessageChat> = ({
     }
   }, [message, messageRef.current, messageWrapperRef.current]);
 
+  const rxEmoji = emojiRegex();
+  const combinedRegex = new RegExp(`^(${rxEmoji.source})+$`, 'gm');
+  const matchMessageEmoji = message.match(combinedRegex);
+  const matchMessageEmojiLength = matchMessageEmoji?.[0].length;
+
+  const classNameMessage = useMemo(() => {
+    if (matchMessageEmojiLength === 2 * 1) {
+      return '!text-[87px] !leading-[87px]';
+    }
+    if (matchMessageEmojiLength === 2 * 2) {
+      return '!text-[60px] !leading-[60px]';
+    }
+    if (matchMessageEmojiLength === 2 * 3) {
+      return '!text-[50px] !leading-[50px]';
+    }
+    if (matchMessageEmojiLength === 2 * 4) {
+      return '!text-[38px] !leading-[38px]';
+    }
+    if (matchMessageEmojiLength === 2 * 5) {
+      return '!text-[33px] !leading-[33px]';
+    }
+    if (matchMessageEmojiLength === 2 * 6) {
+      return '!text-[28px] !leading-[28px]';
+    }
+
+    return '';
+  }, [matchMessageEmoji]);
+
   const bgMessage = useMemo(() => {
     if (bgImage === gallary[1]?.preview) {
       return 'bg-[#F1F1F4]';
@@ -66,13 +95,19 @@ const MessageChat: FC<IMessageChat> = ({
     return 'bg-white';
   }, [bgImage, gallary]);
 
+  const bgOwner = !matchMessageEmojiLength
+    ? 'bg-gradient-to-b from-[#5FA2F4] to-[#5DA0F5] dark:from-[#313131] dark:to-[#313131]'
+    : '';
+
+  const bgInterlocutor = matchMessageEmojiLength ? '' : `${bgMessage} dark:bg-[#1A1A1A]`;
+
   const isOwner = useMemo(() => {
     if (type === 'owner') {
-      return 'bg-gradient-to-b from-[#5FA2F4] to-[#5DA0F5] dark:from-[#313131] dark:to-[#313131] text-white ml-auto';
+      return `${bgOwner} text-white ml-auto`;
     }
 
-    return `${bgMessage} dark:bg-[#1A1A1A] text-black dark:text-white`;
-  }, [type, bgMessage]);
+    return `${bgInterlocutor} text-black dark:text-white`;
+  }, [type, bgMessage, bgOwner, bgInterlocutor]);
 
   const isNextType = nextType === type;
   const isPrevType = prevType !== type;
@@ -378,7 +413,10 @@ const MessageChat: FC<IMessageChat> = ({
                 width: image ? undefined : width,
               }}
             >
-              <span ref={messageRef} className='-tracking-[0.3px]' />
+              <span
+                ref={messageRef}
+                className={`-tracking-[0.3px] ${classNameMessage}`}
+              />
               <MessageTime
                 className={`mt-[5px] pb-0 !pl-0 translate-y-[1px] ${
                   type === 'owner' ? 'translate-x-[5px]' : 'translate-x-[5px]'

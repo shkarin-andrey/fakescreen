@@ -3,7 +3,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Divider, Form, Upload, UploadProps } from 'antd';
 import { MaskedInput } from 'antd-mask-input';
 import { RcFile, UploadFile } from 'antd/es/upload';
-import { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
+import { EmojiClickData } from 'emoji-picker-react';
 import { FC, useCallback, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -12,7 +12,6 @@ import { setMessage } from '../../../redux/state/chatSlice';
 import { beforeUploadPNGAndJPEG } from '../../../utils/beforeUploadPNGAndJPEG';
 import { getBase64 } from '../../../utils/getBase64';
 import { handleCustomRequest } from '../../../utils/handleCustomRequest';
-import { htmlEmoji } from '../../../utils/htmlEmoji';
 import DropdownEmoji from '../../DropdownEmoji';
 import SettingWrapper from '../../SettingWrapper';
 import { initialValues, timeRules } from './SettingsChatImageMessage.config';
@@ -51,10 +50,8 @@ const SettingsChatImageMessage: FC = () => {
   };
 
   const onEmojiClick = useCallback((event: EmojiClickData) => {
-    const emoji = event.getImageUrl(EmojiStyle.APPLE);
-
     if (ref.current) {
-      ref.current.innerHTML += htmlEmoji(emoji, event.emoji);
+      ref.current.innerHTML += event.emoji;
     }
   }, []);
 
@@ -63,9 +60,10 @@ const SettingsChatImageMessage: FC = () => {
       ...values,
       id: uuidv4(),
       type: values.type ? 'interlocutor' : 'owner',
-      message: ref.current?.innerHTML.replace(/(style=.*"|&nbsp;)+/gm, ''),
       fileList,
     };
+
+    data.message = ref.current?.innerHTML.replace(/(style=.*"|&nbsp;)+/gm, '');
 
     setTimeout(() => {
       dispatch(setMessage(data));
