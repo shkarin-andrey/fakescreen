@@ -1,6 +1,6 @@
 // eslint-disable-next-line simple-import-sort/imports
 import update from 'immutability-helper';
-import { FC, memo, useCallback, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import GoDownButtonIcon from '../../../assets/icons/GoDownButtonIcon';
@@ -134,4 +134,4 @@ const PhoneChat: FC = () => {
   );
 };
 
-export default memo(PhoneChat);
+export default PhoneChat;
