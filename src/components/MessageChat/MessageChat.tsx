@@ -47,44 +47,78 @@ const MessageChat: FC<IMessageChat> = ({
 
   const isMessage = message.trim() !== '';
 
-  useEffect(() => {
-    setWidth('auto');
-
-    if (messageRef.current && messageWrapperRef.current) {
-      messageRef.current.innerHTML = message;
-
-      if (messageWrapperRef.current.offsetHeight > 30) {
-        setWidth(messageRef.current.offsetWidth + 1);
-      }
-    }
-  }, [message, messageRef.current, messageWrapperRef.current]);
-
   const rxEmoji = emojiRegex();
   const combinedRegex = new RegExp(`^(${rxEmoji.source})+$`, 'gm');
   const matchMessageEmoji = message.match(combinedRegex);
   const matchMessageEmojiLength = matchMessageEmoji?.[0].length;
 
+  useEffect(() => {
+    setWidth('auto');
+
+    if (messageRef.current && messageWrapperRef.current) {
+      const matchMessageEmojiAndText = message.match(rxEmoji);
+      messageRef.current.innerHTML = message;
+
+      if (!!matchMessageEmojiAndText?.length && !matchMessageEmoji) {
+        for (let index = 0; index < matchMessageEmojiAndText.length; index++) {
+          const rxIndexMessageEmojiAndText = new RegExp(
+            matchMessageEmojiAndText[index],
+            'gm',
+          );
+          const htmlElementEmoji = `<span class="text-[16px] inline-flex translate-y-[1px]">${matchMessageEmojiAndText[index]}</span>`;
+
+          messageRef.current.innerHTML = messageRef.current.innerHTML.replace(
+            rxIndexMessageEmojiAndText,
+            htmlElementEmoji,
+          );
+        }
+      }
+
+      if (messageWrapperRef.current.offsetHeight > 30) {
+        setWidth(messageRef.current.offsetWidth + 1);
+      }
+    }
+  }, [message]);
+
   const classNameMessage = useMemo(() => {
+    let classNameMessageEmoji: React.HTMLAttributes<HTMLDivElement>['className'] =
+      '-tracking-[0.3px]';
+
+    if (matchMessageEmojiLength) {
+      classNameMessageEmoji = 'block -!tracking-[1.3px] text-[16px]';
+    }
     if (matchMessageEmojiLength === 2 * 1) {
-      return '!text-[87px] !leading-[87px]';
+      const defoultClassName =
+        'block translate-y-[10px] tracking-[3px] !text-[87px] !leading-[75px]';
+      classNameMessageEmoji = `${defoultClassName} translate-x-[4px]`;
     }
     if (matchMessageEmojiLength === 2 * 2) {
-      return '!text-[60px] !leading-[60px]';
+      const defoultClassName =
+        'block tracking-[5px] translate-y-[4px] !text-[60px] !leading-[81px]';
+      classNameMessageEmoji = `${defoultClassName} translate-x-[10px]`;
     }
     if (matchMessageEmojiLength === 2 * 3) {
-      return '!text-[50px] !leading-[50px]';
+      const defoultClassName =
+        'block tracking-[3px] translate-y-[6px] !text-[50px] !leading-[66px]';
+      classNameMessageEmoji = `${defoultClassName} translate-x-[8px]`;
     }
     if (matchMessageEmojiLength === 2 * 4) {
-      return '!text-[38px] !leading-[38px]';
+      const defoultClassName =
+        'block tracking-[3.2px] translate-y-[7px] !text-[38px] !leading-[50px]';
+      classNameMessageEmoji = `${defoultClassName} translate-x-[9px]`;
     }
     if (matchMessageEmojiLength === 2 * 5) {
-      return '!text-[33px] !leading-[33px]';
+      const defoultClassName =
+        'block tracking-[4.3px] translate-y-[6px] !text-[33px] !leading-[45px]';
+      classNameMessageEmoji = `${defoultClassName} translate-x-[11px]`;
     }
     if (matchMessageEmojiLength === 2 * 6) {
-      return '!text-[28px] !leading-[28px]';
+      const defoultClassName =
+        'block tracking-[3px] translate-y-[9px] !text-[28px] !leading-[40px]';
+      classNameMessageEmoji = `${defoultClassName} translate-x-[9px]`;
     }
 
-    return '';
+    return classNameMessageEmoji;
   }, [matchMessageEmoji]);
 
   const bgMessage = useMemo(() => {
@@ -183,7 +217,7 @@ const MessageChat: FC<IMessageChat> = ({
   }, [isPrevType, type]);
 
   const classNameImagePadding = useMemo(() => {
-    return 'px-[8px] pt-[3.5px] pb-[3.1px]';
+    return 'pl-[8px] pr-[6px] pt-[4px] pb-[3.1px]';
   }, []);
 
   const handleOpenModal = useCallback(() => {
@@ -413,20 +447,18 @@ const MessageChat: FC<IMessageChat> = ({
                 width: image ? undefined : width,
               }}
             >
-              <span
-                ref={messageRef}
-                className={`-tracking-[0.3px] ${classNameMessage}`}
-              />
+              <span ref={messageRef} className={classNameMessage} />
               <MessageTime
-                className={`mt-[5px] pb-0 !pl-0 translate-y-[1px] ${
-                  type === 'owner' ? 'translate-x-[5px]' : 'translate-x-[5px]'
-                }`}
+                className={`mt-[5px] ${
+                  !matchMessageEmojiLength ? '!pl-0 pb-0' : 'pb-[2px] pt-[3px]'
+                } ${type === 'owner' ? 'translate-x-[4px]' : 'translate-x-[5px]'}`}
                 type={type}
                 time={time}
                 isViewed={isViewed}
+                isBackground={!!matchMessageEmojiLength}
               />
             </div>
-            {isPrevType && (
+            {isPrevType && !matchMessageEmojiLength && (
               <div className={`absolute -bottom-[6px] ${classNamePrevTypeTail}`}>
                 <TailIcon type={type} />
               </div>

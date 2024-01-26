@@ -55,25 +55,30 @@ const SettingsChatImageMessage: FC = () => {
     }
   }, []);
 
-  const onFinish = useCallback((values: any) => {
-    const data = {
-      ...values,
-      id: uuidv4(),
-      type: values.type ? 'interlocutor' : 'owner',
-      fileList,
-    };
+  const onFinish = useCallback(
+    (values: any) => {
+      const data = {
+        ...values,
+        id: uuidv4(),
+        type: values.type ? 'interlocutor' : 'owner',
+        fileList,
+      };
 
-    data.message = ref.current?.innerHTML.replace(/(style=.*"|&nbsp;)+/gm, '');
+      data.message = ref.current?.innerHTML.replace(/(style=.*"|&nbsp;)+/gm, '');
 
-    setTimeout(() => {
-      dispatch(setMessage(data));
-      handleRemove();
+      if (ref.current?.innerHTML !== '' || fileList.length !== 0) {
+        setTimeout(() => {
+          dispatch(setMessage(data));
+          handleRemove();
 
-      if (ref.current) {
-        ref.current.innerHTML = '';
+          if (ref.current) {
+            ref.current.innerHTML = '';
+          }
+        }, 0);
       }
-    }, 0);
-  }, []);
+    },
+    [fileList.length],
+  );
 
   const handleChangeMessage = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.keyCode == 13 && !e.shiftKey) {
