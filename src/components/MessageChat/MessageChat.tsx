@@ -494,7 +494,7 @@ const MessageChat: FC<IMessageChat> = ({
                 width: image ? undefined : width,
               }}
             >
-              <span ref={messageRef} className={classNameMessage} />
+              <span ref={messageRef} className={`break-all ${classNameMessage}`} />
               <MessageTime
                 className={`mt-[5px] ${classNameMessageTime}`}
                 type={type}
