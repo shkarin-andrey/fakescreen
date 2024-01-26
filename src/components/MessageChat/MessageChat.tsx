@@ -80,47 +80,6 @@ const MessageChat: FC<IMessageChat> = ({
     }
   }, [message]);
 
-  const classNameMessage = useMemo(() => {
-    let classNameMessageEmoji: React.HTMLAttributes<HTMLDivElement>['className'] =
-      '-tracking-[0.3px]';
-
-    if (matchMessageEmojiLength) {
-      classNameMessageEmoji = 'block -!tracking-[1.3px] text-[16px]';
-    }
-    if (matchMessageEmojiLength === 2 * 1) {
-      const defoultClassName =
-        'block translate-y-[10px] tracking-[3px] !text-[87px] !leading-[75px]';
-      classNameMessageEmoji = `${defoultClassName} translate-x-[4px]`;
-    }
-    if (matchMessageEmojiLength === 2 * 2) {
-      const defoultClassName =
-        'block tracking-[5px] translate-y-[4px] !text-[60px] !leading-[81px]';
-      classNameMessageEmoji = `${defoultClassName} translate-x-[10px]`;
-    }
-    if (matchMessageEmojiLength === 2 * 3) {
-      const defoultClassName =
-        'block tracking-[3px] translate-y-[6px] !text-[50px] !leading-[66px]';
-      classNameMessageEmoji = `${defoultClassName} translate-x-[8px]`;
-    }
-    if (matchMessageEmojiLength === 2 * 4) {
-      const defoultClassName =
-        'block tracking-[3.2px] translate-y-[7px] !text-[38px] !leading-[50px]';
-      classNameMessageEmoji = `${defoultClassName} translate-x-[9px]`;
-    }
-    if (matchMessageEmojiLength === 2 * 5) {
-      const defoultClassName =
-        'block tracking-[4.3px] translate-y-[6px] !text-[33px] !leading-[45px]';
-      classNameMessageEmoji = `${defoultClassName} translate-x-[11px]`;
-    }
-    if (matchMessageEmojiLength === 2 * 6) {
-      const defoultClassName =
-        'block tracking-[3px] translate-y-[9px] !text-[28px] !leading-[40px]';
-      classNameMessageEmoji = `${defoultClassName} translate-x-[9px]`;
-    }
-
-    return classNameMessageEmoji;
-  }, [matchMessageEmoji]);
-
   const bgMessage = useMemo(() => {
     if (bgImage === gallary[1]?.preview) {
       return 'bg-[#F1F1F4]';
@@ -142,6 +101,71 @@ const MessageChat: FC<IMessageChat> = ({
 
     return `${bgInterlocutor} text-black dark:text-white`;
   }, [type, bgMessage, bgOwner, bgInterlocutor]);
+
+  const classNameMessage = useMemo(() => {
+    let classNameMessageEmoji: React.HTMLAttributes<HTMLDivElement>['className'] =
+      '-tracking-[0.3px]';
+
+    if (matchMessageEmojiLength) {
+      classNameMessageEmoji = 'block -!tracking-[1.3px] text-[16px]';
+    }
+    if (matchMessageEmojiLength === 2 * 1) {
+      const defoultClassName =
+        'block translate-y-[10px] tracking-[3px] !text-[87px] !leading-[75px]';
+      if (type === 'owner') {
+        classNameMessageEmoji = `${defoultClassName} translate-x-[4px]`;
+      } else {
+        classNameMessageEmoji = `${defoultClassName} -translate-x-[4px]`;
+      }
+    }
+    if (matchMessageEmojiLength === 2 * 2) {
+      const defoultClassName =
+        'block tracking-[5px] translate-y-[4px] !text-[60px] !leading-[81px]';
+      if (type === 'owner') {
+        classNameMessageEmoji = `${defoultClassName} translate-x-[10px]`;
+      } else {
+        classNameMessageEmoji = `${defoultClassName} -translate-x-[10px]`;
+      }
+    }
+    if (matchMessageEmojiLength === 2 * 3) {
+      const defoultClassName =
+        'block tracking-[3px] translate-y-[6px] !text-[50px] !leading-[66px]';
+      if (type === 'owner') {
+        classNameMessageEmoji = `${defoultClassName} translate-x-[8px]`;
+      } else {
+        classNameMessageEmoji = `${defoultClassName} -translate-x-[8px]`;
+      }
+    }
+    if (matchMessageEmojiLength === 2 * 4) {
+      const defoultClassName =
+        'block tracking-[3.2px] translate-y-[7px] !text-[38px] !leading-[50px]';
+      if (type === 'owner') {
+        classNameMessageEmoji = `${defoultClassName} translate-x-[9px]`;
+      } else {
+        classNameMessageEmoji = `${defoultClassName} -translate-x-[9px]`;
+      }
+    }
+    if (matchMessageEmojiLength === 2 * 5) {
+      const defoultClassName =
+        'block tracking-[4.3px] translate-y-[6px] !text-[33px] !leading-[45px]';
+      if (type === 'owner') {
+        classNameMessageEmoji = `${defoultClassName} translate-x-[11px]`;
+      } else {
+        classNameMessageEmoji = `${defoultClassName} -translate-x-[11px]`;
+      }
+    }
+    if (matchMessageEmojiLength === 2 * 6) {
+      const defoultClassName =
+        'block tracking-[3px] translate-y-[9px] !text-[28px] !leading-[40px]';
+      if (type === 'owner') {
+        classNameMessageEmoji = `${defoultClassName} translate-x-[9px]`;
+      } else {
+        classNameMessageEmoji = `${defoultClassName} -translate-x-[9px]`;
+      }
+    }
+
+    return classNameMessageEmoji;
+  }, [matchMessageEmoji, type]);
 
   const isNextType = nextType === type;
   const isPrevType = prevType !== type;
@@ -416,6 +440,29 @@ const MessageChat: FC<IMessageChat> = ({
     return 'right-1';
   }, [image, isMessage, isPrevType, type]);
 
+  const classNameMessageTime = useMemo(() => {
+    const className: string[] = [];
+    if (type === 'owner') {
+      className.push('translate-x-[4px]');
+    } else {
+      if (matchMessageEmojiLength === 2 * 1) {
+        className.push('-translate-x-[2px]');
+      } else if (matchMessageEmojiLength && matchMessageEmojiLength >= 2 * 2) {
+        className.push('-translate-x-[13px]');
+      } else {
+        className.push('translate-x-[4px]');
+      }
+    }
+
+    if (!matchMessageEmojiLength) {
+      className.push('!pl-0 pb-0');
+    } else {
+      className.push('pb-[2px] pt-[3px]');
+    }
+
+    return className.join(' ');
+  }, [matchMessageEmojiLength, type]);
+
   return (
     <>
       <div
@@ -449,9 +496,7 @@ const MessageChat: FC<IMessageChat> = ({
             >
               <span ref={messageRef} className={classNameMessage} />
               <MessageTime
-                className={`mt-[5px] ${
-                  !matchMessageEmojiLength ? '!pl-0 pb-0' : 'pb-[2px] pt-[3px]'
-                } ${type === 'owner' ? 'translate-x-[4px]' : 'translate-x-[5px]'}`}
+                className={`mt-[5px] ${classNameMessageTime}`}
                 type={type}
                 time={time}
                 isViewed={isViewed}
