@@ -110,12 +110,11 @@ const MessageChat: FC<IMessageChat> = ({
       classNameMessageEmoji = 'block -!tracking-[1.3px] text-[16px]';
     }
     if (matchMessageEmojiLength === 2 * 1) {
-      const defoultClassName =
-        'block translate-y-[10px] tracking-[3px] !text-[87px] !leading-[75px]';
+      const defoultClassName = 'block tracking-[3px] !text-[87px] !leading-[75px]';
       if (type === 'owner') {
-        classNameMessageEmoji = `${defoultClassName} translate-x-[4px]`;
+        classNameMessageEmoji = `${defoultClassName} translate-x-[4px] translate-y-[10px]`;
       } else {
-        classNameMessageEmoji = `${defoultClassName} -translate-x-[4px]`;
+        classNameMessageEmoji = `${defoultClassName} -translate-x-[1px] translate-y-[13px]`;
       }
     }
     if (matchMessageEmojiLength === 2 * 2) {
@@ -124,25 +123,23 @@ const MessageChat: FC<IMessageChat> = ({
       if (type === 'owner') {
         classNameMessageEmoji = `${defoultClassName} translate-x-[10px]`;
       } else {
-        classNameMessageEmoji = `${defoultClassName} -translate-x-[10px]`;
+        classNameMessageEmoji = `${defoultClassName} -translate-x-[6px]`;
       }
     }
     if (matchMessageEmojiLength === 2 * 3) {
-      const defoultClassName =
-        'block tracking-[3px] translate-y-[6px] !text-[50px] !leading-[66px]';
+      const defoultClassName = 'block translate-y-[6px] !text-[50px] !leading-[66px]';
       if (type === 'owner') {
-        classNameMessageEmoji = `${defoultClassName} translate-x-[8px]`;
+        classNameMessageEmoji = `${defoultClassName} translate-x-[8px] tracking-[3px]`;
       } else {
-        classNameMessageEmoji = `${defoultClassName} -translate-x-[8px]`;
+        classNameMessageEmoji = `${defoultClassName} -translate-x-[8px] tracking-[3.5px]`;
       }
     }
     if (matchMessageEmojiLength === 2 * 4) {
-      const defoultClassName =
-        'block tracking-[3.2px] translate-y-[7px] !text-[38px] !leading-[50px]';
+      const defoultClassName = 'block tracking-[3.2px] !text-[38px] !leading-[50px]';
       if (type === 'owner') {
-        classNameMessageEmoji = `${defoultClassName} translate-x-[9px]`;
+        classNameMessageEmoji = `${defoultClassName} translate-y-[7px] translate-x-[9px]`;
       } else {
-        classNameMessageEmoji = `${defoultClassName} -translate-x-[9px]`;
+        classNameMessageEmoji = `${defoultClassName} translate-y-[6px] -translate-x-[8px]`;
       }
     }
     if (matchMessageEmojiLength === 2 * 5) {
@@ -151,7 +148,7 @@ const MessageChat: FC<IMessageChat> = ({
       if (type === 'owner') {
         classNameMessageEmoji = `${defoultClassName} translate-x-[11px]`;
       } else {
-        classNameMessageEmoji = `${defoultClassName} -translate-x-[11px]`;
+        classNameMessageEmoji = `${defoultClassName} -translate-x-[7px]`;
       }
     }
     if (matchMessageEmojiLength === 2 * 6) {
@@ -447,6 +444,10 @@ const MessageChat: FC<IMessageChat> = ({
     } else {
       if (matchMessageEmojiLength === 2 * 1) {
         className.push('-translate-x-[2px]');
+      } else if (matchMessageEmojiLength === 2 * 3 || matchMessageEmojiLength === 2 * 4) {
+        className.push('-translate-x-[14px]');
+      } else if (matchMessageEmojiLength === 2 * 5) {
+        className.push('-translate-x-[15px]');
       } else if (matchMessageEmojiLength && matchMessageEmojiLength >= 2 * 2) {
         className.push('-translate-x-[13px]');
       } else {
