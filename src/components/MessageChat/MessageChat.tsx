@@ -74,7 +74,10 @@ const MessageChat: FC<IMessageChat> = ({
         }
       }
 
-      if (messageWrapperRef.current.offsetHeight > 30) {
+      if (
+        messageWrapperRef.current.offsetHeight > 30 &&
+        !matchMessageEmojiAndText?.length
+      ) {
         setWidth(messageRef.current.offsetWidth + 1);
       }
     }
