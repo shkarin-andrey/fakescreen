@@ -81,7 +81,7 @@ const MessageChat: FC<IMessageChat> = ({
         setWidth(messageRef.current.offsetWidth + 1);
       }
     }
-  }, [message, messageRef.current, messageWrapperRef.current]);
+  }, [message]);
 
   const bgMessage = useMemo(() => {
     if (bgImage === gallary[1]?.preview) {
