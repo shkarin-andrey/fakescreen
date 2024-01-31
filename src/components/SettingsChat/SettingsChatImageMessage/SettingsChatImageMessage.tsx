@@ -7,11 +7,13 @@ import { EmojiClickData } from 'emoji-picker-react';
 import { FC, useCallback, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
+import { CropperRef } from 'react-advanced-cropper';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { setMessage } from '../../../redux/state/chatSlice';
 import { beforeUploadPNGAndJPEG } from '../../../utils/beforeUploadPNGAndJPEG';
 import { getBase64 } from '../../../utils/getBase64';
 import { handleCustomRequest } from '../../../utils/handleCustomRequest';
+import CropperImage from '../../CropperImage';
 import DropdownEmoji from '../../DropdownEmoji';
 import SettingWrapper from '../../SettingWrapper';
 import { initialValues, timeRules } from './SettingsChatImageMessage.config';
@@ -22,6 +24,32 @@ const SettingsChatImageMessage: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [isOpenCrop, setIsOpenCrop] = useState(false);
+  const [image, setImage] = useState('');
+  const [cropImage, setCropImage] = useState<string | undefined>('');
+
+  const onChangeCropper = (cropper: CropperRef) => {
+    const cropImageUrl = cropper.getCanvas()?.toDataURL();
+    setCropImage(cropImageUrl);
+  };
+
+  const closeCropModal = useCallback(() => {
+    setCropImage(undefined);
+    setImage('');
+    setIsOpenCrop(false);
+  }, []);
+
+  const handleCancel = () => {
+    form.setFieldValue('image', image);
+    closeCropModal();
+  };
+
+  // console.log(cropImage);
+
+  const handleOk = () => {
+    form.setFieldValue('image', cropImage);
+    closeCropModal();
+  };
 
   const handleChange: UploadProps['onChange'] = (info) => {
     let newFileList = [...info.fileList];
@@ -39,7 +67,8 @@ const SettingsChatImageMessage: FC = () => {
 
     if (info.file.status === 'done') {
       getBase64(info.file.originFileObj as RcFile, (url) => {
-        form.setFieldValue('image', url);
+        setImage(url);
+        setIsOpenCrop(true);
       });
     }
   };
@@ -82,6 +111,15 @@ const SettingsChatImageMessage: FC = () => {
 
   const handleChangeMessage = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.keyCode == 13 && !e.shiftKey) {
+      if (!e.currentTarget.textContent) {
+        setTimeout(() => {
+          if (!ref.current) return;
+          ref.current.innerHTML = '';
+        }, 10);
+
+        return;
+      }
+
       form.submit();
     }
   };
@@ -137,6 +175,13 @@ const SettingsChatImageMessage: FC = () => {
           </Form.Item>
         </SettingWrapper>
       </Form>
+      <CropperImage
+        isOpen={isOpenCrop}
+        image={image}
+        onChange={onChangeCropper}
+        onCancel={handleCancel}
+        onOk={handleOk}
+      />
     </div>
   );
 };
