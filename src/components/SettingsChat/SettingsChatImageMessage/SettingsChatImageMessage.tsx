@@ -82,6 +82,15 @@ const SettingsChatImageMessage: FC = () => {
 
   const handleChangeMessage = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.keyCode == 13 && !e.shiftKey) {
+      if (!e.currentTarget.textContent) {
+        setTimeout(() => {
+          if (!ref.current) return;
+          ref.current.innerHTML = '';
+        }, 10);
+
+        return;
+      }
+
       form.submit();
     }
   };
