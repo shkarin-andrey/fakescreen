@@ -15,4 +15,8 @@ export const LOCALES = {
     value: 'de-DE',
     label: '🇩🇪 DE',
   },
+  FRANCE: {
+    value: 'fr-FR',
+    label: '🇫🇷 FR',
+  },
 };

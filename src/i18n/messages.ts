@@ -89,4 +89,26 @@ export const messages = {
     minute_ago: 'Minute',
     hour_ago: 'Stunde',
   },
+  [LOCALES.FRANCE.value]: {
+    footer_phone_message: 'Message',
+
+    interlocutor_status_online: 'en ligne',
+    interlocutor_status_scarcely: "en ligne à l'instant",
+    interlocutor_status_recently: 'en ligne récemment',
+    interlocutor_status_long: 'en ligne longtemps',
+    interlocutor_status_minutesAgo: 'en ligne {time}',
+    interlocutor_status_hourseAgo: 'en ligne {time}',
+    interlocutor_status_today: "était aujourd'hui à {time}",
+    interlocutor_status_yesterday: 'était hier à {time}',
+    interlocutor_status_write: 'écrit',
+    interlocutor_status_avia: 'en attente du réseau...',
+
+    interlocutor_spum_block: 'Bloc',
+    interlocutor_spum_add: 'Ajouter',
+
+    header_phone_back: 'Retour',
+
+    minute_ago: 'minute',
+    hour_ago: 'heure',
+  },
 };

@@ -1,4 +1,4 @@
-import { Radio, RadioChangeEvent } from 'antd';
+import { Select } from 'antd';
 import { FC, useCallback } from 'react';
 
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
@@ -11,24 +11,14 @@ const SettingsPhoneLocal: FC = () => {
   const language = useAppSelector((state) => state.language.language);
   const local = Object.values(LOCALES);
 
-  const handleChangeGeo = useCallback((e: RadioChangeEvent) => {
-    dispatch(setLanguage(e.target.value));
+  const handleChangeGeo = useCallback((value: string) => {
+    dispatch(setLanguage(value));
   }, []);
 
   return (
     <div className='px-6 py-4 rounded-lg bg-white flex items-center gap-4'>
       <div className='text-base font-medium'>Локализация</div>
-      <Radio.Group onChange={handleChangeGeo} defaultValue={language} className='flex'>
-        {local.map((item) => (
-          <Radio.Button
-            key={item.value}
-            value={item.value}
-            className='flex justify-center items-center'
-          >
-            {item.label}
-          </Radio.Button>
-        ))}
-      </Radio.Group>
+      <Select onChange={handleChangeGeo} options={local} defaultValue={language} />
     </div>
   );
 };
