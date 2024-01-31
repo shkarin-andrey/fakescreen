@@ -111,4 +111,26 @@ export const messages = {
     minute_ago: 'minute',
     hour_ago: 'heure',
   },
+  [LOCALES.ITALY.value]: {
+    footer_phone_message: 'Messaggio',
+
+    interlocutor_status_online: 'in linea',
+    interlocutor_status_scarcely: 'ultimo accesso adesso',
+    interlocutor_status_recently: 'ultimo accesso di recente',
+    interlocutor_status_long: 'stato molto tempo fa',
+    interlocutor_status_minutesAgo: 'ultimo accesso {time}',
+    interlocutor_status_hourseAgo: 'ultimo accesso {time}',
+    interlocutor_status_today: 'era oggi alle {time}',
+    interlocutor_status_yesterday: 'era ieri alle {time}',
+    interlocutor_status_write: 'sta scrivendo',
+    interlocutor_status_avia: 'in attesa della rete...',
+
+    interlocutor_spum_block: 'Bloccare',
+    interlocutor_spum_add: 'Aggiungere',
+
+    header_phone_back: 'Indietro',
+
+    minute_ago: 'minuto fa',
+    hour_ago: 'ora fa',
+  },
 };
