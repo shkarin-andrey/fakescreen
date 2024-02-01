@@ -130,11 +130,11 @@ const MessageChat: FC<IMessageChat> = ({
       }
     }
     if (matchMessageEmojiLength === 2 * 3) {
-      const defoultClassName = 'block translate-y-[6px] !text-[50px] !leading-[66px]';
+      const defoultClassName = 'block translate-y-[5px] !text-[50px] !leading-[66px]';
       if (type === 'owner') {
         classNameMessageEmoji = `${defoultClassName} translate-x-[8px] tracking-[3px]`;
       } else {
-        classNameMessageEmoji = `${defoultClassName} -translate-x-[8px] tracking-[3.5px]`;
+        classNameMessageEmoji = `${defoultClassName} -translate-x-[8px] tracking-[3.7px]`;
       }
     }
     if (matchMessageEmojiLength === 2 * 4) {
@@ -450,8 +450,10 @@ const MessageChat: FC<IMessageChat> = ({
       }
       if (matchMessageEmojiLength === 2 * 1) {
         className.push('-translate-x-[1px] translate-y-[1px]');
-      } else if (matchMessageEmojiLength === 2 * 2 || matchMessageEmojiLength === 2 * 3) {
+      } else if (matchMessageEmojiLength === 2 * 2) {
         className.push('-translate-x-[13px] translate-y-[1px]');
+      } else if (matchMessageEmojiLength === 2 * 3) {
+        className.push('-translate-x-[12px] translate-y-[1px]');
       } else if (matchMessageEmojiLength === 2 * 4) {
         className.push('-translate-x-[14px]');
       } else if (matchMessageEmojiLength === 2 * 5) {
