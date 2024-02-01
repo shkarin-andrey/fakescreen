@@ -132,6 +132,9 @@ const SettingsChatImageMessage: FC = () => {
               onKeyDown={handleChangeMessage}
               role='presentation'
               className='w-80 border border-solid border-gray-300 bg-white rounded-md px-2 py-1 text-base shadow-blue-500 hover:border-blue-500 transition-colors outline-none focus-visible:border-blue-500 focus-visible:shadow-md '
+              style={{
+                wordBreak: 'break-word',
+              }}
               contentEditable
               dangerouslySetInnerHTML={{ __html: ref.current?.innerHTML || '' }}
             />
