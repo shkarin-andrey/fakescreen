@@ -503,7 +503,13 @@ const MessageChat: FC<IMessageChat> = ({
                 width: image ? undefined : width,
               }}
             >
-              <span ref={messageRef} className={`break-all ${classNameMessage}`} />
+              <span
+                ref={messageRef}
+                className={classNameMessage}
+                style={{
+                  wordBreak: 'break-word',
+                }}
+              />
               <MessageTime
                 className={`mt-[5px] ${classNameMessageTime}`}
                 type={type}
