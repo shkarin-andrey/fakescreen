@@ -3,7 +3,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Divider, Form, Upload, UploadProps } from 'antd';
 import { MaskedInput } from 'antd-mask-input';
 import { RcFile, UploadFile } from 'antd/es/upload';
-import { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
+import { EmojiClickData } from 'emoji-picker-react';
 import { FC, useCallback, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -12,7 +12,6 @@ import { setMessage } from '../../../redux/state/chatSlice';
 import { beforeUploadPNGAndJPEG } from '../../../utils/beforeUploadPNGAndJPEG';
 import { getBase64 } from '../../../utils/getBase64';
 import { handleCustomRequest } from '../../../utils/handleCustomRequest';
-import { htmlEmoji } from '../../../utils/htmlEmoji';
 import DropdownEmoji from '../../DropdownEmoji';
 import SettingWrapper from '../../SettingWrapper';
 import { initialValues, timeRules } from './SettingsChatImageMessage.config';
@@ -51,34 +50,47 @@ const SettingsChatImageMessage: FC = () => {
   };
 
   const onEmojiClick = useCallback((event: EmojiClickData) => {
-    const emoji = event.getImageUrl(EmojiStyle.APPLE);
-
     if (ref.current) {
-      ref.current.innerHTML += htmlEmoji(emoji, event.emoji);
+      ref.current.innerHTML += event.emoji;
     }
   }, []);
 
-  const onFinish = useCallback((values: any) => {
-    const data = {
-      ...values,
-      id: uuidv4(),
-      type: values.type ? 'interlocutor' : 'owner',
-      message: ref.current?.innerHTML.replace(/(style=.*"|&nbsp;)+/gm, ''),
-      fileList,
-    };
+  const onFinish = useCallback(
+    (values: any) => {
+      const data = {
+        ...values,
+        id: uuidv4(),
+        type: values.type ? 'interlocutor' : 'owner',
+        fileList,
+      };
 
-    setTimeout(() => {
-      dispatch(setMessage(data));
-      handleRemove();
+      data.message = ref.current?.innerHTML.replace(/(style=.*"|&nbsp;)+/gm, '');
 
-      if (ref.current) {
-        ref.current.innerHTML = '';
+      if (ref.current?.innerHTML !== '' || fileList.length !== 0) {
+        setTimeout(() => {
+          dispatch(setMessage(data));
+          handleRemove();
+
+          if (ref.current) {
+            ref.current.innerHTML = '';
+          }
+        }, 0);
       }
-    }, 0);
-  }, []);
+    },
+    [fileList.length],
+  );
 
   const handleChangeMessage = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.keyCode == 13 && !e.shiftKey) {
+      if (!e.currentTarget.textContent) {
+        setTimeout(() => {
+          if (!ref.current) return;
+          ref.current.innerHTML = '';
+        }, 10);
+
+        return;
+      }
+
       form.submit();
     }
   };
@@ -120,6 +132,9 @@ const SettingsChatImageMessage: FC = () => {
               onKeyDown={handleChangeMessage}
               role='presentation'
               className='w-80 border border-solid border-gray-300 bg-white rounded-md px-2 py-1 text-base shadow-blue-500 hover:border-blue-500 transition-colors outline-none focus-visible:border-blue-500 focus-visible:shadow-md '
+              style={{
+                wordBreak: 'break-word',
+              }}
               contentEditable
               dangerouslySetInnerHTML={{ __html: ref.current?.innerHTML || '' }}
             />

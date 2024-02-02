@@ -13,7 +13,7 @@ import {
 } from 'antd';
 import { MaskedInput } from 'antd-mask-input';
 import { RcFile, UploadFile } from 'antd/es/upload';
-import { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
+import { EmojiClickData } from 'emoji-picker-react';
 import { FC, memo, useCallback, useEffect, useRef, useState } from 'react';
 
 import { optionsTypeMessage } from '../../../config';
@@ -24,7 +24,6 @@ import { beforeUploadPNGAndJPEG } from '../../../utils/beforeUploadPNGAndJPEG';
 import { generateAudioList } from '../../../utils/generateAudioList';
 import { getBase64 } from '../../../utils/getBase64';
 import { handleCustomRequest } from '../../../utils/handleCustomRequest';
-import { htmlEmoji } from '../../../utils/htmlEmoji';
 import DropdownEmoji from '../../DropdownEmoji';
 import SettingsChatMessageSticker from '../../SettingsChat/SettingsChatMessage/SettingsChatMessageSticker';
 import { IModalEditMessage } from './ModalEditMessage.interface';
@@ -86,36 +85,37 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
   }, []);
 
   const onEmojiClick = useCallback((event: EmojiClickData) => {
-    const emoji = event.getImageUrl(EmojiStyle.APPLE);
-
     if (ref.current) {
-      ref.current.innerHTML += htmlEmoji(emoji, event.emoji);
+      ref.current.innerHTML += event.emoji;
     }
   }, []);
 
   const onFinish = (values: typeof initialValue) => {
     const index = data.findIndex((el) => el.id === id);
 
-    const body = {
+    const body: any = {
       index,
       data: {
         ...values,
         fileList,
-        message: ref.current?.innerHTML.replace(/(style=.*"|&nbsp;)+/gm, ''),
         audioList: values?.audioMessage
           ? generateAudioList(values.audioMessage)
           : undefined,
       },
     };
 
-    setTimeout(() => {
-      dispatch(updateMessage(body));
-      handleCancel();
+    body.data.message = ref.current?.innerHTML.replace(/(style=.*"|&nbsp;)+/gm, '');
 
-      if (ref.current) {
-        ref.current.innerHTML = '';
-      }
-    }, 0);
+    if (ref.current?.innerHTML !== '' || fileList.length !== 0) {
+      setTimeout(() => {
+        dispatch(updateMessage(body));
+        handleCancel();
+
+        if (ref.current) {
+          ref.current.innerHTML = '';
+        }
+      }, 0);
+    }
   };
 
   const handleUpload: UploadProps['onChange'] = (info) => {
@@ -146,6 +146,15 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
 
   const handleChangeMessage = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.keyCode == 13 && !e.shiftKey) {
+      if (!e.currentTarget.textContent) {
+        setTimeout(() => {
+          if (!ref.current) return;
+          ref.current.innerHTML = '';
+        }, 10);
+
+        return;
+      }
+
       form.submit();
     }
   };
