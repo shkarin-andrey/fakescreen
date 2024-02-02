@@ -1,6 +1,6 @@
 import { DownOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
-import EmojiPicker, { EmojiStyle } from 'emoji-picker-react';
+import EmojiPicker, { EmojiStyle, SuggestionMode } from 'emoji-picker-react';
 import { FC, memo, useCallback, useRef, useState } from 'react';
 
 import EmojiIcon from '../../assets/icons/EmojiIcon';
@@ -35,6 +35,7 @@ const DropdownEmoji: FC<IDropdownEmoji> = ({ onEmojiClick }) => {
             emojiStyle={EmojiStyle.APPLE}
             onEmojiClick={onEmojiClick}
             lazyLoadEmojis
+            suggestedEmojisMode={SuggestionMode.FREQUENT}
             searchPlaceHolder='Поиск'
             key={'emoji'}
           />
