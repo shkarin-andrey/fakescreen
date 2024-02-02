@@ -8,7 +8,9 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import { messages } from '../../i18n/messages';
 import { defaultRout, isAuthRout } from '../../routs';
 
-ReactGa.initialize(TRACKING_ID);
+ReactGa.initialize(TRACKING_ID, {
+  debug: process.env.NODE_ENV === 'development',
+});
 
 const App: FC = () => {
   const language = useAppSelector((state) => state.language.language);
