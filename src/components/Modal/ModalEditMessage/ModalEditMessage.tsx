@@ -13,7 +13,6 @@ import {
 } from 'antd';
 import { MaskedInput } from 'antd-mask-input';
 import { RcFile, UploadFile } from 'antd/es/upload';
-import { EmojiClickData } from 'emoji-picker-react';
 import { FC, memo, useCallback, useEffect, useRef, useState } from 'react';
 
 import { optionsTypeMessage } from '../../../config';
@@ -60,6 +59,8 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
   const [form] = Form.useForm<typeof initialValue>();
   const stickerValue = Form.useWatch('sticker', form);
 
+  const images = useAppSelector((state) => state.config.images);
+
   const ref = useRef<HTMLDivElement>(null);
   const [fileList, setFileList] = useState<UploadFile[]>(defaultFileList);
 
@@ -84,11 +85,14 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
     form.setFieldValue('sticker', sticker);
   }, []);
 
-  const onEmojiClick = useCallback((event: EmojiClickData) => {
-    if (ref.current) {
-      ref.current.innerHTML += event.emoji;
-    }
-  }, []);
+  const onEmojiClick = useCallback(
+    (index: number) => {
+      if (ref.current) {
+        ref.current.innerHTML += `<img class="w-[16px] h-[16px] object-contain" src="${images[index]}" alt="emoji-${index}"/>`;
+      }
+    },
+    [images],
+  );
 
   const onFinish = (values: typeof initialValue) => {
     const index = data.findIndex((el) => el.id === id);
@@ -204,7 +208,7 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
               contentEditable
               dangerouslySetInnerHTML={{ __html: ref.current?.innerHTML || '' }}
             />
-            <DropdownEmoji onEmojiClick={onEmojiClick} />
+            <DropdownEmoji images={images} onEmojiClick={onEmojiClick} />
           </div>
         )}
         {image && (
