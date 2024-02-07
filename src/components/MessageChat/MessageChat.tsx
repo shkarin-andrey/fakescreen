@@ -132,11 +132,17 @@ const MessageChat: FC<IMessageChat> = ({
             ),
           );
         }
-        if (matchMessageEmojiLength > 6) {
-          messageEmoji = matchMessageEmoji.map((item, index) =>
-            htmlElementImage(item, index, 'w-[16px] h-[16px]'),
-          );
-        }
+        // if (matchMessageEmojiLength > 6) {
+        //   messageEmoji = matchMessageEmoji.map((item, index) =>
+        //     htmlElementImage(
+        //       item,
+        //       index,
+        //       `w-[15px] h-[15px] translate-y-[4px] ${
+        //         type === 'owner' ? 'translate-x-[6px]' : '-translate-x-[7px]'
+        //       }`,
+        //     ),
+        //   );
+        // }
 
         messageRef.current.innerHTML = messageEmoji.join('');
       } else {
@@ -194,9 +200,9 @@ const MessageChat: FC<IMessageChat> = ({
     if (matchMessageEmojiLength === 6) {
       classNameMessageEmoji = 'inline-flex gap-[6px]';
     }
-    if (matchMessageEmojiLength && matchMessageEmojiLength > 6) {
-      classNameMessageEmoji = 'flex gap-[4px] w-fit flex-wrap';
-    }
+    // if (matchMessageEmojiLength && matchMessageEmojiLength > 6) {
+    //   classNameMessageEmoji = 'flex gap-[3px] w-fit flex-wrap';
+    // }
 
     return classNameMessageEmoji;
   }, [matchMessageEmoji, type]);
@@ -274,7 +280,13 @@ const MessageChat: FC<IMessageChat> = ({
     return '-left-1 -scale-x-100';
   }, [isPrevType, type]);
 
-  const classNameImagePadding = 'pl-[8px] pr-[6px] pt-[4px] pb-[3.1px]';
+  const classNameImagePadding = useMemo(() => {
+    const defaultClassName = 'pl-[8px] pr-[6px] pb-[3.1px]';
+    // if (matchMessageEmojiLength && matchMessageEmojiLength > 6) {
+    //   return `${defaultClassName} pt-2`;
+    // }
+    return `${defaultClassName} pt-[4px]`;
+  }, []);
 
   const handleOpenModal = useCallback(() => {
     setIsOpenModal(true);
@@ -462,7 +474,7 @@ const MessageChat: FC<IMessageChat> = ({
     }
 
     return 'max-w-[282px]';
-  }, [image, isMessage, isPrevType]);
+  }, [image, isMessage, isPrevType, matchMessageEmojiLength]);
 
   const timePosition = useMemo(() => {
     if (image && !isMessage && isPrevType && type === 'owner') {
@@ -528,6 +540,15 @@ const MessageChat: FC<IMessageChat> = ({
         className.push('-translate-x-[7px]');
       }
     }
+
+    // if (matchMessageEmojiLength && matchMessageEmojiLength > 6) {
+    //   className.push('translate-y-[1px]');
+    //   if (type === 'owner') {
+    //     className.push('translate-x-[4px]');
+    //   } else {
+    //     className.push('');
+    //   }
+    // }
 
     if (!matchMessageEmojiLength) {
       className.push('!pl-0 pb-0');
