@@ -17,6 +17,8 @@ const PreviewScreenshot: FC<IPreviewScreenshot> = ({ title, type, img, exportFil
   const languageState = useAppSelector((state) => state.language);
   const themeState = useAppSelector((state) => state.theme);
 
+  const language = languageState.language;
+
   const handleGetScreenshot = useCallback((id: string) => {
     const url = VITE_APP_BASE_URL + id;
     window.open(url, '_blank', 'noreferrer');
@@ -25,7 +27,7 @@ const PreviewScreenshot: FC<IPreviewScreenshot> = ({ title, type, img, exportFil
   const handleSaveScreenshot = useCallback(() => {
     ReactGa.event({
       category: `Кнопка: "${title}"`,
-      action: 'clickBtnPreview',
+      action: `${language}-clickBtnPreview`,
       label: 'Preview scrennshot',
     });
 

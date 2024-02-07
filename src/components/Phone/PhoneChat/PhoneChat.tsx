@@ -77,7 +77,7 @@ const PhoneChat: FC = () => {
     <>
       <div
         onScroll={handleScroll}
-        className={`chat w-full h-full pl-[8px] pr-[5px] pb-[7px] pt-[79px] flex flex-col-reverse scrollbar scrollbar-thumb-transparent scrollbar-track-transparent scrollbar-small overflow-y-scroll z-10`}
+        className={`chat w-full h-full pl-[8px] pr-[8px] pb-[7px] pt-[79px] flex flex-col-reverse scrollbar scrollbar-thumb-transparent scrollbar-track-transparent scrollbar-small overflow-y-scroll z-10`}
       >
         {data.map((item, index) => (
           <DnDWrapper key={item.id} id={item.id} moveCard={moveCard} index={index}>

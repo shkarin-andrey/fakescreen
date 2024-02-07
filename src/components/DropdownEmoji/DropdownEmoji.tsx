@@ -1,15 +1,12 @@
 import { DownOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
-import EmojiPicker, { EmojiStyle, SuggestionMode } from 'emoji-picker-react';
 import { FC, memo, useCallback, useRef, useState } from 'react';
 
 import EmojiIcon from '../../assets/icons/EmojiIcon';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { IDropdownEmoji } from './DropdownEmoji.interface';
 
-const MemoEmojiPicker = memo(EmojiPicker);
-
-const DropdownEmoji: FC<IDropdownEmoji> = ({ onEmojiClick }) => {
+const DropdownEmoji: FC<IDropdownEmoji> = ({ onEmojiClick, images }) => {
   const ref = useRef(null);
   const [emojiVisible, setEmojiVisible] = useState(false);
 
@@ -31,14 +28,18 @@ const DropdownEmoji: FC<IDropdownEmoji> = ({ onEmojiClick }) => {
       </Button>
       {emojiVisible && (
         <div className={`absolute z-10 block right-0`}>
-          <MemoEmojiPicker
-            emojiStyle={EmojiStyle.APPLE}
-            onEmojiClick={onEmojiClick}
-            lazyLoadEmojis
-            suggestedEmojisMode={SuggestionMode.FREQUENT}
-            searchPlaceHolder='Поиск'
-            key={'emoji'}
-          />
+          <div className='max-w-[302px] flex flex-wrap gap-1 bg-gray-100/50 px-3 py-3 rounded-lg border border-gray-300 border-solid'>
+            {images.map((item, index) => (
+              <img
+                aria-hidden={true}
+                className='w-6 h-6 object-contain hover:bg-gray-200 rounded-sm cursor-pointer p-[2px]'
+                key={`emoji-${index}`}
+                alt={`emoji-${index}`}
+                src={item}
+                onClick={() => onEmojiClick(index)}
+              />
+            ))}
+          </div>
         </div>
       )}
     </div>
