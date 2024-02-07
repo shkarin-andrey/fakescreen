@@ -17,6 +17,12 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import MessageTime from '../MessageTime/MessageTime';
 import ModalEditMessage from '../Modal/ModalEditMessage';
 import { gallary } from '../SettingsInterlocutor/SettingsInterlocutorIGallary/SettingsInterlocutorIGallary.config';
+import {
+  classNameHeigthEmoji,
+  classNameImagePadding,
+  classNameMessage,
+  classNameMessageTime,
+} from './MessageChat.config';
 import { IMessageChat } from './MessageChat.interface';
 
 const MessageChat: FC<IMessageChat> = ({
@@ -68,68 +74,32 @@ const MessageChat: FC<IMessageChat> = ({
 
         if (matchMessageEmojiLength === 1) {
           messageEmoji = matchMessageEmoji.map((item, index) =>
-            htmlElementImage(
-              item,
-              index,
-              `w-[80px] h-[80px] translate-y-[6px] ${
-                type === 'owner' ? '-translate-x-[3px]' : 'translate-x-[3px]'
-              }`,
-            ),
+            htmlElementImage(item, index, `w-[86px] h-[86px]`),
           );
         }
         if (matchMessageEmojiLength === 2) {
           messageEmoji = matchMessageEmoji.map((item, index) =>
-            htmlElementImage(
-              item,
-              index,
-              `w-[59px] h-[59px] translate-y-[14px] ${
-                type === 'owner' ? 'translate-x-[5px]' : '-translate-x-[6px]'
-              }`,
-            ),
+            htmlElementImage(item, index, `w-[59px] h-[59px]`),
           );
         }
         if (matchMessageEmojiLength === 3) {
           messageEmoji = matchMessageEmoji.map((item, index) =>
-            htmlElementImage(
-              item,
-              index,
-              `w-[45px] h-[45px] translate-y-[14px] ${
-                type === 'owner' ? 'translate-x-[4px]' : '-translate-x-[4px]'
-              }`,
-            ),
+            htmlElementImage(item, index, `w-[45px] h-[45px]`),
           );
         }
         if (matchMessageEmojiLength === 4) {
           messageEmoji = matchMessageEmoji.map((item, index) =>
-            htmlElementImage(
-              item,
-              index,
-              `w-[35px] h-[35px] translate-y-[13px] ${
-                type === 'owner' ? 'translate-x-[4px]' : '-translate-x-[6px]'
-              }`,
-            ),
+            htmlElementImage(item, index, `w-[35px] h-[35px]`),
           );
         }
         if (matchMessageEmojiLength === 5) {
           messageEmoji = matchMessageEmoji.map((item, index) =>
-            htmlElementImage(
-              item,
-              index,
-              `w-[30px] h-[30px] translate-y-[12px] ${
-                type === 'owner' ? 'translate-x-[5px]' : '-translate-x-[5px]'
-              }`,
-            ),
+            htmlElementImage(item, index, `w-[30px] h-[30px]`),
           );
         }
         if (matchMessageEmojiLength === 6) {
           messageEmoji = matchMessageEmoji.map((item, index) =>
-            htmlElementImage(
-              item,
-              index,
-              `w-[25px] h-[25px] translate-y-[10px] ${
-                type === 'owner' ? 'translate-x-[4px]' : '-translate-x-[6px]'
-              }`,
-            ),
+            htmlElementImage(item, index, `w-[25px] h-[25px]`),
           );
         }
         if (matchMessageEmojiLength > 6) {
@@ -147,7 +117,7 @@ const MessageChat: FC<IMessageChat> = ({
         setWidth(messageRef.current.offsetWidth + 1);
       }
     }
-  }, [message, matchMessageEmojiLength, matchMessageEmoji, htmlElementImage, type]);
+  }, [message, matchMessageEmojiLength, matchMessageEmoji, htmlElementImage]);
 
   const bgMessage = useMemo(() => {
     if (bgImage === gallary[1]?.preview) {
@@ -170,36 +140,6 @@ const MessageChat: FC<IMessageChat> = ({
 
     return `${bgInterlocutor} text-black dark:text-white`;
   }, [type, bgMessage, bgOwner, bgInterlocutor]);
-
-  const classNameMessage = useMemo(() => {
-    let classNameMessageEmoji: React.HTMLAttributes<HTMLDivElement>['className'] =
-      '-tracking-[0.3px]';
-
-    if (matchMessageEmojiLength === 1) {
-      classNameMessageEmoji = 'inline-flex gap-[10px]';
-    }
-
-    if (matchMessageEmojiLength === 2) {
-      classNameMessageEmoji = 'inline-flex gap-[7px]';
-    }
-    if (matchMessageEmojiLength === 3) {
-      classNameMessageEmoji = 'inline-flex gap-[9px]';
-    }
-    if (matchMessageEmojiLength === 4) {
-      classNameMessageEmoji = 'inline-flex gap-[6px]';
-    }
-    if (matchMessageEmojiLength === 5) {
-      classNameMessageEmoji = 'inline-flex gap-[8px]';
-    }
-    if (matchMessageEmojiLength === 6) {
-      classNameMessageEmoji = 'inline-flex gap-[6px]';
-    }
-    if (matchMessageEmojiLength && matchMessageEmojiLength > 6) {
-      classNameMessageEmoji = 'flex gap-[3px] w-fit flex-wrap';
-    }
-
-    return classNameMessageEmoji;
-  }, [matchMessageEmoji, type]);
 
   const isNextType = nextType === type;
   const isPrevType = prevType !== type;
@@ -273,14 +213,6 @@ const MessageChat: FC<IMessageChat> = ({
 
     return '-left-1 -scale-x-100';
   }, [isPrevType, type]);
-
-  const classNameImagePadding = useMemo(() => {
-    const defaultClassName = 'pl-[8px] pr-[6px] pb-[3.1px]';
-    if (matchMessageEmojiLength && matchMessageEmojiLength > 6) {
-      return `${defaultClassName} pt-2`;
-    }
-    return `${defaultClassName} pt-[4px]`;
-  }, []);
 
   const handleOpenModal = useCallback(() => {
     setIsOpenModal(true);
@@ -468,7 +400,7 @@ const MessageChat: FC<IMessageChat> = ({
     }
 
     return 'max-w-[282px]';
-  }, [image, isMessage, isPrevType, matchMessageEmojiLength]);
+  }, [image, isMessage, isPrevType]);
 
   const timePosition = useMemo(() => {
     if (image && !isMessage && isPrevType && type === 'owner') {
@@ -478,109 +410,6 @@ const MessageChat: FC<IMessageChat> = ({
     return 'right-1';
   }, [image, isMessage, isPrevType, type]);
 
-  const classNameMessageTime = useMemo(() => {
-    const className: string[] = [];
-    if (!matchMessageEmojiLength) {
-      className.push('translate-x-[4px]');
-    }
-
-    if (matchMessageEmojiLength) {
-      className.push('pr-[6px]');
-    }
-    if (matchMessageEmojiLength === 1) {
-      className.push('-translate-y-[9px]');
-      if (type === 'owner') {
-        className.push('translate-x-[4px]');
-      } else {
-        className.push('translate-x-[9px]');
-      }
-    }
-    if (matchMessageEmojiLength === 2) {
-      className.push('translate-y-[18px]');
-      if (type === 'owner') {
-        className.push('translate-x-[4px]');
-      } else {
-        className.push('-translate-x-[8px]');
-      }
-    }
-
-    if (matchMessageEmojiLength === 3) {
-      className.push('translate-y-[18px]');
-      if (type === 'owner') {
-        className.push('translate-x-[4px]');
-      } else {
-        className.push('-translate-x-[6px]');
-      }
-    }
-
-    if (matchMessageEmojiLength === 4) {
-      className.push('translate-x-[4px] translate-y-[11px]');
-    }
-
-    if (matchMessageEmojiLength === 5) {
-      className.push(' translate-y-[11px]');
-      if (type === 'owner') {
-        className.push('translate-x-[4px]');
-      } else {
-        className.push('-translate-x-[8px]');
-      }
-    }
-
-    if (matchMessageEmojiLength === 6) {
-      className.push('translate-y-[6px]');
-      if (type === 'owner') {
-        className.push('translate-x-[4px]');
-      } else {
-        className.push('-translate-x-[7px]');
-      }
-    }
-
-    if (matchMessageEmojiLength && matchMessageEmojiLength > 6) {
-      className.push('translate-y-[1px]');
-      if (type === 'owner') {
-        className.push('translate-x-[4px]');
-      } else {
-        className.push('');
-      }
-    }
-
-    if (!matchMessageEmojiLength) {
-      className.push('!pl-0 pb-0');
-    } else {
-      className.push('pb-[2px] pt-[3px]');
-    }
-
-    return className.join(' ');
-  }, [matchMessageEmojiLength, type]);
-
-  const classNameHeigthEmoji = useMemo(() => {
-    if (matchMessageEmojiLength === 1) {
-      return 'h-[93px]';
-    }
-
-    if (matchMessageEmojiLength === 2) {
-      return 'h-[99px]';
-    }
-
-    if (matchMessageEmojiLength === 3) {
-      return 'h-[85px]';
-    }
-
-    if (matchMessageEmojiLength === 4) {
-      return 'h-[69px]';
-    }
-
-    if (matchMessageEmojiLength === 5) {
-      return 'h-[63px]';
-    }
-
-    if (matchMessageEmojiLength === 6) {
-      return 'h-[53px]';
-    }
-
-    return '';
-  }, [matchMessageEmojiLength]);
-
   return (
     <>
       <div
@@ -588,7 +417,7 @@ const MessageChat: FC<IMessageChat> = ({
         aria-hidden={true}
         onClick={handleOpenModal}
         className={`flex rounded-[13px] font-light text-[13.26px] w-fit relative leading-[134%] ${maxWidthImage} ${
-          image ? 'flex-col' : classNameImagePadding
+          image ? 'flex-col' : classNameImagePadding(matchMessageEmojiLength)
         } ${isOwner} ${classNameNextType} ${classNameRounded()} ${className}`}
         style={{ ...maskImage, ...style }}
       >
@@ -609,9 +438,9 @@ const MessageChat: FC<IMessageChat> = ({
             <div
               className={
                 image
-                  ? classNameImagePadding
+                  ? classNameImagePadding()
                   : matchMessageEmojiLength
-                  ? classNameHeigthEmoji
+                  ? classNameHeigthEmoji(matchMessageEmojiLength)
                   : ''
               }
               style={{
@@ -620,13 +449,16 @@ const MessageChat: FC<IMessageChat> = ({
             >
               <span
                 ref={messageRef}
-                className={classNameMessage}
+                className={classNameMessage(type, matchMessageEmojiLength)}
                 style={{
                   wordBreak: 'break-word',
                 }}
               />
               <MessageTime
-                className={`mt-[5px] ${classNameMessageTime}`}
+                className={`mt-[5px] ${classNameMessageTime(
+                  type,
+                  matchMessageEmojiLength,
+                )}`}
                 type={type}
                 time={time}
                 isViewed={isViewed}
