@@ -1,39 +1,23 @@
 import { Modal } from 'antd';
-import { FC, memo, useState } from 'react';
+import { FC, memo, useCallback, useState } from 'react';
 import { FixedCropper, StencilSize } from 'react-advanced-cropper';
 
 import EditCardImage from '../EditCardImage';
 import { TStencilSize } from '../EditCardImage/EditCardImage.interface';
+import { horizonSize, squareSize, verticalSize } from './CropperImage.config';
 import { ICropperImage } from './CropperImage.interface';
 
 const CropperImage: FC<ICropperImage> = ({ isOpen, image, onOk, onChange, onCancel }) => {
-  const [size, setSize] = useState<StencilSize>({
-    width: 300,
-    height: 300,
-  });
+  const [size, setSize] = useState<StencilSize>(verticalSize);
+  const [selectType, setSelectType] = useState<TStencilSize>('vertical');
 
-  const handleSelectTypeSize = (type: TStencilSize) => {
-    if (type === 'vertical') {
-      setSize({
-        width: 400,
-        height: 716,
-      });
-    }
+  const handleSelectTypeSize = useCallback((type: TStencilSize) => {
+    setSelectType(type);
 
-    if (type === 'square') {
-      setSize({
-        width: 604,
-        height: 588,
-      });
-    }
-
-    if (type === 'horizon') {
-      setSize({
-        width: 609,
-        height: 412,
-      });
-    }
-  };
+    if (type === 'vertical') setSize(verticalSize);
+    if (type === 'square') setSize(squareSize);
+    if (type === 'horizon') setSize(horizonSize);
+  }, []);
 
   return (
     <Modal
@@ -42,13 +26,22 @@ const CropperImage: FC<ICropperImage> = ({ isOpen, image, onOk, onChange, onCanc
       onOk={onOk}
       onCancel={onCancel}
     >
-      <div className='flex justify-around gap-10 items-center w-full bg-black'>
+      <div className='flex justify-around gap-10 items-center w-full bg-black mb-2'>
         <EditCardImage
           type='vertical'
+          isActive={selectType === 'vertical'}
           onSelect={() => handleSelectTypeSize('vertical')}
         />
-        <EditCardImage type='square' onSelect={() => handleSelectTypeSize('square')} />
-        <EditCardImage type='horizon' onSelect={() => handleSelectTypeSize('horizon')} />
+        <EditCardImage
+          type='square'
+          isActive={selectType === 'square'}
+          onSelect={() => handleSelectTypeSize('square')}
+        />
+        <EditCardImage
+          type='horizon'
+          isActive={selectType === 'horizon'}
+          onSelect={() => handleSelectTypeSize('horizon')}
+        />
       </div>
       <FixedCropper
         src={image}
@@ -58,6 +51,9 @@ const CropperImage: FC<ICropperImage> = ({ isOpen, image, onOk, onChange, onCanc
         stencilProps={{
           handlers: false,
           lines: false,
+          movable: true,
+          resizable: true,
+          grid: true,
         }}
       />
     </Modal>

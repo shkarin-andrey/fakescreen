@@ -9,4 +9,5 @@ export type TStencilSize = keyof typeof SelectType;
 export interface IEditCardImage {
   type: TStencilSize;
   onSelect: (type: TStencilSize) => void;
+  isActive: boolean;
 }

@@ -44,8 +44,6 @@ const SettingsChatImageMessage: FC = () => {
     closeCropModal();
   };
 
-  // console.log(cropImage);
-
   const handleOk = () => {
     form.setFieldValue('image', cropImage);
     closeCropModal();

@@ -1,8 +1,8 @@
-import { FC, useMemo } from 'react';
+import { FC, memo, useMemo } from 'react';
 
 import { IEditCardImage, SelectType } from './EditCardImage.interface';
 
-const EditCardImage: FC<IEditCardImage> = ({ onSelect, type }) => {
+const EditCardImage: FC<IEditCardImage> = ({ onSelect, type, isActive }) => {
   const classNameCard = useMemo(() => {
     if (type === 'vertical') {
       return 'w-[25px] h-[45px]';
@@ -20,14 +20,18 @@ const EditCardImage: FC<IEditCardImage> = ({ onSelect, type }) => {
     <div
       aria-hidden={true}
       onClick={() => onSelect(type)}
-      className='group rounded-md flex flex-col items-center gap-1 pt-2 px-4 pb-1 bg-[#171717] cursor-pointer hover:bg-[#5A5A5A] transition-colors duration-200'
+      className={`group rounded-md flex flex-col items-center gap-1 pt-2 px-4 pb-1  cursor-pointer hover:bg-[#5A5A5A] transition-colors duration-200 ${
+        isActive ? 'bg-[#5A5A5A]' : 'bg-[#171717]'
+      }`}
     >
       <div
-        className={`rounded-[3px] border border-white bg-[#4A4A4A] group-hover:bg-white transition-colors duration-200 ${classNameCard}`}
+        className={`rounded-[3px] border group-hover:bg-white border-white transition-colors duration-200 ${classNameCard} ${
+          isActive ? 'bg-white' : ' bg-[#4A4A4A]'
+        }`}
       />
       <div className='text-xs text-white'>{SelectType[type]}</div>
     </div>
   );
 };
 
-export default EditCardImage;
+export default memo(EditCardImage);
