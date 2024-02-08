@@ -3,11 +3,11 @@ import { UploadOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Divider, Form, Upload, UploadProps } from 'antd';
 import { MaskedInput } from 'antd-mask-input';
 import { RcFile, UploadFile } from 'antd/es/upload';
-import { EmojiClickData } from 'emoji-picker-react';
 import { FC, useCallback, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
+import { useAppSelector } from '../../../hooks/useAppSelector';
 import { setMessage } from '../../../redux/state/chatSlice';
 import { beforeUploadPNGAndJPEG } from '../../../utils/beforeUploadPNGAndJPEG';
 import { getBase64 } from '../../../utils/getBase64';
@@ -20,6 +20,8 @@ const SettingsChatImageMessage: FC = () => {
   const dispatch = useAppDispatch();
   const [form] = Form.useForm();
   const ref = useRef<HTMLDivElement>(null);
+
+  const images = useAppSelector((state) => state.config.images);
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
 
@@ -49,11 +51,14 @@ const SettingsChatImageMessage: FC = () => {
     form.setFieldValue('image', null);
   };
 
-  const onEmojiClick = useCallback((event: EmojiClickData) => {
-    if (ref.current) {
-      ref.current.innerHTML += event.emoji;
-    }
-  }, []);
+  const onEmojiClick = useCallback(
+    (index: number) => {
+      if (ref.current) {
+        ref.current.innerHTML += `<img class="w-[16px] h-[16px] object-contain" src="${images[index]}" alt="emoji-${index}"/>`;
+      }
+    },
+    [images],
+  );
 
   const onFinish = useCallback(
     (values: any) => {
@@ -138,7 +143,7 @@ const SettingsChatImageMessage: FC = () => {
               contentEditable
               dangerouslySetInnerHTML={{ __html: ref.current?.innerHTML || '' }}
             />
-            <DropdownEmoji onEmojiClick={onEmojiClick} />
+            <DropdownEmoji images={images} onEmojiClick={onEmojiClick} />
           </div>
           <Divider className='my-3' />
           <Form.Item name='type' className='m-0' valuePropName='checked'>
