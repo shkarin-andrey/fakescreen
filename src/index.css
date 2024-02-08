@@ -1,5 +1,6 @@
 @import 'antd/dist/reset.css';
 @import 'react-lazy-load-image-component/src/effects/blur.css';
+@import 'react-advanced-cropper/dist/style.css';
 
 @import 'swiper/css';
 @import 'swiper/css/pagination';

@@ -6,12 +6,14 @@ import { RcFile, UploadFile } from 'antd/es/upload';
 import { FC, useCallback, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
+import { CropperRef } from 'react-advanced-cropper';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { setMessage } from '../../../redux/state/chatSlice';
 import { beforeUploadPNGAndJPEG } from '../../../utils/beforeUploadPNGAndJPEG';
 import { getBase64 } from '../../../utils/getBase64';
 import { handleCustomRequest } from '../../../utils/handleCustomRequest';
+import CropperImage from '../../CropperImage';
 import DropdownEmoji from '../../DropdownEmoji';
 import SettingWrapper from '../../SettingWrapper';
 import { initialValues, timeRules } from './SettingsChatImageMessage.config';
@@ -24,6 +26,30 @@ const SettingsChatImageMessage: FC = () => {
   const images = useAppSelector((state) => state.config.images);
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [isOpenCrop, setIsOpenCrop] = useState(false);
+  const [image, setImage] = useState('');
+  const [cropImage, setCropImage] = useState<string | undefined>('');
+
+  const onChangeCropper = (cropper: CropperRef) => {
+    const cropImageUrl = cropper.getCanvas()?.toDataURL();
+    setCropImage(cropImageUrl);
+  };
+
+  const closeCropModal = useCallback(() => {
+    setCropImage(undefined);
+    setImage('');
+    setIsOpenCrop(false);
+  }, []);
+
+  const handleCancel = () => {
+    form.setFieldValue('image', image);
+    closeCropModal();
+  };
+
+  const handleOk = () => {
+    form.setFieldValue('image', cropImage);
+    closeCropModal();
+  };
 
   const handleChange: UploadProps['onChange'] = (info) => {
     let newFileList = [...info.fileList];
@@ -41,7 +67,8 @@ const SettingsChatImageMessage: FC = () => {
 
     if (info.file.status === 'done') {
       getBase64(info.file.originFileObj as RcFile, (url) => {
-        form.setFieldValue('image', url);
+        setImage(url);
+        setIsOpenCrop(true);
       });
     }
   };
@@ -154,6 +181,13 @@ const SettingsChatImageMessage: FC = () => {
           </Form.Item>
         </SettingWrapper>
       </Form>
+      <CropperImage
+        isOpen={isOpenCrop}
+        image={image}
+        onChange={onChangeCropper}
+        onCancel={handleCancel}
+        onOk={handleOk}
+      />
     </div>
   );
 };

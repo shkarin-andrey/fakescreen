@@ -89,4 +89,48 @@ export const messages = {
     minute_ago: 'Minute',
     hour_ago: 'Stunde',
   },
+  [LOCALES.FRANCE.value]: {
+    footer_phone_message: 'Message',
+
+    interlocutor_status_online: 'en ligne',
+    interlocutor_status_scarcely: "en ligne à l'instant",
+    interlocutor_status_recently: 'en ligne récemment',
+    interlocutor_status_long: 'en ligne longtemps',
+    interlocutor_status_minutesAgo: 'en ligne {time}',
+    interlocutor_status_hourseAgo: 'en ligne {time}',
+    interlocutor_status_today: "était aujourd'hui à {time}",
+    interlocutor_status_yesterday: 'était hier à {time}',
+    interlocutor_status_write: 'écrit',
+    interlocutor_status_avia: 'en attente du réseau...',
+
+    interlocutor_spum_block: 'Bloc',
+    interlocutor_spum_add: 'Ajouter',
+
+    header_phone_back: 'Retour',
+
+    minute_ago: 'minute',
+    hour_ago: 'heure',
+  },
+  [LOCALES.ITALY.value]: {
+    footer_phone_message: 'Messaggio',
+
+    interlocutor_status_online: 'in linea',
+    interlocutor_status_scarcely: 'ultimo accesso adesso',
+    interlocutor_status_recently: 'ultimo accesso di recente',
+    interlocutor_status_long: 'stato molto tempo fa',
+    interlocutor_status_minutesAgo: 'ultimo accesso {time}',
+    interlocutor_status_hourseAgo: 'ultimo accesso {time}',
+    interlocutor_status_today: 'era oggi alle {time}',
+    interlocutor_status_yesterday: 'era ieri alle {time}',
+    interlocutor_status_write: 'sta scrivendo',
+    interlocutor_status_avia: 'in attesa della rete...',
+
+    interlocutor_spum_block: 'Bloccare',
+    interlocutor_spum_add: 'Aggiungere',
+
+    header_phone_back: 'Indietro',
+
+    minute_ago: 'minuto fa',
+    hour_ago: 'ora fa',
+  },
 };
