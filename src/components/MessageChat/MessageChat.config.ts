@@ -5,8 +5,8 @@ export const classNameMessage = (type: Message['type'], matchMessageEmojiLength 
     '-tracking-[0.3px]';
 
   if (matchMessageEmojiLength === 1) {
-    classNameMessageEmoji = `inline-flex gap-[10px] translate-y-[3px] ${
-      type === 'owner' ? '' : '-translate-x-[1px]'
+    classNameMessageEmoji = `inline-flex gap-[10px] translate-y-[6px] ${
+      type === 'owner' ? '-translate-x-[3px]' : 'translate-x-[2px]'
     }`;
   }
 
@@ -84,11 +84,11 @@ export const classNameMessageTime = (
     className.push('pr-[6px]');
   }
   if (matchMessageEmojiLength === 1) {
-    className.push('-translate-y-[15px]');
+    className.push('-translate-y-[9px]');
     if (type === 'owner') {
       className.push('translate-x-[4px]');
     } else {
-      className.push('translate-x-[3px]');
+      className.push('translate-x-[9px]');
     }
   }
   if (matchMessageEmojiLength === 2) {
@@ -101,7 +101,7 @@ export const classNameMessageTime = (
   }
 
   if (matchMessageEmojiLength === 3) {
-    className.push('translate-y-[18px]');
+    className.push('translate-y-[17px]');
     if (type === 'owner') {
       className.push('translate-x-[4px]');
     } else {
@@ -114,7 +114,7 @@ export const classNameMessageTime = (
   }
 
   if (matchMessageEmojiLength === 5) {
-    className.push(' translate-y-[11px]');
+    className.push('translate-y-[9px]');
     if (type === 'owner') {
       className.push('translate-x-[5px]');
     } else {

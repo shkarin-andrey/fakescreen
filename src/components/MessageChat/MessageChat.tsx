@@ -74,7 +74,7 @@ const MessageChat: FC<IMessageChat> = ({
 
         if (matchMessageEmojiLength === 1) {
           messageEmoji = matchMessageEmoji.map((item, index) =>
-            htmlElementImage(item, index, `w-[86px] h-[86px]`),
+            htmlElementImage(item, index, `w-[80px] h-[80px]`),
           );
         }
         if (matchMessageEmojiLength === 2) {
