@@ -28,6 +28,7 @@ interface ConfigState {
   unread: number | null;
   isUnread: boolean;
   watermark: boolean;
+  images: string[];
 }
 
 const initialState: ConfigState = {
@@ -52,6 +53,7 @@ const initialState: ConfigState = {
   watermark: true,
   isEconom: false,
   isCharge: false,
+  images: [],
 };
 
 export const configSlice = createSlice({
@@ -115,6 +117,9 @@ export const configSlice = createSlice({
     setIsCharge: (state, action: PayloadAction<ConfigState['isCharge']>) => {
       state.isCharge = action.payload;
     },
+    setImages: (state, action: PayloadAction<ConfigState['images']>) => {
+      state.images = action.payload;
+    },
     setGlobalConfig: (state, action: PayloadAction<ConfigState>) => {
       state.volumeBattary = action.payload.volumeBattary;
       state.wifi = action.payload.wifi;
@@ -135,6 +140,7 @@ export const configSlice = createSlice({
       state.watermark = action.payload.watermark;
       state.isEconom = action.payload.isEconom;
       state.isCharge = action.payload.isCharge;
+      state.images = action.payload.images;
     },
   },
 });
@@ -160,6 +166,7 @@ export const {
   setIsCharge,
   setIsEconom,
   setGlobalConfig,
+  setImages,
 } = configSlice.actions;
 
 export default configSlice.reducer;
