@@ -25,15 +25,14 @@ const SettingsInterlocutorIGallary: FC = () => {
 
   const [fileList, setFileList] = useState<UploadFile[]>(gallary);
 
-  const handleChange: UploadProps['onChange'] = (info) => {
+  const handleChange: UploadProps['onChange'] = async (info) => {
+    if (!info.file.url && !info.file.preview) {
+      info.file.preview = await getBase64(info.file.originFileObj as RcFile);
+    }
     setFileList(info.fileList);
   };
 
   const handlePreview = async (file: UploadFile) => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj as RcFile);
-    }
-
     dispatch(setBgImage(file.preview));
   };
 
