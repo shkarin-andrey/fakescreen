@@ -36,4 +36,7 @@ export const AUTH_CONFIG = {
   PASSWORD: window.location.hostname,
 };
 
-export const rxTrimMessage = new RegExp(/(?:^(?:&nbsp;|\s)+)|(?:(?:&nbsp;|\s)+$)/, 'gm');
+export const rxTrimMessage = new RegExp(
+  /(?:^(?:&nbsp;|\s|<br>)+)|(?:(?:&nbsp;|\s|<br>)+$)/,
+  'gm',
+);
