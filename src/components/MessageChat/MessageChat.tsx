@@ -1,18 +1,6 @@
 import { FC, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import TailIcon from '../../assets/icons/TailIcon';
-import maskHorizontalLeft from '../../assets/images/mask-message-horizontal-left.svg';
-import maskHorizontalRight from '../../assets/images/mask-message-horizontal-right.svg';
-import maskHorizontalRoundLeft from '../../assets/images/mask-message-horizontal-round-left.svg';
-import maskHorizontalRoundRight from '../../assets/images/mask-message-horizontal-round-right.svg';
-import maskSquareLeft from '../../assets/images/mask-message-square-left.svg';
-import maskSquareRight from '../../assets/images/mask-message-square-right.svg';
-import maskSquareRoundLeft from '../../assets/images/mask-message-square-round-left.svg';
-import maskSquareRoundRight from '../../assets/images/mask-message-square-round-right.svg';
-import maskVerticalLeft from '../../assets/images/mask-message-vertical-left.svg';
-import maskVerticalRight from '../../assets/images/mask-message-vertical-right.svg';
-import maskVerticalRoundLeft from '../../assets/images/mask-message-vertical-round-left.svg';
-import maskVerticalRoundRight from '../../assets/images/mask-message-vertical-round-right.svg';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import MessageTime from '../MessageTime/MessageTime';
 import ModalEditMessage from '../Modal/ModalEditMessage';
@@ -22,8 +10,11 @@ import {
   classNameImagePadding,
   classNameMessage,
   classNameMessageTime,
+  generateMaskImageType,
+  rxEmoji,
+  rxEmojiOne,
 } from './MessageChat.config';
-import { IMessageChat } from './MessageChat.interface';
+import { IMessageChat, IMessageImageMask } from './MessageChat.interface';
 
 const MessageChat: FC<IMessageChat> = ({
   id,
@@ -38,11 +29,7 @@ const MessageChat: FC<IMessageChat> = ({
   style,
   fileList,
 }) => {
-  const [mask, setMask] = useState<{
-    position?: 'right' | 'left';
-    type?: 'vertical' | 'horizontal' | 'square';
-    rounded?: boolean;
-  }>({});
+  const [mask, setMask] = useState<IMessageImageMask>({});
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [width, setWidth] = useState<number | 'auto'>('auto');
   const messageRef = useRef<HTMLDivElement>(null);
@@ -50,10 +37,9 @@ const MessageChat: FC<IMessageChat> = ({
 
   const bgImage = useAppSelector((state) => state.config.bgImage);
 
-  const isMessage = message.trim() !== '';
+  const generateMaskImage = useMemo(() => generateMaskImageType(mask), [mask]);
 
-  const rxEmoji = new RegExp(`^(<img\\s+[^>]*src="([^"]*)"[^>]*>)+$`, 'gm');
-  const rxEmojiOne = new RegExp(`<img\\s+[^>]*src="([^"]*)"[^>]*>`, 'gm');
+  const isMessage = message.trim() !== '';
 
   const matchMessageEmoji = message
     .match(rxEmoji)?.[0]
@@ -217,62 +203,6 @@ const MessageChat: FC<IMessageChat> = ({
   const handleOpenModal = useCallback(() => {
     setIsOpenModal(true);
   }, []);
-
-  const generateMaskImage = useMemo(() => {
-    const maskTypeSquare = mask?.type === 'square';
-    const maskTypeHorizontal = mask?.type === 'horizontal';
-    const maskTypeVertical = mask?.type === 'vertical';
-    const maskPositionRight = mask?.position === 'right';
-    const maskPositionLeft = mask?.position === 'left';
-
-    if (maskTypeSquare && maskPositionRight) {
-      if (mask?.rounded) {
-        return maskSquareRoundRight;
-      }
-
-      return maskSquareRight;
-    }
-
-    if (maskTypeSquare && maskPositionLeft) {
-      if (mask?.rounded) {
-        return maskSquareRoundLeft;
-      }
-
-      return maskSquareLeft;
-    }
-
-    if (maskTypeHorizontal && maskPositionRight) {
-      if (mask?.rounded) {
-        return maskHorizontalRoundRight;
-      }
-
-      return maskHorizontalRight;
-    }
-
-    if (maskTypeHorizontal && maskPositionLeft) {
-      if (mask?.rounded) {
-        return maskHorizontalRoundLeft;
-      }
-
-      return maskHorizontalLeft;
-    }
-
-    if (maskTypeVertical && maskPositionRight) {
-      if (mask?.rounded) {
-        return maskVerticalRoundRight;
-      }
-
-      return maskVerticalRight;
-    }
-
-    if (maskTypeVertical && maskPositionLeft) {
-      if (mask?.rounded) {
-        return maskVerticalRoundLeft;
-      }
-
-      return maskVerticalLeft;
-    }
-  }, [mask?.type, mask?.position, mask?.rounded]);
 
   const maskImage = useMemo(() => {
     const styleObj: React.CSSProperties = {};
