@@ -7,6 +7,7 @@ import { FC, useCallback, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { CropperRef } from 'react-advanced-cropper';
+import { rxTrimMessage } from '../../../config';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { setMessage } from '../../../redux/state/chatSlice';
@@ -96,7 +97,10 @@ const SettingsChatImageMessage: FC = () => {
         fileList,
       };
 
-      data.message = ref.current?.innerHTML.replace(/(style=.*"|&nbsp;)+/gm, '');
+      data.message = ref.current?.innerHTML
+        .trim()
+        .replace(/(style=.*")+/gm, '')
+        .replace(rxTrimMessage, '');
 
       if (ref.current?.innerHTML !== '' || fileList.length !== 0) {
         setTimeout(() => {
