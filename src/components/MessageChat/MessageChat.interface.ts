@@ -13,3 +13,9 @@ export interface IMessageChat {
   className?: string;
   style?: React.CSSProperties | undefined;
 }
+
+export interface IMessageImageMask {
+  position?: 'right' | 'left';
+  type?: 'vertical' | 'horizontal' | 'square';
+  rounded?: boolean;
+}

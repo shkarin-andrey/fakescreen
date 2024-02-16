@@ -1,4 +1,20 @@
+import maskHorizontalLeft from '../../assets/images/mask-message-horizontal-left.svg';
+import maskHorizontalRight from '../../assets/images/mask-message-horizontal-right.svg';
+import maskHorizontalRoundLeft from '../../assets/images/mask-message-horizontal-round-left.svg';
+import maskHorizontalRoundRight from '../../assets/images/mask-message-horizontal-round-right.svg';
+import maskSquareLeft from '../../assets/images/mask-message-square-left.svg';
+import maskSquareRight from '../../assets/images/mask-message-square-right.svg';
+import maskSquareRoundLeft from '../../assets/images/mask-message-square-round-left.svg';
+import maskSquareRoundRight from '../../assets/images/mask-message-square-round-right.svg';
+import maskVerticalLeft from '../../assets/images/mask-message-vertical-left.svg';
+import maskVerticalRight from '../../assets/images/mask-message-vertical-right.svg';
+import maskVerticalRoundLeft from '../../assets/images/mask-message-vertical-round-left.svg';
+import maskVerticalRoundRight from '../../assets/images/mask-message-vertical-round-right.svg';
 import { Message } from '../../redux/state/chatSlice';
+import { IMessageImageMask } from './MessageChat.interface';
+
+export const rxEmoji = new RegExp(`^(<img\\s+[^>]*src="([^"]*)"[^>]*>)+$`, 'gm');
+export const rxEmojiOne = new RegExp(`<img\\s+[^>]*src="([^"]*)"[^>]*>`, 'gm');
 
 export const classNameMessage = (type: Message['type'], matchMessageEmojiLength = 0) => {
   let classNameMessageEmoji: React.HTMLAttributes<HTMLDivElement>['className'] =
@@ -155,4 +171,60 @@ export const classNameImagePadding = (matchMessageEmojiLength = 0) => {
     return `${defaultClassName} pt-2`;
   }
   return `${defaultClassName} pt-[4px]`;
+};
+
+export const generateMaskImageType = (mask: IMessageImageMask) => {
+  const maskTypeSquare = mask?.type === 'square';
+  const maskTypeHorizontal = mask?.type === 'horizontal';
+  const maskTypeVertical = mask?.type === 'vertical';
+  const maskPositionRight = mask?.position === 'right';
+  const maskPositionLeft = mask?.position === 'left';
+
+  if (maskTypeSquare && maskPositionRight) {
+    if (mask?.rounded) {
+      return maskSquareRoundRight;
+    }
+
+    return maskSquareRight;
+  }
+
+  if (maskTypeSquare && maskPositionLeft) {
+    if (mask?.rounded) {
+      return maskSquareRoundLeft;
+    }
+
+    return maskSquareLeft;
+  }
+
+  if (maskTypeHorizontal && maskPositionRight) {
+    if (mask?.rounded) {
+      return maskHorizontalRoundRight;
+    }
+
+    return maskHorizontalRight;
+  }
+
+  if (maskTypeHorizontal && maskPositionLeft) {
+    if (mask?.rounded) {
+      return maskHorizontalRoundLeft;
+    }
+
+    return maskHorizontalLeft;
+  }
+
+  if (maskTypeVertical && maskPositionRight) {
+    if (mask?.rounded) {
+      return maskVerticalRoundRight;
+    }
+
+    return maskVerticalRight;
+  }
+
+  if (maskTypeVertical && maskPositionLeft) {
+    if (mask?.rounded) {
+      return maskVerticalRoundLeft;
+    }
+
+    return maskVerticalLeft;
+  }
 };

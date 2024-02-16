@@ -15,7 +15,7 @@ import { MaskedInput } from 'antd-mask-input';
 import { RcFile, UploadFile } from 'antd/es/upload';
 import { FC, memo, useCallback, useEffect, useRef, useState } from 'react';
 
-import { optionsTypeMessage } from '../../../config';
+import { optionsTypeMessage, rxTrimMessage } from '../../../config';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { deleteMessage, updateMessage } from '../../../redux/state/chatSlice';
@@ -108,7 +108,9 @@ const ModalEditMessage: FC<IModalEditMessage> = ({
       },
     };
 
-    body.data.message = ref.current?.innerHTML.replace(/(style=.*"|&nbsp;)+/gm, '');
+    body.data.message = ref.current?.innerHTML
+      .replace(/(style=.*")+/gm, '')
+      .replace(rxTrimMessage, '');
 
     if (ref.current?.innerHTML !== '' || fileList.length !== 0) {
       setTimeout(() => {
